@@ -1,26 +1,34 @@
 import { IsOptional, IsString } from "class-validator";
+import Decimal from "decimal.js";
 
 export class JointProcurementDto {
-    @IsString()
+    
     @IsOptional()
-    expectedValue: string
+    expectedValue: Decimal
+    
+    @IsOptional()
+    resultValue: Decimal
     
     @IsString()
     @IsOptional()
-    resultValue: string
-    
-    @IsString()
-    @IsOptional()
-    announcedAt: string
+    announcedAt: Date
 
     @IsString()
     @IsOptional()
-    finishedAt: string
+    finishedAt: Date
+
+    @IsString()
+    @IsOptional()
+    prozorroId: string
+
+    @IsString()
+    @IsOptional()
+    prozorroLink: string
 
     @IsString()
     @IsOptional()
     product: string
-
+    
     @IsString()
     @IsOptional()
     unit: string

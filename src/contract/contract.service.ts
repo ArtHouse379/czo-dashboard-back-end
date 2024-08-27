@@ -6,7 +6,15 @@ import { ContractDto } from './contract.dto';
 export class ContractService {
   constructor(private prisma: PrismaService) { }
 
-  async getAll(procurementId: string) {
+  async getAll() {
+    return this.prisma.contract.findMany({
+      include: {
+        agreements: true
+      }
+    })
+  }
+
+  async getByProcurementId(procurementId: string) {
     return this.prisma.contract.findMany({
       where: {
         procurementId

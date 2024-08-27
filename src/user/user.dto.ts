@@ -9,6 +9,10 @@ export class UserDto {
     @IsOptional()
     name?: string
 
+    @IsString()
+    @IsOptional()
+    surname?: string
+
     @IsOptional()
     @MinLength(6, {
         message: 'Password must be at least 6 characters'

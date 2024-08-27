@@ -4,14 +4,20 @@ import { Auth } from 'src/auth/decorators/auth.decorator';
 import { ContractDto } from './contract.dto';
 
 
-@Controller('procurement/contracts')
+@Controller('contracts')
 export class ContractController {
   constructor(private readonly contractService: ContractService) { }
 
+  @Get()
+  @Auth()
+  async getAll() {
+    return this.contractService.getAll()
+  }
+
   @Get(':id')
   @Auth()
-  async getAll(@Param('id') procurementId: string) {
-    return this.contractService.getAll(procurementId)
+  async getById(@Param('id') procurementId: string) {
+    return this.contractService.getByProcurementId(procurementId)
   }
 
   @UsePipes(new ValidationPipe())

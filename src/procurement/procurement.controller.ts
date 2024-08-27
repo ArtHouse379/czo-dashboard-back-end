@@ -21,9 +21,9 @@ export class ProcurementController {
     return this.procurementService.getByUserId(userId)
   }
 
-  @Get('customers-procurements')
+  @Get('customers-procurements/:id')
   @Auth()
-  async getByCustomerId( customerId: string) {
+  async getByCustomerId( @Param('id') customerId: string ) {
     return this.procurementService.getByCustomerId(customerId)
   }
 
@@ -37,7 +37,7 @@ export class ProcurementController {
 
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
-  @Put(':id/connect-to-joint')
+  @Put('connect-to-joint/:id')
   @Auth()
   async connectToJointProcurement(
     @Body() dto: ProcurementDto,

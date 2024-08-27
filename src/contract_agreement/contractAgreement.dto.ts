@@ -4,7 +4,11 @@ export class ContractAgreementDto {
 
     @IsString()
     @IsOptional()
-    signatureDate: string
+    number: string
+
+    @IsString()
+    @IsOptional()
+    signatureDate: Date
 
     @IsString()
     @IsOptional()

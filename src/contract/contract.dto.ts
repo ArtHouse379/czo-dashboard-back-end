@@ -1,22 +1,29 @@
 import { IsOptional, IsString } from "class-validator";
+import Decimal from "decimal.js";
 
 export class ContractDto {
 
     @IsString()
     @IsOptional()
-    startValue: string
+    number: string
 
     @IsString()
     @IsOptional()
-    currentValue: string
+    prozorroLink: string
+
+    @IsOptional()
+    startValue: Decimal
+
+    @IsOptional()
+    currentValue: Decimal
 
     @IsString()
     @IsOptional()
-    signatureDate: string
+    signatureDate: Date
 
     @IsString()
     @IsOptional()
-    terminationDate: string
+    terminationDate: Date
 
     @IsString()
     @IsOptional()

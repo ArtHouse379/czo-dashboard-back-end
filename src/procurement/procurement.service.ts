@@ -48,7 +48,7 @@ export class ProcurementService {
             id: customerId
           }
         },
-        user: {
+        manager: {
           connect: {
             id: userId,
           },

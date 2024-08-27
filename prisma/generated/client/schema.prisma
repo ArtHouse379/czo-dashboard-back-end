@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../prisma/generated/client"
@@ -21,10 +15,11 @@ model User {
 
   email    String  @unique
   name     String?
+  surname  String?
   password String
 
   position String?
-  role     String? @default("user")
+  role     String  @default("user")
 
   tasks        Task[]
   procurements Procurement[]
@@ -35,7 +30,7 @@ model User {
 model Customer {
   id String @id @default(cuid())
 
-  name  String?
+  name  String
   code  String
   email String
   phone String
@@ -50,23 +45,26 @@ model Procurement {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  expectedValue String @map("expected_value")
-  resultValue   String @map("result_value")
+  expectedValue Decimal @map("expected_value")
+  resultValue   Decimal? @map("result_value")
 
-  announcedAt DateTime @map("announced_at")
-  finishedAt  DateTime @map("finished_at")
+  announcedAt DateTime? @map("announced_at")
+  finishedAt  DateTime? @map("finished_at")
+
+  prozorroId   String?
+  prozorroLink String? @map("prozorro_link")
 
   product String
   unit    String
   scope   String
 
-  status String @default("in process")
+  status String @default("in work")
 
   customer   Customer @relation(fields: [customerId], references: [id])
   customerId String   @map("customer_id")
 
-  user   User   @relation(fields: [userId], references: [id])
-  userId String @map("user_id")
+  manager User   @relation(fields: [userId], references: [id])
+  userId  String @map("user_id")
 
   jointProcurement   JointProcurement? @relation(fields: [jointProcurementid], references: [id])
   jointProcurementid String?           @map("joint_procurement_id")
@@ -81,17 +79,20 @@ model JointProcurement {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  expectedValue String @map("expected_value")
-  resultValue   String @map("result_value")
+  expectedValue Decimal @map("expected_value")
+  resultValue   Decimal? @map("result_value")
 
-  announcedAt DateTime @map("announced_at")
-  finishedAt  DateTime @map("finished_at")
+  announcedAt DateTime? @map("announced_at")
+  finishedAt  DateTime? @map("finished_at")
+
+  prozorroId   String?
+  prozorroLink String? @map("prozorro_link")
 
   product String
   unit    String
   scope   String
 
-  status String @default("in process")
+  status String @default("in work")
 
   procurements Procurement[]
 
@@ -103,8 +104,10 @@ model Contract {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  startValue      String   @map("start_value")
-  currentValue    String?  @map("final_value")
+  number          String
+  prozorroLink    String?  @map("prozorro_link")
+  startValue      Decimal   @map("start_value")
+  currentValue    Decimal?  @map("final_value")
   signatureDate   DateTime @map("signature_date")
   terminationDate DateTime @map("termination_date")
 
@@ -124,6 +127,7 @@ model contractAgreement {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map("created_at")
 
+  number        String
   signatureDate DateTime @map("signature_date")
   reason        String
   changes       String
@@ -141,9 +145,9 @@ model Task {
 
   name            String
   priority        Priority?
-  status          String?   @default("Waiting for status")
-  terminationDate DateTime? @default(now()) @map("termination_date")
-  isCompleted     Boolean?  @default(false) @map("is_completed")
+  status          String    @default("Waiting for status")
+  terminationDate DateTime  @map("termination_date")
+  isCompleted     Boolean   @default(false) @map("is_completed")
   notes           String?
 
   user   User   @relation(fields: [userId], references: [id])

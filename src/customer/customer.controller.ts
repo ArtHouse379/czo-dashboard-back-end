@@ -14,6 +14,18 @@ export class CustomerController {
     return this.customerService.getAll()
   }
 
+  @Get(':id')
+  @Auth()
+  async getById( @Param('id') customerId: string ) {
+    return this.customerService.getById(customerId)
+  }
+
+  @Get('by-email')
+  @Auth()
+  async getByEmail( email: string ) {
+    return this.customerService.getByEmail(email)
+  }
+
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Post()

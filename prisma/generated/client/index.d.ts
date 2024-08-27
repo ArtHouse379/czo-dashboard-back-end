@@ -1562,6 +1562,7 @@ export namespace Prisma {
     updatedAt: Date | null
     email: string | null
     name: string | null
+    surname: string | null
     password: string | null
     position: string | null
     role: string | null
@@ -1573,6 +1574,7 @@ export namespace Prisma {
     updatedAt: Date | null
     email: string | null
     name: string | null
+    surname: string | null
     password: string | null
     position: string | null
     role: string | null
@@ -1584,6 +1586,7 @@ export namespace Prisma {
     updatedAt: number
     email: number
     name: number
+    surname: number
     password: number
     position: number
     role: number
@@ -1597,6 +1600,7 @@ export namespace Prisma {
     updatedAt?: true
     email?: true
     name?: true
+    surname?: true
     password?: true
     position?: true
     role?: true
@@ -1608,6 +1612,7 @@ export namespace Prisma {
     updatedAt?: true
     email?: true
     name?: true
+    surname?: true
     password?: true
     position?: true
     role?: true
@@ -1619,6 +1624,7 @@ export namespace Prisma {
     updatedAt?: true
     email?: true
     name?: true
+    surname?: true
     password?: true
     position?: true
     role?: true
@@ -1703,9 +1709,10 @@ export namespace Prisma {
     updatedAt: Date
     email: string
     name: string | null
+    surname: string | null
     password: string
     position: string | null
-    role: string | null
+    role: string
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1731,6 +1738,7 @@ export namespace Prisma {
     updatedAt?: boolean
     email?: boolean
     name?: boolean
+    surname?: boolean
     password?: boolean
     position?: boolean
     role?: boolean
@@ -1745,6 +1753,7 @@ export namespace Prisma {
     updatedAt?: boolean
     email?: boolean
     name?: boolean
+    surname?: boolean
     password?: boolean
     position?: boolean
     role?: boolean
@@ -1770,9 +1779,10 @@ export namespace Prisma {
       updatedAt: Date
       email: string
       name: string | null
+      surname: string | null
       password: string
       position: string | null
-      role: string | null
+      role: string
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2175,6 +2185,7 @@ export namespace Prisma {
     readonly updatedAt: FieldRef<"User", 'DateTime'>
     readonly email: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
+    readonly surname: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly position: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'String'>
@@ -2666,7 +2677,7 @@ export namespace Prisma {
 
   export type CustomerGroupByOutputType = {
     id: string
-    name: string | null
+    name: string
     code: string
     email: string
     phone: string
@@ -2721,7 +2732,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      name: string | null
+      name: string
       code: string
       email: string
       phone: string
@@ -3464,18 +3475,32 @@ export namespace Prisma {
 
   export type AggregateProcurement = {
     _count: ProcurementCountAggregateOutputType | null
+    _avg: ProcurementAvgAggregateOutputType | null
+    _sum: ProcurementSumAggregateOutputType | null
     _min: ProcurementMinAggregateOutputType | null
     _max: ProcurementMaxAggregateOutputType | null
+  }
+
+  export type ProcurementAvgAggregateOutputType = {
+    expectedValue: Decimal | null
+    resultValue: Decimal | null
+  }
+
+  export type ProcurementSumAggregateOutputType = {
+    expectedValue: Decimal | null
+    resultValue: Decimal | null
   }
 
   export type ProcurementMinAggregateOutputType = {
     id: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    expectedValue: string | null
-    resultValue: string | null
+    expectedValue: Decimal | null
+    resultValue: Decimal | null
     announcedAt: Date | null
     finishedAt: Date | null
+    prozorroId: string | null
+    prozorroLink: string | null
     product: string | null
     unit: string | null
     scope: string | null
@@ -3489,10 +3514,12 @@ export namespace Prisma {
     id: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    expectedValue: string | null
-    resultValue: string | null
+    expectedValue: Decimal | null
+    resultValue: Decimal | null
     announcedAt: Date | null
     finishedAt: Date | null
+    prozorroId: string | null
+    prozorroLink: string | null
     product: string | null
     unit: string | null
     scope: string | null
@@ -3510,6 +3537,8 @@ export namespace Prisma {
     resultValue: number
     announcedAt: number
     finishedAt: number
+    prozorroId: number
+    prozorroLink: number
     product: number
     unit: number
     scope: number
@@ -3521,6 +3550,16 @@ export namespace Prisma {
   }
 
 
+  export type ProcurementAvgAggregateInputType = {
+    expectedValue?: true
+    resultValue?: true
+  }
+
+  export type ProcurementSumAggregateInputType = {
+    expectedValue?: true
+    resultValue?: true
+  }
+
   export type ProcurementMinAggregateInputType = {
     id?: true
     createdAt?: true
@@ -3529,6 +3568,8 @@ export namespace Prisma {
     resultValue?: true
     announcedAt?: true
     finishedAt?: true
+    prozorroId?: true
+    prozorroLink?: true
     product?: true
     unit?: true
     scope?: true
@@ -3546,6 +3587,8 @@ export namespace Prisma {
     resultValue?: true
     announcedAt?: true
     finishedAt?: true
+    prozorroId?: true
+    prozorroLink?: true
     product?: true
     unit?: true
     scope?: true
@@ -3563,6 +3606,8 @@ export namespace Prisma {
     resultValue?: true
     announcedAt?: true
     finishedAt?: true
+    prozorroId?: true
+    prozorroLink?: true
     product?: true
     unit?: true
     scope?: true
@@ -3611,6 +3656,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ProcurementAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProcurementSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ProcurementMinAggregateInputType
@@ -3641,6 +3698,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ProcurementCountAggregateInputType | true
+    _avg?: ProcurementAvgAggregateInputType
+    _sum?: ProcurementSumAggregateInputType
     _min?: ProcurementMinAggregateInputType
     _max?: ProcurementMaxAggregateInputType
   }
@@ -3649,10 +3708,12 @@ export namespace Prisma {
     id: string
     createdAt: Date
     updatedAt: Date
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date
-    finishedAt: Date
+    expectedValue: Decimal
+    resultValue: Decimal | null
+    announcedAt: Date | null
+    finishedAt: Date | null
+    prozorroId: string | null
+    prozorroLink: string | null
     product: string
     unit: string
     scope: string
@@ -3661,6 +3722,8 @@ export namespace Prisma {
     userId: string
     jointProcurementid: string | null
     _count: ProcurementCountAggregateOutputType | null
+    _avg: ProcurementAvgAggregateOutputType | null
+    _sum: ProcurementSumAggregateOutputType | null
     _min: ProcurementMinAggregateOutputType | null
     _max: ProcurementMaxAggregateOutputType | null
   }
@@ -3687,6 +3750,8 @@ export namespace Prisma {
     resultValue?: boolean
     announcedAt?: boolean
     finishedAt?: boolean
+    prozorroId?: boolean
+    prozorroLink?: boolean
     product?: boolean
     unit?: boolean
     scope?: boolean
@@ -3695,7 +3760,7 @@ export namespace Prisma {
     userId?: boolean
     jointProcurementid?: boolean
     customer?: boolean | CustomerDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    manager?: boolean | UserDefaultArgs<ExtArgs>
     jointProcurement?: boolean | Procurement$jointProcurementArgs<ExtArgs>
     contracts?: boolean | Procurement$contractsArgs<ExtArgs>
     _count?: boolean | ProcurementCountOutputTypeDefaultArgs<ExtArgs>
@@ -3709,6 +3774,8 @@ export namespace Prisma {
     resultValue?: boolean
     announcedAt?: boolean
     finishedAt?: boolean
+    prozorroId?: boolean
+    prozorroLink?: boolean
     product?: boolean
     unit?: boolean
     scope?: boolean
@@ -3721,7 +3788,7 @@ export namespace Prisma {
 
   export type ProcurementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     customer?: boolean | CustomerDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    manager?: boolean | UserDefaultArgs<ExtArgs>
     jointProcurement?: boolean | Procurement$jointProcurementArgs<ExtArgs>
     contracts?: boolean | Procurement$contractsArgs<ExtArgs>
     _count?: boolean | ProcurementCountOutputTypeDefaultArgs<ExtArgs>
@@ -3732,7 +3799,7 @@ export namespace Prisma {
     name: "Procurement"
     objects: {
       customer: Prisma.$CustomerPayload<ExtArgs>
-      user: Prisma.$UserPayload<ExtArgs>
+      manager: Prisma.$UserPayload<ExtArgs>
       jointProcurement: Prisma.$JointProcurementPayload<ExtArgs> | null
       contracts: Prisma.$ContractPayload<ExtArgs>[]
     }
@@ -3740,10 +3807,12 @@ export namespace Prisma {
       id: string
       createdAt: Date
       updatedAt: Date
-      expectedValue: string
-      resultValue: string
-      announcedAt: Date
-      finishedAt: Date
+      expectedValue: Prisma.Decimal
+      resultValue: Prisma.Decimal | null
+      announcedAt: Date | null
+      finishedAt: Date | null
+      prozorroId: string | null
+      prozorroLink: string | null
       product: string
       unit: string
       scope: string
@@ -4118,7 +4187,7 @@ export namespace Prisma {
 
     customer<T extends CustomerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CustomerDefaultArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
 
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+    manager<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
 
     jointProcurement<T extends Procurement$jointProcurementArgs<ExtArgs> = {}>(args?: Subset<T, Procurement$jointProcurementArgs<ExtArgs>>): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
@@ -4155,10 +4224,12 @@ export namespace Prisma {
     readonly id: FieldRef<"Procurement", 'String'>
     readonly createdAt: FieldRef<"Procurement", 'DateTime'>
     readonly updatedAt: FieldRef<"Procurement", 'DateTime'>
-    readonly expectedValue: FieldRef<"Procurement", 'String'>
-    readonly resultValue: FieldRef<"Procurement", 'String'>
+    readonly expectedValue: FieldRef<"Procurement", 'Decimal'>
+    readonly resultValue: FieldRef<"Procurement", 'Decimal'>
     readonly announcedAt: FieldRef<"Procurement", 'DateTime'>
     readonly finishedAt: FieldRef<"Procurement", 'DateTime'>
+    readonly prozorroId: FieldRef<"Procurement", 'String'>
+    readonly prozorroLink: FieldRef<"Procurement", 'String'>
     readonly product: FieldRef<"Procurement", 'String'>
     readonly unit: FieldRef<"Procurement", 'String'>
     readonly scope: FieldRef<"Procurement", 'String'>
@@ -4520,18 +4591,32 @@ export namespace Prisma {
 
   export type AggregateJointProcurement = {
     _count: JointProcurementCountAggregateOutputType | null
+    _avg: JointProcurementAvgAggregateOutputType | null
+    _sum: JointProcurementSumAggregateOutputType | null
     _min: JointProcurementMinAggregateOutputType | null
     _max: JointProcurementMaxAggregateOutputType | null
+  }
+
+  export type JointProcurementAvgAggregateOutputType = {
+    expectedValue: Decimal | null
+    resultValue: Decimal | null
+  }
+
+  export type JointProcurementSumAggregateOutputType = {
+    expectedValue: Decimal | null
+    resultValue: Decimal | null
   }
 
   export type JointProcurementMinAggregateOutputType = {
     id: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    expectedValue: string | null
-    resultValue: string | null
+    expectedValue: Decimal | null
+    resultValue: Decimal | null
     announcedAt: Date | null
     finishedAt: Date | null
+    prozorroId: string | null
+    prozorroLink: string | null
     product: string | null
     unit: string | null
     scope: string | null
@@ -4542,10 +4627,12 @@ export namespace Prisma {
     id: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    expectedValue: string | null
-    resultValue: string | null
+    expectedValue: Decimal | null
+    resultValue: Decimal | null
     announcedAt: Date | null
     finishedAt: Date | null
+    prozorroId: string | null
+    prozorroLink: string | null
     product: string | null
     unit: string | null
     scope: string | null
@@ -4560,6 +4647,8 @@ export namespace Prisma {
     resultValue: number
     announcedAt: number
     finishedAt: number
+    prozorroId: number
+    prozorroLink: number
     product: number
     unit: number
     scope: number
@@ -4567,6 +4656,16 @@ export namespace Prisma {
     _all: number
   }
 
+
+  export type JointProcurementAvgAggregateInputType = {
+    expectedValue?: true
+    resultValue?: true
+  }
+
+  export type JointProcurementSumAggregateInputType = {
+    expectedValue?: true
+    resultValue?: true
+  }
 
   export type JointProcurementMinAggregateInputType = {
     id?: true
@@ -4576,6 +4675,8 @@ export namespace Prisma {
     resultValue?: true
     announcedAt?: true
     finishedAt?: true
+    prozorroId?: true
+    prozorroLink?: true
     product?: true
     unit?: true
     scope?: true
@@ -4590,6 +4691,8 @@ export namespace Prisma {
     resultValue?: true
     announcedAt?: true
     finishedAt?: true
+    prozorroId?: true
+    prozorroLink?: true
     product?: true
     unit?: true
     scope?: true
@@ -4604,6 +4707,8 @@ export namespace Prisma {
     resultValue?: true
     announcedAt?: true
     finishedAt?: true
+    prozorroId?: true
+    prozorroLink?: true
     product?: true
     unit?: true
     scope?: true
@@ -4649,6 +4754,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: JointProcurementAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: JointProcurementSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: JointProcurementMinAggregateInputType
@@ -4679,6 +4796,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: JointProcurementCountAggregateInputType | true
+    _avg?: JointProcurementAvgAggregateInputType
+    _sum?: JointProcurementSumAggregateInputType
     _min?: JointProcurementMinAggregateInputType
     _max?: JointProcurementMaxAggregateInputType
   }
@@ -4687,15 +4806,19 @@ export namespace Prisma {
     id: string
     createdAt: Date
     updatedAt: Date
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date
-    finishedAt: Date
+    expectedValue: Decimal
+    resultValue: Decimal | null
+    announcedAt: Date | null
+    finishedAt: Date | null
+    prozorroId: string | null
+    prozorroLink: string | null
     product: string
     unit: string
     scope: string
     status: string
     _count: JointProcurementCountAggregateOutputType | null
+    _avg: JointProcurementAvgAggregateOutputType | null
+    _sum: JointProcurementSumAggregateOutputType | null
     _min: JointProcurementMinAggregateOutputType | null
     _max: JointProcurementMaxAggregateOutputType | null
   }
@@ -4722,6 +4845,8 @@ export namespace Prisma {
     resultValue?: boolean
     announcedAt?: boolean
     finishedAt?: boolean
+    prozorroId?: boolean
+    prozorroLink?: boolean
     product?: boolean
     unit?: boolean
     scope?: boolean
@@ -4738,6 +4863,8 @@ export namespace Prisma {
     resultValue?: boolean
     announcedAt?: boolean
     finishedAt?: boolean
+    prozorroId?: boolean
+    prozorroLink?: boolean
     product?: boolean
     unit?: boolean
     scope?: boolean
@@ -4760,10 +4887,12 @@ export namespace Prisma {
       id: string
       createdAt: Date
       updatedAt: Date
-      expectedValue: string
-      resultValue: string
-      announcedAt: Date
-      finishedAt: Date
+      expectedValue: Prisma.Decimal
+      resultValue: Prisma.Decimal | null
+      announcedAt: Date | null
+      finishedAt: Date | null
+      prozorroId: string | null
+      prozorroLink: string | null
       product: string
       unit: string
       scope: string
@@ -5166,10 +5295,12 @@ export namespace Prisma {
     readonly id: FieldRef<"JointProcurement", 'String'>
     readonly createdAt: FieldRef<"JointProcurement", 'DateTime'>
     readonly updatedAt: FieldRef<"JointProcurement", 'DateTime'>
-    readonly expectedValue: FieldRef<"JointProcurement", 'String'>
-    readonly resultValue: FieldRef<"JointProcurement", 'String'>
+    readonly expectedValue: FieldRef<"JointProcurement", 'Decimal'>
+    readonly resultValue: FieldRef<"JointProcurement", 'Decimal'>
     readonly announcedAt: FieldRef<"JointProcurement", 'DateTime'>
     readonly finishedAt: FieldRef<"JointProcurement", 'DateTime'>
+    readonly prozorroId: FieldRef<"JointProcurement", 'String'>
+    readonly prozorroLink: FieldRef<"JointProcurement", 'String'>
     readonly product: FieldRef<"JointProcurement", 'String'>
     readonly unit: FieldRef<"JointProcurement", 'String'>
     readonly scope: FieldRef<"JointProcurement", 'String'>
@@ -5513,16 +5644,30 @@ export namespace Prisma {
 
   export type AggregateContract = {
     _count: ContractCountAggregateOutputType | null
+    _avg: ContractAvgAggregateOutputType | null
+    _sum: ContractSumAggregateOutputType | null
     _min: ContractMinAggregateOutputType | null
     _max: ContractMaxAggregateOutputType | null
+  }
+
+  export type ContractAvgAggregateOutputType = {
+    startValue: Decimal | null
+    currentValue: Decimal | null
+  }
+
+  export type ContractSumAggregateOutputType = {
+    startValue: Decimal | null
+    currentValue: Decimal | null
   }
 
   export type ContractMinAggregateOutputType = {
     id: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    startValue: string | null
-    currentValue: string | null
+    number: string | null
+    prozorroLink: string | null
+    startValue: Decimal | null
+    currentValue: Decimal | null
     signatureDate: Date | null
     terminationDate: Date | null
     product: string | null
@@ -5535,8 +5680,10 @@ export namespace Prisma {
     id: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    startValue: string | null
-    currentValue: string | null
+    number: string | null
+    prozorroLink: string | null
+    startValue: Decimal | null
+    currentValue: Decimal | null
     signatureDate: Date | null
     terminationDate: Date | null
     product: string | null
@@ -5549,6 +5696,8 @@ export namespace Prisma {
     id: number
     createdAt: number
     updatedAt: number
+    number: number
+    prozorroLink: number
     startValue: number
     currentValue: number
     signatureDate: number
@@ -5561,10 +5710,22 @@ export namespace Prisma {
   }
 
 
+  export type ContractAvgAggregateInputType = {
+    startValue?: true
+    currentValue?: true
+  }
+
+  export type ContractSumAggregateInputType = {
+    startValue?: true
+    currentValue?: true
+  }
+
   export type ContractMinAggregateInputType = {
     id?: true
     createdAt?: true
     updatedAt?: true
+    number?: true
+    prozorroLink?: true
     startValue?: true
     currentValue?: true
     signatureDate?: true
@@ -5579,6 +5740,8 @@ export namespace Prisma {
     id?: true
     createdAt?: true
     updatedAt?: true
+    number?: true
+    prozorroLink?: true
     startValue?: true
     currentValue?: true
     signatureDate?: true
@@ -5593,6 +5756,8 @@ export namespace Prisma {
     id?: true
     createdAt?: true
     updatedAt?: true
+    number?: true
+    prozorroLink?: true
     startValue?: true
     currentValue?: true
     signatureDate?: true
@@ -5642,6 +5807,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ContractAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ContractSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ContractMinAggregateInputType
@@ -5672,6 +5849,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ContractCountAggregateInputType | true
+    _avg?: ContractAvgAggregateInputType
+    _sum?: ContractSumAggregateInputType
     _min?: ContractMinAggregateInputType
     _max?: ContractMaxAggregateInputType
   }
@@ -5680,8 +5859,10 @@ export namespace Prisma {
     id: string
     createdAt: Date
     updatedAt: Date
-    startValue: string
-    currentValue: string | null
+    number: string
+    prozorroLink: string | null
+    startValue: Decimal
+    currentValue: Decimal | null
     signatureDate: Date
     terminationDate: Date
     product: string
@@ -5689,6 +5870,8 @@ export namespace Prisma {
     scope: string
     procurementId: string
     _count: ContractCountAggregateOutputType | null
+    _avg: ContractAvgAggregateOutputType | null
+    _sum: ContractSumAggregateOutputType | null
     _min: ContractMinAggregateOutputType | null
     _max: ContractMaxAggregateOutputType | null
   }
@@ -5711,6 +5894,8 @@ export namespace Prisma {
     id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    number?: boolean
+    prozorroLink?: boolean
     startValue?: boolean
     currentValue?: boolean
     signatureDate?: boolean
@@ -5728,6 +5913,8 @@ export namespace Prisma {
     id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    number?: boolean
+    prozorroLink?: boolean
     startValue?: boolean
     currentValue?: boolean
     signatureDate?: boolean
@@ -5756,8 +5943,10 @@ export namespace Prisma {
       id: string
       createdAt: Date
       updatedAt: Date
-      startValue: string
-      currentValue: string | null
+      number: string
+      prozorroLink: string | null
+      startValue: Prisma.Decimal
+      currentValue: Prisma.Decimal | null
       signatureDate: Date
       terminationDate: Date
       product: string
@@ -6164,8 +6353,10 @@ export namespace Prisma {
     readonly id: FieldRef<"Contract", 'String'>
     readonly createdAt: FieldRef<"Contract", 'DateTime'>
     readonly updatedAt: FieldRef<"Contract", 'DateTime'>
-    readonly startValue: FieldRef<"Contract", 'String'>
-    readonly currentValue: FieldRef<"Contract", 'String'>
+    readonly number: FieldRef<"Contract", 'String'>
+    readonly prozorroLink: FieldRef<"Contract", 'String'>
+    readonly startValue: FieldRef<"Contract", 'Decimal'>
+    readonly currentValue: FieldRef<"Contract", 'Decimal'>
     readonly signatureDate: FieldRef<"Contract", 'DateTime'>
     readonly terminationDate: FieldRef<"Contract", 'DateTime'>
     readonly product: FieldRef<"Contract", 'String'>
@@ -6518,6 +6709,7 @@ export namespace Prisma {
   export type ContractAgreementMinAggregateOutputType = {
     id: string | null
     createdAt: Date | null
+    number: string | null
     signatureDate: Date | null
     reason: string | null
     changes: string | null
@@ -6527,6 +6719,7 @@ export namespace Prisma {
   export type ContractAgreementMaxAggregateOutputType = {
     id: string | null
     createdAt: Date | null
+    number: string | null
     signatureDate: Date | null
     reason: string | null
     changes: string | null
@@ -6536,6 +6729,7 @@ export namespace Prisma {
   export type ContractAgreementCountAggregateOutputType = {
     id: number
     createdAt: number
+    number: number
     signatureDate: number
     reason: number
     changes: number
@@ -6547,6 +6741,7 @@ export namespace Prisma {
   export type ContractAgreementMinAggregateInputType = {
     id?: true
     createdAt?: true
+    number?: true
     signatureDate?: true
     reason?: true
     changes?: true
@@ -6556,6 +6751,7 @@ export namespace Prisma {
   export type ContractAgreementMaxAggregateInputType = {
     id?: true
     createdAt?: true
+    number?: true
     signatureDate?: true
     reason?: true
     changes?: true
@@ -6565,6 +6761,7 @@ export namespace Prisma {
   export type ContractAgreementCountAggregateInputType = {
     id?: true
     createdAt?: true
+    number?: true
     signatureDate?: true
     reason?: true
     changes?: true
@@ -6647,6 +6844,7 @@ export namespace Prisma {
   export type ContractAgreementGroupByOutputType = {
     id: string
     createdAt: Date
+    number: string
     signatureDate: Date
     reason: string
     changes: string
@@ -6673,6 +6871,7 @@ export namespace Prisma {
   export type contractAgreementSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     createdAt?: boolean
+    number?: boolean
     signatureDate?: boolean
     reason?: boolean
     changes?: boolean
@@ -6683,6 +6882,7 @@ export namespace Prisma {
   export type contractAgreementSelectScalar = {
     id?: boolean
     createdAt?: boolean
+    number?: boolean
     signatureDate?: boolean
     reason?: boolean
     changes?: boolean
@@ -6703,6 +6903,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       createdAt: Date
+      number: string
       signatureDate: Date
       reason: string
       changes: string
@@ -7104,6 +7305,7 @@ export namespace Prisma {
   interface contractAgreementFieldRefs {
     readonly id: FieldRef<"contractAgreement", 'String'>
     readonly createdAt: FieldRef<"contractAgreement", 'DateTime'>
+    readonly number: FieldRef<"contractAgreement", 'String'>
     readonly signatureDate: FieldRef<"contractAgreement", 'DateTime'>
     readonly reason: FieldRef<"contractAgreement", 'String'>
     readonly changes: FieldRef<"contractAgreement", 'String'>
@@ -7590,9 +7792,9 @@ export namespace Prisma {
     updatedAt: Date
     name: string
     priority: $Enums.Priority | null
-    status: string | null
-    terminationDate: Date | null
-    isCompleted: boolean | null
+    status: string
+    terminationDate: Date
+    isCompleted: boolean
     notes: string | null
     userId: string
     _count: TaskCountAggregateOutputType | null
@@ -7658,9 +7860,9 @@ export namespace Prisma {
       updatedAt: Date
       name: string
       priority: $Enums.Priority | null
-      status: string | null
-      terminationDate: Date | null
-      isCompleted: boolean | null
+      status: string
+      terminationDate: Date
+      isCompleted: boolean
       notes: string | null
       userId: string
     }, ExtArgs["result"]["task"]>
@@ -8401,6 +8603,7 @@ export namespace Prisma {
     updatedAt: 'updatedAt',
     email: 'email',
     name: 'name',
+    surname: 'surname',
     password: 'password',
     position: 'position',
     role: 'role'
@@ -8428,6 +8631,8 @@ export namespace Prisma {
     resultValue: 'resultValue',
     announcedAt: 'announcedAt',
     finishedAt: 'finishedAt',
+    prozorroId: 'prozorroId',
+    prozorroLink: 'prozorroLink',
     product: 'product',
     unit: 'unit',
     scope: 'scope',
@@ -8448,6 +8653,8 @@ export namespace Prisma {
     resultValue: 'resultValue',
     announcedAt: 'announcedAt',
     finishedAt: 'finishedAt',
+    prozorroId: 'prozorroId',
+    prozorroLink: 'prozorroLink',
     product: 'product',
     unit: 'unit',
     scope: 'scope',
@@ -8461,6 +8668,8 @@ export namespace Prisma {
     id: 'id',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
+    number: 'number',
+    prozorroLink: 'prozorroLink',
     startValue: 'startValue',
     currentValue: 'currentValue',
     signatureDate: 'signatureDate',
@@ -8477,6 +8686,7 @@ export namespace Prisma {
   export const ContractAgreementScalarFieldEnum: {
     id: 'id',
     createdAt: 'createdAt',
+    number: 'number',
     signatureDate: 'signatureDate',
     reason: 'reason',
     changes: 'changes',
@@ -8560,6 +8770,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Decimal'
+   */
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal[]'
+   */
+  export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Priority'
    */
   export type EnumPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Priority'>
@@ -8606,9 +8830,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     email?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
+    surname?: StringNullableFilter<"User"> | string | null
     password?: StringFilter<"User"> | string
     position?: StringNullableFilter<"User"> | string | null
-    role?: StringNullableFilter<"User"> | string | null
+    role?: StringFilter<"User"> | string
     tasks?: TaskListRelationFilter
     procurements?: ProcurementListRelationFilter
   }
@@ -8619,9 +8844,10 @@ export namespace Prisma {
     updatedAt?: SortOrder
     email?: SortOrder
     name?: SortOrderInput | SortOrder
+    surname?: SortOrderInput | SortOrder
     password?: SortOrder
     position?: SortOrderInput | SortOrder
-    role?: SortOrderInput | SortOrder
+    role?: SortOrder
     tasks?: TaskOrderByRelationAggregateInput
     procurements?: ProcurementOrderByRelationAggregateInput
   }
@@ -8635,9 +8861,10 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     name?: StringNullableFilter<"User"> | string | null
+    surname?: StringNullableFilter<"User"> | string | null
     password?: StringFilter<"User"> | string
     position?: StringNullableFilter<"User"> | string | null
-    role?: StringNullableFilter<"User"> | string | null
+    role?: StringFilter<"User"> | string
     tasks?: TaskListRelationFilter
     procurements?: ProcurementListRelationFilter
   }, "id" | "email">
@@ -8648,9 +8875,10 @@ export namespace Prisma {
     updatedAt?: SortOrder
     email?: SortOrder
     name?: SortOrderInput | SortOrder
+    surname?: SortOrderInput | SortOrder
     password?: SortOrder
     position?: SortOrderInput | SortOrder
-    role?: SortOrderInput | SortOrder
+    role?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -8665,9 +8893,10 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     email?: StringWithAggregatesFilter<"User"> | string
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    surname?: StringNullableWithAggregatesFilter<"User"> | string | null
     password?: StringWithAggregatesFilter<"User"> | string
     position?: StringNullableWithAggregatesFilter<"User"> | string | null
-    role?: StringNullableWithAggregatesFilter<"User"> | string | null
+    role?: StringWithAggregatesFilter<"User"> | string
   }
 
   export type CustomerWhereInput = {
@@ -8675,7 +8904,7 @@ export namespace Prisma {
     OR?: CustomerWhereInput[]
     NOT?: CustomerWhereInput | CustomerWhereInput[]
     id?: StringFilter<"Customer"> | string
-    name?: StringNullableFilter<"Customer"> | string | null
+    name?: StringFilter<"Customer"> | string
     code?: StringFilter<"Customer"> | string
     email?: StringFilter<"Customer"> | string
     phone?: StringFilter<"Customer"> | string
@@ -8684,7 +8913,7 @@ export namespace Prisma {
 
   export type CustomerOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrderInput | SortOrder
+    name?: SortOrder
     code?: SortOrder
     email?: SortOrder
     phone?: SortOrder
@@ -8696,7 +8925,7 @@ export namespace Prisma {
     AND?: CustomerWhereInput | CustomerWhereInput[]
     OR?: CustomerWhereInput[]
     NOT?: CustomerWhereInput | CustomerWhereInput[]
-    name?: StringNullableFilter<"Customer"> | string | null
+    name?: StringFilter<"Customer"> | string
     code?: StringFilter<"Customer"> | string
     email?: StringFilter<"Customer"> | string
     phone?: StringFilter<"Customer"> | string
@@ -8705,7 +8934,7 @@ export namespace Prisma {
 
   export type CustomerOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrderInput | SortOrder
+    name?: SortOrder
     code?: SortOrder
     email?: SortOrder
     phone?: SortOrder
@@ -8719,7 +8948,7 @@ export namespace Prisma {
     OR?: CustomerScalarWhereWithAggregatesInput[]
     NOT?: CustomerScalarWhereWithAggregatesInput | CustomerScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Customer"> | string
-    name?: StringNullableWithAggregatesFilter<"Customer"> | string | null
+    name?: StringWithAggregatesFilter<"Customer"> | string
     code?: StringWithAggregatesFilter<"Customer"> | string
     email?: StringWithAggregatesFilter<"Customer"> | string
     phone?: StringWithAggregatesFilter<"Customer"> | string
@@ -8732,10 +8961,12 @@ export namespace Prisma {
     id?: StringFilter<"Procurement"> | string
     createdAt?: DateTimeFilter<"Procurement"> | Date | string
     updatedAt?: DateTimeFilter<"Procurement"> | Date | string
-    expectedValue?: StringFilter<"Procurement"> | string
-    resultValue?: StringFilter<"Procurement"> | string
-    announcedAt?: DateTimeFilter<"Procurement"> | Date | string
-    finishedAt?: DateTimeFilter<"Procurement"> | Date | string
+    expectedValue?: DecimalFilter<"Procurement"> | Decimal | DecimalJsLike | number | string
+    resultValue?: DecimalNullableFilter<"Procurement"> | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
+    finishedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
+    prozorroId?: StringNullableFilter<"Procurement"> | string | null
+    prozorroLink?: StringNullableFilter<"Procurement"> | string | null
     product?: StringFilter<"Procurement"> | string
     unit?: StringFilter<"Procurement"> | string
     scope?: StringFilter<"Procurement"> | string
@@ -8744,7 +8975,7 @@ export namespace Prisma {
     userId?: StringFilter<"Procurement"> | string
     jointProcurementid?: StringNullableFilter<"Procurement"> | string | null
     customer?: XOR<CustomerRelationFilter, CustomerWhereInput>
-    user?: XOR<UserRelationFilter, UserWhereInput>
+    manager?: XOR<UserRelationFilter, UserWhereInput>
     jointProcurement?: XOR<JointProcurementNullableRelationFilter, JointProcurementWhereInput> | null
     contracts?: ContractListRelationFilter
   }
@@ -8754,9 +8985,11 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     expectedValue?: SortOrder
-    resultValue?: SortOrder
-    announcedAt?: SortOrder
-    finishedAt?: SortOrder
+    resultValue?: SortOrderInput | SortOrder
+    announcedAt?: SortOrderInput | SortOrder
+    finishedAt?: SortOrderInput | SortOrder
+    prozorroId?: SortOrderInput | SortOrder
+    prozorroLink?: SortOrderInput | SortOrder
     product?: SortOrder
     unit?: SortOrder
     scope?: SortOrder
@@ -8765,7 +8998,7 @@ export namespace Prisma {
     userId?: SortOrder
     jointProcurementid?: SortOrderInput | SortOrder
     customer?: CustomerOrderByWithRelationInput
-    user?: UserOrderByWithRelationInput
+    manager?: UserOrderByWithRelationInput
     jointProcurement?: JointProcurementOrderByWithRelationInput
     contracts?: ContractOrderByRelationAggregateInput
   }
@@ -8777,10 +9010,12 @@ export namespace Prisma {
     NOT?: ProcurementWhereInput | ProcurementWhereInput[]
     createdAt?: DateTimeFilter<"Procurement"> | Date | string
     updatedAt?: DateTimeFilter<"Procurement"> | Date | string
-    expectedValue?: StringFilter<"Procurement"> | string
-    resultValue?: StringFilter<"Procurement"> | string
-    announcedAt?: DateTimeFilter<"Procurement"> | Date | string
-    finishedAt?: DateTimeFilter<"Procurement"> | Date | string
+    expectedValue?: DecimalFilter<"Procurement"> | Decimal | DecimalJsLike | number | string
+    resultValue?: DecimalNullableFilter<"Procurement"> | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
+    finishedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
+    prozorroId?: StringNullableFilter<"Procurement"> | string | null
+    prozorroLink?: StringNullableFilter<"Procurement"> | string | null
     product?: StringFilter<"Procurement"> | string
     unit?: StringFilter<"Procurement"> | string
     scope?: StringFilter<"Procurement"> | string
@@ -8789,7 +9024,7 @@ export namespace Prisma {
     userId?: StringFilter<"Procurement"> | string
     jointProcurementid?: StringNullableFilter<"Procurement"> | string | null
     customer?: XOR<CustomerRelationFilter, CustomerWhereInput>
-    user?: XOR<UserRelationFilter, UserWhereInput>
+    manager?: XOR<UserRelationFilter, UserWhereInput>
     jointProcurement?: XOR<JointProcurementNullableRelationFilter, JointProcurementWhereInput> | null
     contracts?: ContractListRelationFilter
   }, "id">
@@ -8799,9 +9034,11 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     expectedValue?: SortOrder
-    resultValue?: SortOrder
-    announcedAt?: SortOrder
-    finishedAt?: SortOrder
+    resultValue?: SortOrderInput | SortOrder
+    announcedAt?: SortOrderInput | SortOrder
+    finishedAt?: SortOrderInput | SortOrder
+    prozorroId?: SortOrderInput | SortOrder
+    prozorroLink?: SortOrderInput | SortOrder
     product?: SortOrder
     unit?: SortOrder
     scope?: SortOrder
@@ -8810,8 +9047,10 @@ export namespace Prisma {
     userId?: SortOrder
     jointProcurementid?: SortOrderInput | SortOrder
     _count?: ProcurementCountOrderByAggregateInput
+    _avg?: ProcurementAvgOrderByAggregateInput
     _max?: ProcurementMaxOrderByAggregateInput
     _min?: ProcurementMinOrderByAggregateInput
+    _sum?: ProcurementSumOrderByAggregateInput
   }
 
   export type ProcurementScalarWhereWithAggregatesInput = {
@@ -8821,10 +9060,12 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Procurement"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Procurement"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Procurement"> | Date | string
-    expectedValue?: StringWithAggregatesFilter<"Procurement"> | string
-    resultValue?: StringWithAggregatesFilter<"Procurement"> | string
-    announcedAt?: DateTimeWithAggregatesFilter<"Procurement"> | Date | string
-    finishedAt?: DateTimeWithAggregatesFilter<"Procurement"> | Date | string
+    expectedValue?: DecimalWithAggregatesFilter<"Procurement"> | Decimal | DecimalJsLike | number | string
+    resultValue?: DecimalNullableWithAggregatesFilter<"Procurement"> | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: DateTimeNullableWithAggregatesFilter<"Procurement"> | Date | string | null
+    finishedAt?: DateTimeNullableWithAggregatesFilter<"Procurement"> | Date | string | null
+    prozorroId?: StringNullableWithAggregatesFilter<"Procurement"> | string | null
+    prozorroLink?: StringNullableWithAggregatesFilter<"Procurement"> | string | null
     product?: StringWithAggregatesFilter<"Procurement"> | string
     unit?: StringWithAggregatesFilter<"Procurement"> | string
     scope?: StringWithAggregatesFilter<"Procurement"> | string
@@ -8841,10 +9082,12 @@ export namespace Prisma {
     id?: StringFilter<"JointProcurement"> | string
     createdAt?: DateTimeFilter<"JointProcurement"> | Date | string
     updatedAt?: DateTimeFilter<"JointProcurement"> | Date | string
-    expectedValue?: StringFilter<"JointProcurement"> | string
-    resultValue?: StringFilter<"JointProcurement"> | string
-    announcedAt?: DateTimeFilter<"JointProcurement"> | Date | string
-    finishedAt?: DateTimeFilter<"JointProcurement"> | Date | string
+    expectedValue?: DecimalFilter<"JointProcurement"> | Decimal | DecimalJsLike | number | string
+    resultValue?: DecimalNullableFilter<"JointProcurement"> | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: DateTimeNullableFilter<"JointProcurement"> | Date | string | null
+    finishedAt?: DateTimeNullableFilter<"JointProcurement"> | Date | string | null
+    prozorroId?: StringNullableFilter<"JointProcurement"> | string | null
+    prozorroLink?: StringNullableFilter<"JointProcurement"> | string | null
     product?: StringFilter<"JointProcurement"> | string
     unit?: StringFilter<"JointProcurement"> | string
     scope?: StringFilter<"JointProcurement"> | string
@@ -8857,9 +9100,11 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     expectedValue?: SortOrder
-    resultValue?: SortOrder
-    announcedAt?: SortOrder
-    finishedAt?: SortOrder
+    resultValue?: SortOrderInput | SortOrder
+    announcedAt?: SortOrderInput | SortOrder
+    finishedAt?: SortOrderInput | SortOrder
+    prozorroId?: SortOrderInput | SortOrder
+    prozorroLink?: SortOrderInput | SortOrder
     product?: SortOrder
     unit?: SortOrder
     scope?: SortOrder
@@ -8874,10 +9119,12 @@ export namespace Prisma {
     NOT?: JointProcurementWhereInput | JointProcurementWhereInput[]
     createdAt?: DateTimeFilter<"JointProcurement"> | Date | string
     updatedAt?: DateTimeFilter<"JointProcurement"> | Date | string
-    expectedValue?: StringFilter<"JointProcurement"> | string
-    resultValue?: StringFilter<"JointProcurement"> | string
-    announcedAt?: DateTimeFilter<"JointProcurement"> | Date | string
-    finishedAt?: DateTimeFilter<"JointProcurement"> | Date | string
+    expectedValue?: DecimalFilter<"JointProcurement"> | Decimal | DecimalJsLike | number | string
+    resultValue?: DecimalNullableFilter<"JointProcurement"> | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: DateTimeNullableFilter<"JointProcurement"> | Date | string | null
+    finishedAt?: DateTimeNullableFilter<"JointProcurement"> | Date | string | null
+    prozorroId?: StringNullableFilter<"JointProcurement"> | string | null
+    prozorroLink?: StringNullableFilter<"JointProcurement"> | string | null
     product?: StringFilter<"JointProcurement"> | string
     unit?: StringFilter<"JointProcurement"> | string
     scope?: StringFilter<"JointProcurement"> | string
@@ -8890,16 +9137,20 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     expectedValue?: SortOrder
-    resultValue?: SortOrder
-    announcedAt?: SortOrder
-    finishedAt?: SortOrder
+    resultValue?: SortOrderInput | SortOrder
+    announcedAt?: SortOrderInput | SortOrder
+    finishedAt?: SortOrderInput | SortOrder
+    prozorroId?: SortOrderInput | SortOrder
+    prozorroLink?: SortOrderInput | SortOrder
     product?: SortOrder
     unit?: SortOrder
     scope?: SortOrder
     status?: SortOrder
     _count?: JointProcurementCountOrderByAggregateInput
+    _avg?: JointProcurementAvgOrderByAggregateInput
     _max?: JointProcurementMaxOrderByAggregateInput
     _min?: JointProcurementMinOrderByAggregateInput
+    _sum?: JointProcurementSumOrderByAggregateInput
   }
 
   export type JointProcurementScalarWhereWithAggregatesInput = {
@@ -8909,10 +9160,12 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"JointProcurement"> | string
     createdAt?: DateTimeWithAggregatesFilter<"JointProcurement"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"JointProcurement"> | Date | string
-    expectedValue?: StringWithAggregatesFilter<"JointProcurement"> | string
-    resultValue?: StringWithAggregatesFilter<"JointProcurement"> | string
-    announcedAt?: DateTimeWithAggregatesFilter<"JointProcurement"> | Date | string
-    finishedAt?: DateTimeWithAggregatesFilter<"JointProcurement"> | Date | string
+    expectedValue?: DecimalWithAggregatesFilter<"JointProcurement"> | Decimal | DecimalJsLike | number | string
+    resultValue?: DecimalNullableWithAggregatesFilter<"JointProcurement"> | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: DateTimeNullableWithAggregatesFilter<"JointProcurement"> | Date | string | null
+    finishedAt?: DateTimeNullableWithAggregatesFilter<"JointProcurement"> | Date | string | null
+    prozorroId?: StringNullableWithAggregatesFilter<"JointProcurement"> | string | null
+    prozorroLink?: StringNullableWithAggregatesFilter<"JointProcurement"> | string | null
     product?: StringWithAggregatesFilter<"JointProcurement"> | string
     unit?: StringWithAggregatesFilter<"JointProcurement"> | string
     scope?: StringWithAggregatesFilter<"JointProcurement"> | string
@@ -8926,8 +9179,10 @@ export namespace Prisma {
     id?: StringFilter<"Contract"> | string
     createdAt?: DateTimeFilter<"Contract"> | Date | string
     updatedAt?: DateTimeFilter<"Contract"> | Date | string
-    startValue?: StringFilter<"Contract"> | string
-    currentValue?: StringNullableFilter<"Contract"> | string | null
+    number?: StringFilter<"Contract"> | string
+    prozorroLink?: StringNullableFilter<"Contract"> | string | null
+    startValue?: DecimalFilter<"Contract"> | Decimal | DecimalJsLike | number | string
+    currentValue?: DecimalNullableFilter<"Contract"> | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeFilter<"Contract"> | Date | string
     terminationDate?: DateTimeFilter<"Contract"> | Date | string
     product?: StringFilter<"Contract"> | string
@@ -8942,6 +9197,8 @@ export namespace Prisma {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    number?: SortOrder
+    prozorroLink?: SortOrderInput | SortOrder
     startValue?: SortOrder
     currentValue?: SortOrderInput | SortOrder
     signatureDate?: SortOrder
@@ -8961,8 +9218,10 @@ export namespace Prisma {
     NOT?: ContractWhereInput | ContractWhereInput[]
     createdAt?: DateTimeFilter<"Contract"> | Date | string
     updatedAt?: DateTimeFilter<"Contract"> | Date | string
-    startValue?: StringFilter<"Contract"> | string
-    currentValue?: StringNullableFilter<"Contract"> | string | null
+    number?: StringFilter<"Contract"> | string
+    prozorroLink?: StringNullableFilter<"Contract"> | string | null
+    startValue?: DecimalFilter<"Contract"> | Decimal | DecimalJsLike | number | string
+    currentValue?: DecimalNullableFilter<"Contract"> | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeFilter<"Contract"> | Date | string
     terminationDate?: DateTimeFilter<"Contract"> | Date | string
     product?: StringFilter<"Contract"> | string
@@ -8977,6 +9236,8 @@ export namespace Prisma {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    number?: SortOrder
+    prozorroLink?: SortOrderInput | SortOrder
     startValue?: SortOrder
     currentValue?: SortOrderInput | SortOrder
     signatureDate?: SortOrder
@@ -8986,8 +9247,10 @@ export namespace Prisma {
     scope?: SortOrder
     procurementId?: SortOrder
     _count?: ContractCountOrderByAggregateInput
+    _avg?: ContractAvgOrderByAggregateInput
     _max?: ContractMaxOrderByAggregateInput
     _min?: ContractMinOrderByAggregateInput
+    _sum?: ContractSumOrderByAggregateInput
   }
 
   export type ContractScalarWhereWithAggregatesInput = {
@@ -8997,8 +9260,10 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Contract"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Contract"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Contract"> | Date | string
-    startValue?: StringWithAggregatesFilter<"Contract"> | string
-    currentValue?: StringNullableWithAggregatesFilter<"Contract"> | string | null
+    number?: StringWithAggregatesFilter<"Contract"> | string
+    prozorroLink?: StringNullableWithAggregatesFilter<"Contract"> | string | null
+    startValue?: DecimalWithAggregatesFilter<"Contract"> | Decimal | DecimalJsLike | number | string
+    currentValue?: DecimalNullableWithAggregatesFilter<"Contract"> | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeWithAggregatesFilter<"Contract"> | Date | string
     terminationDate?: DateTimeWithAggregatesFilter<"Contract"> | Date | string
     product?: StringWithAggregatesFilter<"Contract"> | string
@@ -9013,6 +9278,7 @@ export namespace Prisma {
     NOT?: contractAgreementWhereInput | contractAgreementWhereInput[]
     id?: StringFilter<"contractAgreement"> | string
     createdAt?: DateTimeFilter<"contractAgreement"> | Date | string
+    number?: StringFilter<"contractAgreement"> | string
     signatureDate?: DateTimeFilter<"contractAgreement"> | Date | string
     reason?: StringFilter<"contractAgreement"> | string
     changes?: StringFilter<"contractAgreement"> | string
@@ -9023,6 +9289,7 @@ export namespace Prisma {
   export type contractAgreementOrderByWithRelationInput = {
     id?: SortOrder
     createdAt?: SortOrder
+    number?: SortOrder
     signatureDate?: SortOrder
     reason?: SortOrder
     changes?: SortOrder
@@ -9036,6 +9303,7 @@ export namespace Prisma {
     OR?: contractAgreementWhereInput[]
     NOT?: contractAgreementWhereInput | contractAgreementWhereInput[]
     createdAt?: DateTimeFilter<"contractAgreement"> | Date | string
+    number?: StringFilter<"contractAgreement"> | string
     signatureDate?: DateTimeFilter<"contractAgreement"> | Date | string
     reason?: StringFilter<"contractAgreement"> | string
     changes?: StringFilter<"contractAgreement"> | string
@@ -9046,6 +9314,7 @@ export namespace Prisma {
   export type contractAgreementOrderByWithAggregationInput = {
     id?: SortOrder
     createdAt?: SortOrder
+    number?: SortOrder
     signatureDate?: SortOrder
     reason?: SortOrder
     changes?: SortOrder
@@ -9061,6 +9330,7 @@ export namespace Prisma {
     NOT?: contractAgreementScalarWhereWithAggregatesInput | contractAgreementScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"contractAgreement"> | string
     createdAt?: DateTimeWithAggregatesFilter<"contractAgreement"> | Date | string
+    number?: StringWithAggregatesFilter<"contractAgreement"> | string
     signatureDate?: DateTimeWithAggregatesFilter<"contractAgreement"> | Date | string
     reason?: StringWithAggregatesFilter<"contractAgreement"> | string
     changes?: StringWithAggregatesFilter<"contractAgreement"> | string
@@ -9076,9 +9346,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Task"> | Date | string
     name?: StringFilter<"Task"> | string
     priority?: EnumPriorityNullableFilter<"Task"> | $Enums.Priority | null
-    status?: StringNullableFilter<"Task"> | string | null
-    terminationDate?: DateTimeNullableFilter<"Task"> | Date | string | null
-    isCompleted?: BoolNullableFilter<"Task"> | boolean | null
+    status?: StringFilter<"Task"> | string
+    terminationDate?: DateTimeFilter<"Task"> | Date | string
+    isCompleted?: BoolFilter<"Task"> | boolean
     notes?: StringNullableFilter<"Task"> | string | null
     userId?: StringFilter<"Task"> | string
     user?: XOR<UserRelationFilter, UserWhereInput>
@@ -9090,9 +9360,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
     name?: SortOrder
     priority?: SortOrderInput | SortOrder
-    status?: SortOrderInput | SortOrder
-    terminationDate?: SortOrderInput | SortOrder
-    isCompleted?: SortOrderInput | SortOrder
+    status?: SortOrder
+    terminationDate?: SortOrder
+    isCompleted?: SortOrder
     notes?: SortOrderInput | SortOrder
     userId?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -9107,9 +9377,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Task"> | Date | string
     name?: StringFilter<"Task"> | string
     priority?: EnumPriorityNullableFilter<"Task"> | $Enums.Priority | null
-    status?: StringNullableFilter<"Task"> | string | null
-    terminationDate?: DateTimeNullableFilter<"Task"> | Date | string | null
-    isCompleted?: BoolNullableFilter<"Task"> | boolean | null
+    status?: StringFilter<"Task"> | string
+    terminationDate?: DateTimeFilter<"Task"> | Date | string
+    isCompleted?: BoolFilter<"Task"> | boolean
     notes?: StringNullableFilter<"Task"> | string | null
     userId?: StringFilter<"Task"> | string
     user?: XOR<UserRelationFilter, UserWhereInput>
@@ -9121,9 +9391,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
     name?: SortOrder
     priority?: SortOrderInput | SortOrder
-    status?: SortOrderInput | SortOrder
-    terminationDate?: SortOrderInput | SortOrder
-    isCompleted?: SortOrderInput | SortOrder
+    status?: SortOrder
+    terminationDate?: SortOrder
+    isCompleted?: SortOrder
     notes?: SortOrderInput | SortOrder
     userId?: SortOrder
     _count?: TaskCountOrderByAggregateInput
@@ -9140,9 +9410,9 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
     name?: StringWithAggregatesFilter<"Task"> | string
     priority?: EnumPriorityNullableWithAggregatesFilter<"Task"> | $Enums.Priority | null
-    status?: StringNullableWithAggregatesFilter<"Task"> | string | null
-    terminationDate?: DateTimeNullableWithAggregatesFilter<"Task"> | Date | string | null
-    isCompleted?: BoolNullableWithAggregatesFilter<"Task"> | boolean | null
+    status?: StringWithAggregatesFilter<"Task"> | string
+    terminationDate?: DateTimeWithAggregatesFilter<"Task"> | Date | string
+    isCompleted?: BoolWithAggregatesFilter<"Task"> | boolean
     notes?: StringNullableWithAggregatesFilter<"Task"> | string | null
     userId?: StringWithAggregatesFilter<"Task"> | string
   }
@@ -9153,11 +9423,12 @@ export namespace Prisma {
     updatedAt?: Date | string
     email: string
     name?: string | null
+    surname?: string | null
     password: string
     position?: string | null
-    role?: string | null
+    role?: string
     tasks?: TaskCreateNestedManyWithoutUserInput
-    procurements?: ProcurementCreateNestedManyWithoutUserInput
+    procurements?: ProcurementCreateNestedManyWithoutManagerInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -9166,11 +9437,12 @@ export namespace Prisma {
     updatedAt?: Date | string
     email: string
     name?: string | null
+    surname?: string | null
     password: string
     position?: string | null
-    role?: string | null
+    role?: string
     tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
-    procurements?: ProcurementUncheckedCreateNestedManyWithoutUserInput
+    procurements?: ProcurementUncheckedCreateNestedManyWithoutManagerInput
   }
 
   export type UserUpdateInput = {
@@ -9179,11 +9451,12 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    surname?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     position?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
     tasks?: TaskUpdateManyWithoutUserNestedInput
-    procurements?: ProcurementUpdateManyWithoutUserNestedInput
+    procurements?: ProcurementUpdateManyWithoutManagerNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -9192,11 +9465,12 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    surname?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     position?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
     tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
-    procurements?: ProcurementUncheckedUpdateManyWithoutUserNestedInput
+    procurements?: ProcurementUncheckedUpdateManyWithoutManagerNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -9205,9 +9479,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     email: string
     name?: string | null
+    surname?: string | null
     password: string
     position?: string | null
-    role?: string | null
+    role?: string
   }
 
   export type UserUpdateManyMutationInput = {
@@ -9216,9 +9491,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    surname?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     position?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -9227,14 +9503,15 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    surname?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     position?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
   }
 
   export type CustomerCreateInput = {
     id?: string
-    name?: string | null
+    name: string
     code: string
     email: string
     phone: string
@@ -9243,7 +9520,7 @@ export namespace Prisma {
 
   export type CustomerUncheckedCreateInput = {
     id?: string
-    name?: string | null
+    name: string
     code: string
     email: string
     phone: string
@@ -9252,7 +9529,7 @@ export namespace Prisma {
 
   export type CustomerUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -9261,7 +9538,7 @@ export namespace Prisma {
 
   export type CustomerUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -9270,7 +9547,7 @@ export namespace Prisma {
 
   export type CustomerCreateManyInput = {
     id?: string
-    name?: string | null
+    name: string
     code: string
     email: string
     phone: string
@@ -9278,7 +9555,7 @@ export namespace Prisma {
 
   export type CustomerUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -9286,7 +9563,7 @@ export namespace Prisma {
 
   export type CustomerUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -9296,16 +9573,18 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
     status?: string
     customer: CustomerCreateNestedOneWithoutProcurementsInput
-    user: UserCreateNestedOneWithoutProcurementsInput
+    manager: UserCreateNestedOneWithoutProcurementsInput
     jointProcurement?: JointProcurementCreateNestedOneWithoutProcurementsInput
     contracts?: ContractCreateNestedManyWithoutProcurementInput
   }
@@ -9314,10 +9593,12 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
@@ -9332,16 +9613,18 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     customer?: CustomerUpdateOneRequiredWithoutProcurementsNestedInput
-    user?: UserUpdateOneRequiredWithoutProcurementsNestedInput
+    manager?: UserUpdateOneRequiredWithoutProcurementsNestedInput
     jointProcurement?: JointProcurementUpdateOneWithoutProcurementsNestedInput
     contracts?: ContractUpdateManyWithoutProcurementNestedInput
   }
@@ -9350,10 +9633,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
@@ -9368,10 +9653,12 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
@@ -9385,10 +9672,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
@@ -9399,10 +9688,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
@@ -9416,10 +9707,12 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
@@ -9431,10 +9724,12 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
@@ -9446,10 +9741,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
@@ -9461,10 +9758,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
@@ -9476,10 +9775,12 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
@@ -9490,10 +9791,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
@@ -9504,10 +9807,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
@@ -9518,8 +9823,10 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    startValue: string
-    currentValue?: string | null
+    number: string
+    prozorroLink?: string | null
+    startValue: Decimal | DecimalJsLike | number | string
+    currentValue?: Decimal | DecimalJsLike | number | string | null
     signatureDate: Date | string
     terminationDate: Date | string
     product: string
@@ -9533,8 +9840,10 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    startValue: string
-    currentValue?: string | null
+    number: string
+    prozorroLink?: string | null
+    startValue: Decimal | DecimalJsLike | number | string
+    currentValue?: Decimal | DecimalJsLike | number | string | null
     signatureDate: Date | string
     terminationDate: Date | string
     product: string
@@ -9548,8 +9857,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startValue?: StringFieldUpdateOperationsInput | string
-    currentValue?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
     terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     product?: StringFieldUpdateOperationsInput | string
@@ -9563,8 +9874,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startValue?: StringFieldUpdateOperationsInput | string
-    currentValue?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
     terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     product?: StringFieldUpdateOperationsInput | string
@@ -9578,8 +9891,10 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    startValue: string
-    currentValue?: string | null
+    number: string
+    prozorroLink?: string | null
+    startValue: Decimal | DecimalJsLike | number | string
+    currentValue?: Decimal | DecimalJsLike | number | string | null
     signatureDate: Date | string
     terminationDate: Date | string
     product: string
@@ -9592,8 +9907,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startValue?: StringFieldUpdateOperationsInput | string
-    currentValue?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
     terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     product?: StringFieldUpdateOperationsInput | string
@@ -9605,8 +9922,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startValue?: StringFieldUpdateOperationsInput | string
-    currentValue?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
     terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     product?: StringFieldUpdateOperationsInput | string
@@ -9618,6 +9937,7 @@ export namespace Prisma {
   export type contractAgreementCreateInput = {
     id?: string
     createdAt?: Date | string
+    number: string
     signatureDate: Date | string
     reason: string
     changes: string
@@ -9627,6 +9947,7 @@ export namespace Prisma {
   export type contractAgreementUncheckedCreateInput = {
     id?: string
     createdAt?: Date | string
+    number: string
     signatureDate: Date | string
     reason: string
     changes: string
@@ -9636,6 +9957,7 @@ export namespace Prisma {
   export type contractAgreementUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    number?: StringFieldUpdateOperationsInput | string
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
     reason?: StringFieldUpdateOperationsInput | string
     changes?: StringFieldUpdateOperationsInput | string
@@ -9645,6 +9967,7 @@ export namespace Prisma {
   export type contractAgreementUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    number?: StringFieldUpdateOperationsInput | string
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
     reason?: StringFieldUpdateOperationsInput | string
     changes?: StringFieldUpdateOperationsInput | string
@@ -9654,6 +9977,7 @@ export namespace Prisma {
   export type contractAgreementCreateManyInput = {
     id?: string
     createdAt?: Date | string
+    number: string
     signatureDate: Date | string
     reason: string
     changes: string
@@ -9663,6 +9987,7 @@ export namespace Prisma {
   export type contractAgreementUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    number?: StringFieldUpdateOperationsInput | string
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
     reason?: StringFieldUpdateOperationsInput | string
     changes?: StringFieldUpdateOperationsInput | string
@@ -9671,6 +9996,7 @@ export namespace Prisma {
   export type contractAgreementUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    number?: StringFieldUpdateOperationsInput | string
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
     reason?: StringFieldUpdateOperationsInput | string
     changes?: StringFieldUpdateOperationsInput | string
@@ -9683,9 +10009,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     priority?: $Enums.Priority | null
-    status?: string | null
-    terminationDate?: Date | string | null
-    isCompleted?: boolean | null
+    status?: string
+    terminationDate: Date | string
+    isCompleted?: boolean
     notes?: string | null
     user: UserCreateNestedOneWithoutTasksInput
   }
@@ -9696,9 +10022,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     priority?: $Enums.Priority | null
-    status?: string | null
-    terminationDate?: Date | string | null
-    isCompleted?: boolean | null
+    status?: string
+    terminationDate: Date | string
+    isCompleted?: boolean
     notes?: string | null
     userId: string
   }
@@ -9709,9 +10035,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    terminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isCompleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: StringFieldUpdateOperationsInput | string
+    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutTasksNestedInput
   }
@@ -9722,9 +10048,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    terminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isCompleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: StringFieldUpdateOperationsInput | string
+    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
   }
@@ -9735,9 +10061,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     priority?: $Enums.Priority | null
-    status?: string | null
-    terminationDate?: Date | string | null
-    isCompleted?: boolean | null
+    status?: string
+    terminationDate: Date | string
+    isCompleted?: boolean
     notes?: string | null
     userId: string
   }
@@ -9748,9 +10074,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    terminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isCompleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: StringFieldUpdateOperationsInput | string
+    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
     notes?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -9760,9 +10086,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    terminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isCompleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: StringFieldUpdateOperationsInput | string
+    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
   }
@@ -9839,6 +10165,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    surname?: SortOrder
     password?: SortOrder
     position?: SortOrder
     role?: SortOrder
@@ -9850,6 +10177,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    surname?: SortOrder
     password?: SortOrder
     position?: SortOrder
     role?: SortOrder
@@ -9861,6 +10189,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    surname?: SortOrder
     password?: SortOrder
     position?: SortOrder
     role?: SortOrder
@@ -9940,6 +10269,39 @@ export namespace Prisma {
     phone?: SortOrder
   }
 
+  export type DecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type DecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type CustomerRelationFilter = {
     is?: CustomerWhereInput
     isNot?: CustomerWhereInput
@@ -9973,6 +10335,8 @@ export namespace Prisma {
     resultValue?: SortOrder
     announcedAt?: SortOrder
     finishedAt?: SortOrder
+    prozorroId?: SortOrder
+    prozorroLink?: SortOrder
     product?: SortOrder
     unit?: SortOrder
     scope?: SortOrder
@@ -9980,6 +10344,11 @@ export namespace Prisma {
     customerId?: SortOrder
     userId?: SortOrder
     jointProcurementid?: SortOrder
+  }
+
+  export type ProcurementAvgOrderByAggregateInput = {
+    expectedValue?: SortOrder
+    resultValue?: SortOrder
   }
 
   export type ProcurementMaxOrderByAggregateInput = {
@@ -9990,6 +10359,8 @@ export namespace Prisma {
     resultValue?: SortOrder
     announcedAt?: SortOrder
     finishedAt?: SortOrder
+    prozorroId?: SortOrder
+    prozorroLink?: SortOrder
     product?: SortOrder
     unit?: SortOrder
     scope?: SortOrder
@@ -10007,6 +10378,8 @@ export namespace Prisma {
     resultValue?: SortOrder
     announcedAt?: SortOrder
     finishedAt?: SortOrder
+    prozorroId?: SortOrder
+    prozorroLink?: SortOrder
     product?: SortOrder
     unit?: SortOrder
     scope?: SortOrder
@@ -10014,6 +10387,57 @@ export namespace Prisma {
     customerId?: SortOrder
     userId?: SortOrder
     jointProcurementid?: SortOrder
+  }
+
+  export type ProcurementSumOrderByAggregateInput = {
+    expectedValue?: SortOrder
+    resultValue?: SortOrder
+  }
+
+  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type JointProcurementCountOrderByAggregateInput = {
@@ -10024,10 +10448,17 @@ export namespace Prisma {
     resultValue?: SortOrder
     announcedAt?: SortOrder
     finishedAt?: SortOrder
+    prozorroId?: SortOrder
+    prozorroLink?: SortOrder
     product?: SortOrder
     unit?: SortOrder
     scope?: SortOrder
     status?: SortOrder
+  }
+
+  export type JointProcurementAvgOrderByAggregateInput = {
+    expectedValue?: SortOrder
+    resultValue?: SortOrder
   }
 
   export type JointProcurementMaxOrderByAggregateInput = {
@@ -10038,6 +10469,8 @@ export namespace Prisma {
     resultValue?: SortOrder
     announcedAt?: SortOrder
     finishedAt?: SortOrder
+    prozorroId?: SortOrder
+    prozorroLink?: SortOrder
     product?: SortOrder
     unit?: SortOrder
     scope?: SortOrder
@@ -10052,10 +10485,17 @@ export namespace Prisma {
     resultValue?: SortOrder
     announcedAt?: SortOrder
     finishedAt?: SortOrder
+    prozorroId?: SortOrder
+    prozorroLink?: SortOrder
     product?: SortOrder
     unit?: SortOrder
     scope?: SortOrder
     status?: SortOrder
+  }
+
+  export type JointProcurementSumOrderByAggregateInput = {
+    expectedValue?: SortOrder
+    resultValue?: SortOrder
   }
 
   export type ProcurementRelationFilter = {
@@ -10077,6 +10517,8 @@ export namespace Prisma {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    number?: SortOrder
+    prozorroLink?: SortOrder
     startValue?: SortOrder
     currentValue?: SortOrder
     signatureDate?: SortOrder
@@ -10087,10 +10529,17 @@ export namespace Prisma {
     procurementId?: SortOrder
   }
 
+  export type ContractAvgOrderByAggregateInput = {
+    startValue?: SortOrder
+    currentValue?: SortOrder
+  }
+
   export type ContractMaxOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    number?: SortOrder
+    prozorroLink?: SortOrder
     startValue?: SortOrder
     currentValue?: SortOrder
     signatureDate?: SortOrder
@@ -10105,6 +10554,8 @@ export namespace Prisma {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    number?: SortOrder
+    prozorroLink?: SortOrder
     startValue?: SortOrder
     currentValue?: SortOrder
     signatureDate?: SortOrder
@@ -10115,6 +10566,11 @@ export namespace Prisma {
     procurementId?: SortOrder
   }
 
+  export type ContractSumOrderByAggregateInput = {
+    startValue?: SortOrder
+    currentValue?: SortOrder
+  }
+
   export type ContractRelationFilter = {
     is?: ContractWhereInput
     isNot?: ContractWhereInput
@@ -10123,6 +10579,7 @@ export namespace Prisma {
   export type contractAgreementCountOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
+    number?: SortOrder
     signatureDate?: SortOrder
     reason?: SortOrder
     changes?: SortOrder
@@ -10132,6 +10589,7 @@ export namespace Prisma {
   export type contractAgreementMaxOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
+    number?: SortOrder
     signatureDate?: SortOrder
     reason?: SortOrder
     changes?: SortOrder
@@ -10141,6 +10599,7 @@ export namespace Prisma {
   export type contractAgreementMinOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
+    number?: SortOrder
     signatureDate?: SortOrder
     reason?: SortOrder
     changes?: SortOrder
@@ -10154,20 +10613,9 @@ export namespace Prisma {
     not?: NestedEnumPriorityNullableFilter<$PrismaModel> | $Enums.Priority | null
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type BoolNullableFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type TaskCountOrderByAggregateInput = {
@@ -10219,26 +10667,12 @@ export namespace Prisma {
     _max?: NestedEnumPriorityNullableFilter<$PrismaModel>
   }
 
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedBoolNullableFilter<$PrismaModel>
-    _max?: NestedBoolNullableFilter<$PrismaModel>
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type TaskCreateNestedManyWithoutUserInput = {
@@ -10248,10 +10682,10 @@ export namespace Prisma {
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
-  export type ProcurementCreateNestedManyWithoutUserInput = {
-    create?: XOR<ProcurementCreateWithoutUserInput, ProcurementUncheckedCreateWithoutUserInput> | ProcurementCreateWithoutUserInput[] | ProcurementUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ProcurementCreateOrConnectWithoutUserInput | ProcurementCreateOrConnectWithoutUserInput[]
-    createMany?: ProcurementCreateManyUserInputEnvelope
+  export type ProcurementCreateNestedManyWithoutManagerInput = {
+    create?: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput> | ProcurementCreateWithoutManagerInput[] | ProcurementUncheckedCreateWithoutManagerInput[]
+    connectOrCreate?: ProcurementCreateOrConnectWithoutManagerInput | ProcurementCreateOrConnectWithoutManagerInput[]
+    createMany?: ProcurementCreateManyManagerInputEnvelope
     connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
   }
 
@@ -10262,10 +10696,10 @@ export namespace Prisma {
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
-  export type ProcurementUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<ProcurementCreateWithoutUserInput, ProcurementUncheckedCreateWithoutUserInput> | ProcurementCreateWithoutUserInput[] | ProcurementUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ProcurementCreateOrConnectWithoutUserInput | ProcurementCreateOrConnectWithoutUserInput[]
-    createMany?: ProcurementCreateManyUserInputEnvelope
+  export type ProcurementUncheckedCreateNestedManyWithoutManagerInput = {
+    create?: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput> | ProcurementCreateWithoutManagerInput[] | ProcurementUncheckedCreateWithoutManagerInput[]
+    connectOrCreate?: ProcurementCreateOrConnectWithoutManagerInput | ProcurementCreateOrConnectWithoutManagerInput[]
+    createMany?: ProcurementCreateManyManagerInputEnvelope
     connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
   }
 
@@ -10295,17 +10729,17 @@ export namespace Prisma {
     deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
-  export type ProcurementUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ProcurementCreateWithoutUserInput, ProcurementUncheckedCreateWithoutUserInput> | ProcurementCreateWithoutUserInput[] | ProcurementUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ProcurementCreateOrConnectWithoutUserInput | ProcurementCreateOrConnectWithoutUserInput[]
-    upsert?: ProcurementUpsertWithWhereUniqueWithoutUserInput | ProcurementUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ProcurementCreateManyUserInputEnvelope
+  export type ProcurementUpdateManyWithoutManagerNestedInput = {
+    create?: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput> | ProcurementCreateWithoutManagerInput[] | ProcurementUncheckedCreateWithoutManagerInput[]
+    connectOrCreate?: ProcurementCreateOrConnectWithoutManagerInput | ProcurementCreateOrConnectWithoutManagerInput[]
+    upsert?: ProcurementUpsertWithWhereUniqueWithoutManagerInput | ProcurementUpsertWithWhereUniqueWithoutManagerInput[]
+    createMany?: ProcurementCreateManyManagerInputEnvelope
     set?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
     disconnect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
     delete?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
     connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    update?: ProcurementUpdateWithWhereUniqueWithoutUserInput | ProcurementUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ProcurementUpdateManyWithWhereWithoutUserInput | ProcurementUpdateManyWithWhereWithoutUserInput[]
+    update?: ProcurementUpdateWithWhereUniqueWithoutManagerInput | ProcurementUpdateWithWhereUniqueWithoutManagerInput[]
+    updateMany?: ProcurementUpdateManyWithWhereWithoutManagerInput | ProcurementUpdateManyWithWhereWithoutManagerInput[]
     deleteMany?: ProcurementScalarWhereInput | ProcurementScalarWhereInput[]
   }
 
@@ -10323,17 +10757,17 @@ export namespace Prisma {
     deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
-  export type ProcurementUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ProcurementCreateWithoutUserInput, ProcurementUncheckedCreateWithoutUserInput> | ProcurementCreateWithoutUserInput[] | ProcurementUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ProcurementCreateOrConnectWithoutUserInput | ProcurementCreateOrConnectWithoutUserInput[]
-    upsert?: ProcurementUpsertWithWhereUniqueWithoutUserInput | ProcurementUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ProcurementCreateManyUserInputEnvelope
+  export type ProcurementUncheckedUpdateManyWithoutManagerNestedInput = {
+    create?: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput> | ProcurementCreateWithoutManagerInput[] | ProcurementUncheckedCreateWithoutManagerInput[]
+    connectOrCreate?: ProcurementCreateOrConnectWithoutManagerInput | ProcurementCreateOrConnectWithoutManagerInput[]
+    upsert?: ProcurementUpsertWithWhereUniqueWithoutManagerInput | ProcurementUpsertWithWhereUniqueWithoutManagerInput[]
+    createMany?: ProcurementCreateManyManagerInputEnvelope
     set?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
     disconnect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
     delete?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
     connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    update?: ProcurementUpdateWithWhereUniqueWithoutUserInput | ProcurementUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ProcurementUpdateManyWithWhereWithoutUserInput | ProcurementUpdateManyWithWhereWithoutUserInput[]
+    update?: ProcurementUpdateWithWhereUniqueWithoutManagerInput | ProcurementUpdateWithWhereUniqueWithoutManagerInput[]
+    updateMany?: ProcurementUpdateManyWithWhereWithoutManagerInput | ProcurementUpdateManyWithWhereWithoutManagerInput[]
     deleteMany?: ProcurementScalarWhereInput | ProcurementScalarWhereInput[]
   }
 
@@ -10409,6 +10843,26 @@ export namespace Prisma {
     connectOrCreate?: ContractCreateOrConnectWithoutProcurementInput | ContractCreateOrConnectWithoutProcurementInput[]
     createMany?: ContractCreateManyProcurementInputEnvelope
     connect?: ContractWhereUniqueInput | ContractWhereUniqueInput[]
+  }
+
+  export type DecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type NullableDecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string | null
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type CustomerUpdateOneRequiredWithoutProcurementsNestedInput = {
@@ -10587,12 +11041,8 @@ export namespace Prisma {
     set?: $Enums.Priority | null
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
-  }
-
-  export type NullableBoolFieldUpdateOperationsInput = {
-    set?: boolean | null
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type UserUpdateOneRequiredWithoutTasksNestedInput = {
@@ -10712,11 +11162,26 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedEnumPriorityNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumPriorityNullableFilter<$PrismaModel> | $Enums.Priority | null
+  export type NestedDecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -10730,19 +11195,36 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type NestedBoolNullableFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
   }
 
-  export type NestedEnumPriorityNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumPriorityNullableWithAggregatesFilter<$PrismaModel> | $Enums.Priority | null
+  export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
     _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumPriorityNullableFilter<$PrismaModel>
-    _max?: NestedEnumPriorityNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -10759,12 +11241,34 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+  export type NestedEnumPriorityNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumPriorityNullableFilter<$PrismaModel> | $Enums.Priority | null
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedEnumPriorityNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumPriorityNullableWithAggregatesFilter<$PrismaModel> | $Enums.Priority | null
     _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedBoolNullableFilter<$PrismaModel>
-    _max?: NestedBoolNullableFilter<$PrismaModel>
+    _min?: NestedEnumPriorityNullableFilter<$PrismaModel>
+    _max?: NestedEnumPriorityNullableFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type TaskCreateWithoutUserInput = {
@@ -10773,9 +11277,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     priority?: $Enums.Priority | null
-    status?: string | null
-    terminationDate?: Date | string | null
-    isCompleted?: boolean | null
+    status?: string
+    terminationDate: Date | string
+    isCompleted?: boolean
     notes?: string | null
   }
 
@@ -10785,9 +11289,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     priority?: $Enums.Priority | null
-    status?: string | null
-    terminationDate?: Date | string | null
-    isCompleted?: boolean | null
+    status?: string
+    terminationDate: Date | string
+    isCompleted?: boolean
     notes?: string | null
   }
 
@@ -10801,14 +11305,16 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ProcurementCreateWithoutUserInput = {
+  export type ProcurementCreateWithoutManagerInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
@@ -10818,14 +11324,16 @@ export namespace Prisma {
     contracts?: ContractCreateNestedManyWithoutProcurementInput
   }
 
-  export type ProcurementUncheckedCreateWithoutUserInput = {
+  export type ProcurementUncheckedCreateWithoutManagerInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
@@ -10835,13 +11343,13 @@ export namespace Prisma {
     contracts?: ContractUncheckedCreateNestedManyWithoutProcurementInput
   }
 
-  export type ProcurementCreateOrConnectWithoutUserInput = {
+  export type ProcurementCreateOrConnectWithoutManagerInput = {
     where: ProcurementWhereUniqueInput
-    create: XOR<ProcurementCreateWithoutUserInput, ProcurementUncheckedCreateWithoutUserInput>
+    create: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput>
   }
 
-  export type ProcurementCreateManyUserInputEnvelope = {
-    data: ProcurementCreateManyUserInput | ProcurementCreateManyUserInput[]
+  export type ProcurementCreateManyManagerInputEnvelope = {
+    data: ProcurementCreateManyManagerInput | ProcurementCreateManyManagerInput[]
     skipDuplicates?: boolean
   }
 
@@ -10870,27 +11378,27 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Task"> | Date | string
     name?: StringFilter<"Task"> | string
     priority?: EnumPriorityNullableFilter<"Task"> | $Enums.Priority | null
-    status?: StringNullableFilter<"Task"> | string | null
-    terminationDate?: DateTimeNullableFilter<"Task"> | Date | string | null
-    isCompleted?: BoolNullableFilter<"Task"> | boolean | null
+    status?: StringFilter<"Task"> | string
+    terminationDate?: DateTimeFilter<"Task"> | Date | string
+    isCompleted?: BoolFilter<"Task"> | boolean
     notes?: StringNullableFilter<"Task"> | string | null
     userId?: StringFilter<"Task"> | string
   }
 
-  export type ProcurementUpsertWithWhereUniqueWithoutUserInput = {
+  export type ProcurementUpsertWithWhereUniqueWithoutManagerInput = {
     where: ProcurementWhereUniqueInput
-    update: XOR<ProcurementUpdateWithoutUserInput, ProcurementUncheckedUpdateWithoutUserInput>
-    create: XOR<ProcurementCreateWithoutUserInput, ProcurementUncheckedCreateWithoutUserInput>
+    update: XOR<ProcurementUpdateWithoutManagerInput, ProcurementUncheckedUpdateWithoutManagerInput>
+    create: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput>
   }
 
-  export type ProcurementUpdateWithWhereUniqueWithoutUserInput = {
+  export type ProcurementUpdateWithWhereUniqueWithoutManagerInput = {
     where: ProcurementWhereUniqueInput
-    data: XOR<ProcurementUpdateWithoutUserInput, ProcurementUncheckedUpdateWithoutUserInput>
+    data: XOR<ProcurementUpdateWithoutManagerInput, ProcurementUncheckedUpdateWithoutManagerInput>
   }
 
-  export type ProcurementUpdateManyWithWhereWithoutUserInput = {
+  export type ProcurementUpdateManyWithWhereWithoutManagerInput = {
     where: ProcurementScalarWhereInput
-    data: XOR<ProcurementUpdateManyMutationInput, ProcurementUncheckedUpdateManyWithoutUserInput>
+    data: XOR<ProcurementUpdateManyMutationInput, ProcurementUncheckedUpdateManyWithoutManagerInput>
   }
 
   export type ProcurementScalarWhereInput = {
@@ -10900,10 +11408,12 @@ export namespace Prisma {
     id?: StringFilter<"Procurement"> | string
     createdAt?: DateTimeFilter<"Procurement"> | Date | string
     updatedAt?: DateTimeFilter<"Procurement"> | Date | string
-    expectedValue?: StringFilter<"Procurement"> | string
-    resultValue?: StringFilter<"Procurement"> | string
-    announcedAt?: DateTimeFilter<"Procurement"> | Date | string
-    finishedAt?: DateTimeFilter<"Procurement"> | Date | string
+    expectedValue?: DecimalFilter<"Procurement"> | Decimal | DecimalJsLike | number | string
+    resultValue?: DecimalNullableFilter<"Procurement"> | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
+    finishedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
+    prozorroId?: StringNullableFilter<"Procurement"> | string | null
+    prozorroLink?: StringNullableFilter<"Procurement"> | string | null
     product?: StringFilter<"Procurement"> | string
     unit?: StringFilter<"Procurement"> | string
     scope?: StringFilter<"Procurement"> | string
@@ -10917,15 +11427,17 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
     status?: string
-    user: UserCreateNestedOneWithoutProcurementsInput
+    manager: UserCreateNestedOneWithoutProcurementsInput
     jointProcurement?: JointProcurementCreateNestedOneWithoutProcurementsInput
     contracts?: ContractCreateNestedManyWithoutProcurementInput
   }
@@ -10934,10 +11446,12 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
@@ -10975,7 +11489,7 @@ export namespace Prisma {
 
   export type CustomerCreateWithoutProcurementsInput = {
     id?: string
-    name?: string | null
+    name: string
     code: string
     email: string
     phone: string
@@ -10983,7 +11497,7 @@ export namespace Prisma {
 
   export type CustomerUncheckedCreateWithoutProcurementsInput = {
     id?: string
-    name?: string | null
+    name: string
     code: string
     email: string
     phone: string
@@ -11000,9 +11514,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     email: string
     name?: string | null
+    surname?: string | null
     password: string
     position?: string | null
-    role?: string | null
+    role?: string
     tasks?: TaskCreateNestedManyWithoutUserInput
   }
 
@@ -11012,9 +11527,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     email: string
     name?: string | null
+    surname?: string | null
     password: string
     position?: string | null
-    role?: string | null
+    role?: string
     tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -11027,10 +11543,12 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
@@ -11041,10 +11559,12 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
@@ -11060,8 +11580,10 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    startValue: string
-    currentValue?: string | null
+    number: string
+    prozorroLink?: string | null
+    startValue: Decimal | DecimalJsLike | number | string
+    currentValue?: Decimal | DecimalJsLike | number | string | null
     signatureDate: Date | string
     terminationDate: Date | string
     product: string
@@ -11074,8 +11596,10 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    startValue: string
-    currentValue?: string | null
+    number: string
+    prozorroLink?: string | null
+    startValue: Decimal | DecimalJsLike | number | string
+    currentValue?: Decimal | DecimalJsLike | number | string | null
     signatureDate: Date | string
     terminationDate: Date | string
     product: string
@@ -11107,7 +11631,7 @@ export namespace Prisma {
 
   export type CustomerUpdateWithoutProcurementsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -11115,7 +11639,7 @@ export namespace Prisma {
 
   export type CustomerUncheckedUpdateWithoutProcurementsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -11138,9 +11662,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    surname?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     position?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
     tasks?: TaskUpdateManyWithoutUserNestedInput
   }
 
@@ -11150,9 +11675,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    surname?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     position?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
     tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -11171,10 +11697,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
@@ -11185,10 +11713,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
@@ -11218,8 +11748,10 @@ export namespace Prisma {
     id?: StringFilter<"Contract"> | string
     createdAt?: DateTimeFilter<"Contract"> | Date | string
     updatedAt?: DateTimeFilter<"Contract"> | Date | string
-    startValue?: StringFilter<"Contract"> | string
-    currentValue?: StringNullableFilter<"Contract"> | string | null
+    number?: StringFilter<"Contract"> | string
+    prozorroLink?: StringNullableFilter<"Contract"> | string | null
+    startValue?: DecimalFilter<"Contract"> | Decimal | DecimalJsLike | number | string
+    currentValue?: DecimalNullableFilter<"Contract"> | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeFilter<"Contract"> | Date | string
     terminationDate?: DateTimeFilter<"Contract"> | Date | string
     product?: StringFilter<"Contract"> | string
@@ -11232,16 +11764,18 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
     status?: string
     customer: CustomerCreateNestedOneWithoutProcurementsInput
-    user: UserCreateNestedOneWithoutProcurementsInput
+    manager: UserCreateNestedOneWithoutProcurementsInput
     contracts?: ContractCreateNestedManyWithoutProcurementInput
   }
 
@@ -11249,10 +11783,12 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
@@ -11292,16 +11828,18 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
     status?: string
     customer: CustomerCreateNestedOneWithoutProcurementsInput
-    user: UserCreateNestedOneWithoutProcurementsInput
+    manager: UserCreateNestedOneWithoutProcurementsInput
     jointProcurement?: JointProcurementCreateNestedOneWithoutProcurementsInput
   }
 
@@ -11309,10 +11847,12 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
@@ -11330,6 +11870,7 @@ export namespace Prisma {
   export type contractAgreementCreateWithoutContractInput = {
     id?: string
     createdAt?: Date | string
+    number: string
     signatureDate: Date | string
     reason: string
     changes: string
@@ -11338,6 +11879,7 @@ export namespace Prisma {
   export type contractAgreementUncheckedCreateWithoutContractInput = {
     id?: string
     createdAt?: Date | string
+    number: string
     signatureDate: Date | string
     reason: string
     changes: string
@@ -11368,16 +11910,18 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     customer?: CustomerUpdateOneRequiredWithoutProcurementsNestedInput
-    user?: UserUpdateOneRequiredWithoutProcurementsNestedInput
+    manager?: UserUpdateOneRequiredWithoutProcurementsNestedInput
     jointProcurement?: JointProcurementUpdateOneWithoutProcurementsNestedInput
   }
 
@@ -11385,10 +11929,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
@@ -11420,6 +11966,7 @@ export namespace Prisma {
     NOT?: contractAgreementScalarWhereInput | contractAgreementScalarWhereInput[]
     id?: StringFilter<"contractAgreement"> | string
     createdAt?: DateTimeFilter<"contractAgreement"> | Date | string
+    number?: StringFilter<"contractAgreement"> | string
     signatureDate?: DateTimeFilter<"contractAgreement"> | Date | string
     reason?: StringFilter<"contractAgreement"> | string
     changes?: StringFilter<"contractAgreement"> | string
@@ -11430,8 +11977,10 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    startValue: string
-    currentValue?: string | null
+    number: string
+    prozorroLink?: string | null
+    startValue: Decimal | DecimalJsLike | number | string
+    currentValue?: Decimal | DecimalJsLike | number | string | null
     signatureDate: Date | string
     terminationDate: Date | string
     product: string
@@ -11444,8 +11993,10 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    startValue: string
-    currentValue?: string | null
+    number: string
+    prozorroLink?: string | null
+    startValue: Decimal | DecimalJsLike | number | string
+    currentValue?: Decimal | DecimalJsLike | number | string | null
     signatureDate: Date | string
     terminationDate: Date | string
     product: string
@@ -11474,8 +12025,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startValue?: StringFieldUpdateOperationsInput | string
-    currentValue?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
     terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     product?: StringFieldUpdateOperationsInput | string
@@ -11488,8 +12041,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startValue?: StringFieldUpdateOperationsInput | string
-    currentValue?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
     terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     product?: StringFieldUpdateOperationsInput | string
@@ -11504,10 +12059,11 @@ export namespace Prisma {
     updatedAt?: Date | string
     email: string
     name?: string | null
+    surname?: string | null
     password: string
     position?: string | null
-    role?: string | null
-    procurements?: ProcurementCreateNestedManyWithoutUserInput
+    role?: string
+    procurements?: ProcurementCreateNestedManyWithoutManagerInput
   }
 
   export type UserUncheckedCreateWithoutTasksInput = {
@@ -11516,10 +12072,11 @@ export namespace Prisma {
     updatedAt?: Date | string
     email: string
     name?: string | null
+    surname?: string | null
     password: string
     position?: string | null
-    role?: string | null
-    procurements?: ProcurementUncheckedCreateNestedManyWithoutUserInput
+    role?: string
+    procurements?: ProcurementUncheckedCreateNestedManyWithoutManagerInput
   }
 
   export type UserCreateOrConnectWithoutTasksInput = {
@@ -11544,10 +12101,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    surname?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     position?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    procurements?: ProcurementUpdateManyWithoutUserNestedInput
+    role?: StringFieldUpdateOperationsInput | string
+    procurements?: ProcurementUpdateManyWithoutManagerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTasksInput = {
@@ -11556,10 +12114,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    surname?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     position?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    procurements?: ProcurementUncheckedUpdateManyWithoutUserNestedInput
+    role?: StringFieldUpdateOperationsInput | string
+    procurements?: ProcurementUncheckedUpdateManyWithoutManagerNestedInput
   }
 
   export type TaskCreateManyUserInput = {
@@ -11568,20 +12127,22 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     priority?: $Enums.Priority | null
-    status?: string | null
-    terminationDate?: Date | string | null
-    isCompleted?: boolean | null
+    status?: string
+    terminationDate: Date | string
+    isCompleted?: boolean
     notes?: string | null
   }
 
-  export type ProcurementCreateManyUserInput = {
+  export type ProcurementCreateManyManagerInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
@@ -11596,9 +12157,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    terminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isCompleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: StringFieldUpdateOperationsInput | string
+    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
     notes?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -11608,9 +12169,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    terminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isCompleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: StringFieldUpdateOperationsInput | string
+    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
     notes?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -11620,20 +12181,22 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    terminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isCompleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: StringFieldUpdateOperationsInput | string
+    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
     notes?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type ProcurementUpdateWithoutUserInput = {
+  export type ProcurementUpdateWithoutManagerInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
@@ -11643,14 +12206,16 @@ export namespace Prisma {
     contracts?: ContractUpdateManyWithoutProcurementNestedInput
   }
 
-  export type ProcurementUncheckedUpdateWithoutUserInput = {
+  export type ProcurementUncheckedUpdateWithoutManagerInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
@@ -11660,14 +12225,16 @@ export namespace Prisma {
     contracts?: ContractUncheckedUpdateManyWithoutProcurementNestedInput
   }
 
-  export type ProcurementUncheckedUpdateManyWithoutUserInput = {
+  export type ProcurementUncheckedUpdateManyWithoutManagerInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
@@ -11680,10 +12247,12 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
@@ -11696,15 +12265,17 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    user?: UserUpdateOneRequiredWithoutProcurementsNestedInput
+    manager?: UserUpdateOneRequiredWithoutProcurementsNestedInput
     jointProcurement?: JointProcurementUpdateOneWithoutProcurementsNestedInput
     contracts?: ContractUpdateManyWithoutProcurementNestedInput
   }
@@ -11713,10 +12284,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
@@ -11730,10 +12303,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
@@ -11746,8 +12321,10 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    startValue: string
-    currentValue?: string | null
+    number: string
+    prozorroLink?: string | null
+    startValue: Decimal | DecimalJsLike | number | string
+    currentValue?: Decimal | DecimalJsLike | number | string | null
     signatureDate: Date | string
     terminationDate: Date | string
     product: string
@@ -11759,8 +12336,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startValue?: StringFieldUpdateOperationsInput | string
-    currentValue?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
     terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     product?: StringFieldUpdateOperationsInput | string
@@ -11773,8 +12352,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startValue?: StringFieldUpdateOperationsInput | string
-    currentValue?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
     terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     product?: StringFieldUpdateOperationsInput | string
@@ -11787,8 +12368,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    startValue?: StringFieldUpdateOperationsInput | string
-    currentValue?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
     terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     product?: StringFieldUpdateOperationsInput | string
@@ -11800,10 +12383,12 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    expectedValue: string
-    resultValue: string
-    announcedAt: Date | string
-    finishedAt: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
     product: string
     unit: string
     scope: string
@@ -11816,16 +12401,18 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     customer?: CustomerUpdateOneRequiredWithoutProcurementsNestedInput
-    user?: UserUpdateOneRequiredWithoutProcurementsNestedInput
+    manager?: UserUpdateOneRequiredWithoutProcurementsNestedInput
     contracts?: ContractUpdateManyWithoutProcurementNestedInput
   }
 
@@ -11833,10 +12420,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
@@ -11850,10 +12439,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: StringFieldUpdateOperationsInput | string
-    resultValue?: StringFieldUpdateOperationsInput | string
-    announcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    finishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     product?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
     scope?: StringFieldUpdateOperationsInput | string
@@ -11865,6 +12456,7 @@ export namespace Prisma {
   export type contractAgreementCreateManyContractInput = {
     id?: string
     createdAt?: Date | string
+    number: string
     signatureDate: Date | string
     reason: string
     changes: string
@@ -11873,6 +12465,7 @@ export namespace Prisma {
   export type contractAgreementUpdateWithoutContractInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    number?: StringFieldUpdateOperationsInput | string
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
     reason?: StringFieldUpdateOperationsInput | string
     changes?: StringFieldUpdateOperationsInput | string
@@ -11881,6 +12474,7 @@ export namespace Prisma {
   export type contractAgreementUncheckedUpdateWithoutContractInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    number?: StringFieldUpdateOperationsInput | string
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
     reason?: StringFieldUpdateOperationsInput | string
     changes?: StringFieldUpdateOperationsInput | string
@@ -11889,6 +12483,7 @@ export namespace Prisma {
   export type contractAgreementUncheckedUpdateManyWithoutContractInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    number?: StringFieldUpdateOperationsInput | string
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
     reason?: StringFieldUpdateOperationsInput | string
     changes?: StringFieldUpdateOperationsInput | string
