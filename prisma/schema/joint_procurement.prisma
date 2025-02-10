@@ -1,0 +1,24 @@
+model JointProcurement {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  expectedValue Decimal  @map("expected_value")
+  resultValue   Decimal? @map("result_value")
+
+  announcedAt DateTime? @map("announced_at")
+  finishedAt  DateTime? @map("finished_at")
+
+  prozorroId   String?
+  prozorroLink String? @map("prozorro_link")
+
+  product String
+  unit    String
+  scope   String
+
+  status String @default("in work")
+
+  procurements Procurement[]
+
+  @@map("joint_procurement")
+}

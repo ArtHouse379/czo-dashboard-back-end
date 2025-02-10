@@ -1,0 +1,18 @@
+model Task {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name            String
+  priority        Priority?
+  status          String    @default("Waiting for status")
+  terminationDate DateTime  @map("termination_date")
+  isCompleted     Boolean   @default(false) @map("is_completed")
+  notes           String?
+  managerId       String?   @map("manager_id")
+
+  createdByUser User   @relation(fields: [userId], references: [id])
+  userId        String @map("user_id")
+
+  @@map("task")
+}

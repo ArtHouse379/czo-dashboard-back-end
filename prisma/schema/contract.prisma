@@ -1,0 +1,22 @@
+model Contract {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  number          String
+  startValue      Decimal  @map("start_value")
+  currentValue    Decimal? @map("final_value")
+  signatureDate   DateTime @map("signature_date")
+  terminationDate DateTime @map("termination_date")
+
+  product String
+  unit    String
+  scope   String
+
+  procurement   Procurement @relation(fields: [procurementId], references: [id])
+  procurementId String      @map("procurement_id")
+
+  agreements contractAgreement[]
+
+  @@map("contract")
+}

@@ -1,0 +1,14 @@
+model contractAgreement {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+
+  number        String
+  signatureDate DateTime @map("signature_date")
+  reason        String
+  changes       String
+
+  contract   Contract @relation(fields: [contractId], references: [id])
+  contractId String   @map("contract_id")
+
+  @@map("contract_agreement")
+}

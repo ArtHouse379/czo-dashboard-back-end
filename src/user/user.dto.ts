@@ -1,30 +1,34 @@
-import { IsEmail, IsOptional, IsString, MinLength } from "class-validator";
+import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator'
 
 export class UserDto {
-    @IsEmail()
-    @IsOptional()
-    email?: string
+	@IsEmail()
+	@IsOptional()
+	email: string
 
-    @IsString()
-    @IsOptional()
-    name?: string
+	@IsString()
+	@IsOptional()
+	name: string
 
-    @IsString()
-    @IsOptional()
-    surname?: string
+	@IsString()
+	@IsOptional()
+	surname: string
 
-    @IsOptional()
-    @MinLength(6, {
-        message: 'Password must be at least 6 characters'
-    })
-    @IsString()
-    password: string
+	@IsString()
+	@IsOptional()
+	@MinLength(6, {
+		message: 'Password must be at least 6 characters'
+	})
+	password: string
 
-    @IsString()
-    @IsOptional()
-    position?: string
+	@IsString()
+	@IsOptional()
+	isAdmin: boolean
 
-    @IsString()
-    @IsOptional()
-    role?: string
+	@IsString()
+	@IsOptional()
+	isManager: boolean
+
+	@IsString()
+	@IsOptional()
+	isGuest: boolean
 }

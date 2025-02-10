@@ -1,96 +1,122 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
-import { ProcurementDto } from './procurement.dto';
+import { Injectable } from '@nestjs/common'
+import { PrismaService } from 'src/prisma.service'
+import { ProcurementDto } from './procurement.dto'
 
 @Injectable()
 export class ProcurementService {
-  constructor(private prisma: PrismaService) { }
+	constructor(private prisma: PrismaService) {}
 
-  async getAll() {
-    return this.prisma.procurement.findMany({
-      include: {
-        contracts: true
-      }
-    })
-  }
+	async getAll() {
+		return this.prisma.procurement.findMany({
+			include: {
+				contracts: true
+			}
+		})
+	}
 
-  async getByUserId(userId: string) {
-    return this.prisma.procurement.findMany({
-      where: {
-        userId: userId
-      },
-      include: {
-        contracts: true
-      }
-    })
-  }
+	async getById(id: string) {
+		return this.prisma.procurement.findUnique({
+			where: {
+				id: id
+			},
+			include: {
+				contracts: true
+			}
+		})
+	}
 
-  async getByCustomerId(customerId: string) {
-    return this.prisma.procurement.findMany({
-      where: {
-        customerId: customerId
-      },
-      include: {
-        contracts: true
-      }
-    })
-  }
+	// Get procurements by manager or userId (user who create procurements)
+	async getByUserId(userId: string) {
+		return this.prisma.procurement.findMany({
+			where: {
+				userId: userId
+			},
+			include: {
+				contracts: true
+			}
+		})
+	}
 
-  async create(dto: ProcurementDto, userId: string) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const {customerId, jointProcurementid, ...rest} = dto;
+	async getByCustomerId(customerId: string) {
+		return this.prisma.procurement.findMany({
+			where: {
+				customerId: customerId
+			},
+			include: {
+				contracts: true
+			}
+		})
+	}
 
-    return this.prisma.procurement.create({
-      data: {
-        ...rest,
-        customer: {
-          connect: {
-            id: customerId
-          }
-        },
-        manager: {
-          connect: {
-            id: userId,
-          },
-        }
-      }
-    })
-  }
+	async create(dto: ProcurementDto, userId: string) {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const { customerId, jointProcurementid, ...rest } = dto
 
-  async connectToJointProcurement(dto: ProcurementDto, procurementId: string, userId: string) {
-    
-    const { jointProcurementid } = dto;
+		return this.prisma.procurement.create({
+			data: {
+				...rest,
+				customer: {
+					connect: {
+						id: customerId
+					}
+				},
+				manager: {
+					connect: {
+						id: userId
+					}
+				}
+			}
+		})
+	}
 
-    return this.prisma.procurement.update({
-        where: {
-          userId,
-          id: procurementId
-        },
-        data: {
-          jointProcurement: {
-            connect: {
-              id: jointProcurementid
-            }
-          }
-        }
-      })
-  }
+	async connectToJointProcurement(
+		procurementId: string,
+		jointProcurementid: string
+	) {
+		return this.prisma.procurement.update({
+			where: {
+				id: procurementId
+			},
+			data: {
+				jointProcurement: {
+					connect: {
+						id: jointProcurementid
+					}
+				}
+			}
+		})
+	}
 
-  async update(dto: Partial<ProcurementDto>, procurementId: string, userId: string) {
-    return this.prisma.procurement.update({
-      where: {
-        userId,
-        id: procurementId
-      },
-      data: dto
-    })
-  }
+	async update(dto: ProcurementDto, procurementId: string, userId: string) {
+		return this.prisma.procurement.update({
+			where: {
+				userId,
+				id: procurementId
+			},
+			data: dto
+		})
+	}
 
-  async delete(procurementId: string) {
-    return this.prisma.procurement.delete({
-      where: {
-        id: procurementId
-      }
-    })
-  }
+	async changeManager(procurementId: string, userId: string) {
+		return this.prisma.procurement.update({
+			where: {
+				id: procurementId
+			},
+			data: {
+				manager: {
+					connect: {
+						id: userId
+					}
+				}
+			}
+		})
+	}
+
+	async delete(procurementId: string) {
+		return this.prisma.procurement.delete({
+			where: {
+				id: procurementId
+			}
+		})
+	}
 }

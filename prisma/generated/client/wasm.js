@@ -7,6 +7,7 @@ const {
   makeStrictEnum,
   Public,
   getRuntime,
+  skip
 } = require('./runtime/index-browser.js')
 
 
@@ -16,12 +17,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 5.13.0
- * Query Engine version: b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b
+ * Prisma Client JS version: 6.2.1
+ * Query Engine version: 4123509d24aa4dede1e864b46351bf2790323b69
  */
 Prisma.prismaVersion = {
-  client: "5.13.0",
-  engine: "b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b"
+  client: "6.2.1",
+  engine: "4123509d24aa4dede1e864b46351bf2790323b69"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -47,11 +48,6 @@ In case this error is unexpected for you, please report it in https://pris.ly/pr
 Prisma.PrismaClientValidationError = () => {
   const runtimeName = getRuntime().prettyName;
   throw new Error(`PrismaClientValidationError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
-Prisma.NotFoundError = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`NotFoundError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
 In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
 )}
 Prisma.Decimal = Decimal
@@ -108,6 +104,8 @@ Prisma.NullTypes = {
   AnyNull: objectEnumValues.classes.AnyNull
 }
 
+
+
 /**
  * Enums
  */
@@ -119,16 +117,29 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.UserScalarFieldEnum = {
+exports.Prisma.ContractScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  email: 'email',
-  name: 'name',
-  surname: 'surname',
-  password: 'password',
-  position: 'position',
-  role: 'role'
+  number: 'number',
+  startValue: 'startValue',
+  currentValue: 'currentValue',
+  signatureDate: 'signatureDate',
+  terminationDate: 'terminationDate',
+  product: 'product',
+  unit: 'unit',
+  scope: 'scope',
+  procurementId: 'procurementId'
+};
+
+exports.Prisma.ContractAgreementScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  number: 'number',
+  signatureDate: 'signatureDate',
+  reason: 'reason',
+  changes: 'changes',
+  contractId: 'contractId'
 };
 
 exports.Prisma.CustomerScalarFieldEnum = {
@@ -136,7 +147,24 @@ exports.Prisma.CustomerScalarFieldEnum = {
   name: 'name',
   code: 'code',
   email: 'email',
-  phone: 'phone'
+  phone: 'phone',
+  address: 'address'
+};
+
+exports.Prisma.JointProcurementScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  expectedValue: 'expectedValue',
+  resultValue: 'resultValue',
+  announcedAt: 'announcedAt',
+  finishedAt: 'finishedAt',
+  prozorroId: 'prozorroId',
+  prozorroLink: 'prozorroLink',
+  product: 'product',
+  unit: 'unit',
+  scope: 'scope',
+  status: 'status'
 };
 
 exports.Prisma.ProcurementScalarFieldEnum = {
@@ -158,48 +186,6 @@ exports.Prisma.ProcurementScalarFieldEnum = {
   jointProcurementid: 'jointProcurementid'
 };
 
-exports.Prisma.JointProcurementScalarFieldEnum = {
-  id: 'id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  expectedValue: 'expectedValue',
-  resultValue: 'resultValue',
-  announcedAt: 'announcedAt',
-  finishedAt: 'finishedAt',
-  prozorroId: 'prozorroId',
-  prozorroLink: 'prozorroLink',
-  product: 'product',
-  unit: 'unit',
-  scope: 'scope',
-  status: 'status'
-};
-
-exports.Prisma.ContractScalarFieldEnum = {
-  id: 'id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  number: 'number',
-  prozorroLink: 'prozorroLink',
-  startValue: 'startValue',
-  currentValue: 'currentValue',
-  signatureDate: 'signatureDate',
-  terminationDate: 'terminationDate',
-  product: 'product',
-  unit: 'unit',
-  scope: 'scope',
-  procurementId: 'procurementId'
-};
-
-exports.Prisma.ContractAgreementScalarFieldEnum = {
-  id: 'id',
-  createdAt: 'createdAt',
-  number: 'number',
-  signatureDate: 'signatureDate',
-  reason: 'reason',
-  changes: 'changes',
-  contractId: 'contractId'
-};
-
 exports.Prisma.TaskScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
@@ -210,7 +196,21 @@ exports.Prisma.TaskScalarFieldEnum = {
   terminationDate: 'terminationDate',
   isCompleted: 'isCompleted',
   notes: 'notes',
+  managerId: 'managerId',
   userId: 'userId'
+};
+
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  email: 'email',
+  name: 'name',
+  surname: 'surname',
+  password: 'password',
+  isAdmin: 'isAdmin',
+  isManager: 'isManager',
+  isGuest: 'isGuest'
 };
 
 exports.Prisma.SortOrder = {
@@ -234,13 +234,13 @@ exports.Priority = exports.$Enums.Priority = {
 };
 
 exports.Prisma.ModelName = {
-  User: 'User',
-  Customer: 'Customer',
-  Procurement: 'Procurement',
-  JointProcurement: 'JointProcurement',
   Contract: 'Contract',
   contractAgreement: 'contractAgreement',
-  Task: 'Task'
+  Customer: 'Customer',
+  JointProcurement: 'JointProcurement',
+  Procurement: 'Procurement',
+  Task: 'Task',
+  User: 'User'
 };
 
 /**

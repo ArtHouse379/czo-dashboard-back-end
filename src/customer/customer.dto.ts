@@ -1,19 +1,23 @@
-import { IsOptional, IsString } from "class-validator";
+import { IsOptional, IsString } from 'class-validator'
 
 export class CustomerDto {
-    @IsString()
-    @IsOptional()
-    name: string
+	@IsString()
+	@IsOptional()
+	name: string
 
-    @IsString()
-    @IsOptional()
-    email: string
+	@IsString()
+	@IsOptional()
+	email: string
 
-    @IsString()
-    @IsOptional()
-    code: string
+	@IsString()
+	@IsOptional()
+	code: string
 
-    @IsString()
-    @IsOptional()
-    phone: string
+	@IsString()
+	@IsOptional()
+	phone: string
+
+	@IsString()
+	@IsOptional()
+	address: string
 }

@@ -1,0 +1,13 @@
+model Customer {
+  id String @id @default(cuid())
+
+  name    String
+  code    String
+  email   String
+  phone   String
+  address String?
+
+  procurements Procurement[]
+
+  @@map("customer")
+}

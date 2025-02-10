@@ -14,26 +14,6 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model User
- * 
- */
-export type User = $Result.DefaultSelection<Prisma.$UserPayload>
-/**
- * Model Customer
- * 
- */
-export type Customer = $Result.DefaultSelection<Prisma.$CustomerPayload>
-/**
- * Model Procurement
- * 
- */
-export type Procurement = $Result.DefaultSelection<Prisma.$ProcurementPayload>
-/**
- * Model JointProcurement
- * 
- */
-export type JointProcurement = $Result.DefaultSelection<Prisma.$JointProcurementPayload>
-/**
  * Model Contract
  * 
  */
@@ -44,10 +24,30 @@ export type Contract = $Result.DefaultSelection<Prisma.$ContractPayload>
  */
 export type contractAgreement = $Result.DefaultSelection<Prisma.$contractAgreementPayload>
 /**
+ * Model Customer
+ * 
+ */
+export type Customer = $Result.DefaultSelection<Prisma.$CustomerPayload>
+/**
+ * Model JointProcurement
+ * 
+ */
+export type JointProcurement = $Result.DefaultSelection<Prisma.$JointProcurementPayload>
+/**
+ * Model Procurement
+ * 
+ */
+export type Procurement = $Result.DefaultSelection<Prisma.$ProcurementPayload>
+/**
  * Model Task
  * 
  */
 export type Task = $Result.DefaultSelection<Prisma.$TaskPayload>
+/**
+ * Model User
+ * 
+ */
+export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 
 /**
  * Enums
@@ -69,41 +69,41 @@ export const Priority: typeof $Enums.Priority
 
 /**
  * ##  Prisma Client ʲˢ
- * 
+ *
  * Type-safe database client for TypeScript & Node.js
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * // Fetch zero or more Contracts
+ * const contracts = await prisma.contract.findMany()
  * ```
  *
- * 
+ *
  * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
  */
 export class PrismaClient<
-  T extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
-  U = 'log' extends keyof T ? T['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<T['log']> : never : never,
+  ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
+  U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
 
     /**
    * ##  Prisma Client ʲˢ
-   * 
+   *
    * Type-safe database client for TypeScript & Node.js
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Users
-   * const users = await prisma.user.findMany()
+   * // Fetch zero or more Contracts
+   * const contracts = await prisma.contract.findMany()
    * ```
    *
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
    */
 
-  constructor(optionsArg ?: Prisma.Subset<T, Prisma.PrismaClientOptions>);
+  constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
   $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): void;
 
   /**
@@ -129,7 +129,7 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
    * ```
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
@@ -141,7 +141,7 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
    * ```
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
@@ -152,7 +152,7 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
    * ```
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
@@ -164,10 +164,11 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
    * ```
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
+
 
   /**
    * Allows the running of a sequence of read/write operations that are guaranteed to either succeed or fail as a whole.
@@ -187,49 +188,11 @@ export class PrismaClient<
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
 
 
-  $extends: $Extensions.ExtendsHook<'extends', Prisma.TypeMapCb, ExtArgs>
+  $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb, ExtArgs, $Utils.Call<Prisma.TypeMapCb, {
+    extArgs: ExtArgs
+  }>, ClientOptions>
 
       /**
-   * `prisma.user`: Exposes CRUD operations for the **User** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Users
-    * const users = await prisma.user.findMany()
-    * ```
-    */
-  get user(): Prisma.UserDelegate<ExtArgs>;
-
-  /**
-   * `prisma.customer`: Exposes CRUD operations for the **Customer** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Customers
-    * const customers = await prisma.customer.findMany()
-    * ```
-    */
-  get customer(): Prisma.CustomerDelegate<ExtArgs>;
-
-  /**
-   * `prisma.procurement`: Exposes CRUD operations for the **Procurement** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Procurements
-    * const procurements = await prisma.procurement.findMany()
-    * ```
-    */
-  get procurement(): Prisma.ProcurementDelegate<ExtArgs>;
-
-  /**
-   * `prisma.jointProcurement`: Exposes CRUD operations for the **JointProcurement** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more JointProcurements
-    * const jointProcurements = await prisma.jointProcurement.findMany()
-    * ```
-    */
-  get jointProcurement(): Prisma.JointProcurementDelegate<ExtArgs>;
-
-  /**
    * `prisma.contract`: Exposes CRUD operations for the **Contract** model.
     * Example usage:
     * ```ts
@@ -237,7 +200,7 @@ export class PrismaClient<
     * const contracts = await prisma.contract.findMany()
     * ```
     */
-  get contract(): Prisma.ContractDelegate<ExtArgs>;
+  get contract(): Prisma.ContractDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.contractAgreement`: Exposes CRUD operations for the **contractAgreement** model.
@@ -247,7 +210,37 @@ export class PrismaClient<
     * const contractAgreements = await prisma.contractAgreement.findMany()
     * ```
     */
-  get contractAgreement(): Prisma.contractAgreementDelegate<ExtArgs>;
+  get contractAgreement(): Prisma.contractAgreementDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.customer`: Exposes CRUD operations for the **Customer** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Customers
+    * const customers = await prisma.customer.findMany()
+    * ```
+    */
+  get customer(): Prisma.CustomerDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.jointProcurement`: Exposes CRUD operations for the **JointProcurement** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more JointProcurements
+    * const jointProcurements = await prisma.jointProcurement.findMany()
+    * ```
+    */
+  get jointProcurement(): Prisma.JointProcurementDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.procurement`: Exposes CRUD operations for the **Procurement** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Procurements
+    * const procurements = await prisma.procurement.findMany()
+    * ```
+    */
+  get procurement(): Prisma.ProcurementDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.task`: Exposes CRUD operations for the **Task** model.
@@ -257,7 +250,17 @@ export class PrismaClient<
     * const tasks = await prisma.task.findMany()
     * ```
     */
-  get task(): Prisma.TaskDelegate<ExtArgs>;
+  get task(): Prisma.TaskDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
+    * ```
+    */
+  get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -278,7 +281,6 @@ export namespace Prisma {
   export import PrismaClientRustPanicError = runtime.PrismaClientRustPanicError
   export import PrismaClientInitializationError = runtime.PrismaClientInitializationError
   export import PrismaClientValidationError = runtime.PrismaClientValidationError
-  export import NotFoundError = runtime.NotFoundError
 
   /**
    * Re-export of sql-template-tag
@@ -288,6 +290,8 @@ export namespace Prisma {
   export import join = runtime.join
   export import raw = runtime.raw
   export import Sql = runtime.Sql
+
+
 
   /**
    * Decimal.js
@@ -315,8 +319,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 5.13.0
-   * Query Engine version: b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b
+   * Prisma Client JS version: 6.2.1
+   * Query Engine version: 4123509d24aa4dede1e864b46351bf2790323b69
    */
   export type PrismaVersion = {
     client: string
@@ -328,51 +332,13 @@ export namespace Prisma {
    * Utility Types
    */
 
-  /**
-   * From https://github.com/sindresorhus/type-fest/
-   * Matches a JSON object.
-   * This type can be useful to enforce some input to be JSON-compatible or as a super-type to be extended from. 
-   */
-  export type JsonObject = {[Key in string]?: JsonValue}
 
-  /**
-   * From https://github.com/sindresorhus/type-fest/
-   * Matches a JSON array.
-   */
-  export interface JsonArray extends Array<JsonValue> {}
-
-  /**
-   * From https://github.com/sindresorhus/type-fest/
-   * Matches any valid JSON value.
-   */
-  export type JsonValue = string | number | boolean | JsonObject | JsonArray | null
-
-  /**
-   * Matches a JSON object.
-   * Unlike `JsonObject`, this type allows undefined and read-only properties.
-   */
-  export type InputJsonObject = {readonly [Key in string]?: InputJsonValue | null}
-
-  /**
-   * Matches a JSON array.
-   * Unlike `JsonArray`, readonly arrays are assignable to this type.
-   */
-  export interface InputJsonArray extends ReadonlyArray<InputJsonValue | null> {}
-
-  /**
-   * Matches any valid value that can be used as an input for operations like
-   * create and update as the value of a JSON field. Unlike `JsonValue`, this
-   * type allows read-only arrays and read-only object properties and disallows
-   * `null` at the top level.
-   *
-   * `null` cannot be used as the value of a JSON field because its meaning
-   * would be ambiguous. Use `Prisma.JsonNull` to store the JSON null value or
-   * `Prisma.DbNull` to clear the JSON value and set the field to the database
-   * NULL value instead.
-   *
-   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-by-null-values
-   */
-  export type InputJsonValue = string | number | boolean | InputJsonObject | InputJsonArray | { toJSON(): unknown }
+  export import JsonObject = runtime.JsonObject
+  export import JsonArray = runtime.JsonArray
+  export import JsonValue = runtime.JsonValue
+  export import InputJsonObject = runtime.InputJsonObject
+  export import InputJsonArray = runtime.InputJsonArray
+  export import InputJsonValue = runtime.InputJsonValue
 
   /**
    * Types of the values used to represent different kinds of `null` values when working with JSON fields.
@@ -735,13 +701,13 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    User: 'User',
-    Customer: 'Customer',
-    Procurement: 'Procurement',
-    JointProcurement: 'JointProcurement',
     Contract: 'Contract',
     contractAgreement: 'contractAgreement',
-    Task: 'Task'
+    Customer: 'Customer',
+    JointProcurement: 'JointProcurement',
+    Procurement: 'Procurement',
+    Task: 'Task',
+    User: 'User'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -751,343 +717,86 @@ export namespace Prisma {
     db?: Datasource
   }
 
-
-  interface TypeMapCb extends $Utils.Fn<{extArgs: $Extensions.InternalArgs}, $Utils.Record<string, any>> {
-    returns: Prisma.TypeMap<this['params']['extArgs']>
+  interface TypeMapCb extends $Utils.Fn<{extArgs: $Extensions.InternalArgs, clientOptions: PrismaClientOptions }, $Utils.Record<string, any>> {
+    returns: Prisma.TypeMap<this['params']['extArgs'], this['params']['clientOptions']>
   }
 
-  export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: 'user' | 'customer' | 'procurement' | 'jointProcurement' | 'contract' | 'contractAgreement' | 'task'
+      modelProps: "contract" | "contractAgreement" | "customer" | "jointProcurement" | "procurement" | "task" | "user"
       txIsolationLevel: Prisma.TransactionIsolationLevel
-    },
+    }
     model: {
-      User: {
-        payload: Prisma.$UserPayload<ExtArgs>
-        fields: Prisma.UserFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.UserFindUniqueArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$UserPayload>
-          }
-          findFirst: {
-            args: Prisma.UserFindFirstArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$UserPayload>
-          }
-          findMany: {
-            args: Prisma.UserFindManyArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
-          }
-          create: {
-            args: Prisma.UserCreateArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$UserPayload>
-          }
-          createMany: {
-            args: Prisma.UserCreateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
-          }
-          delete: {
-            args: Prisma.UserDeleteArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$UserPayload>
-          }
-          update: {
-            args: Prisma.UserUpdateArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$UserPayload>
-          }
-          deleteMany: {
-            args: Prisma.UserDeleteManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
-          }
-          updateMany: {
-            args: Prisma.UserUpdateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
-          }
-          upsert: {
-            args: Prisma.UserUpsertArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$UserPayload>
-          }
-          aggregate: {
-            args: Prisma.UserAggregateArgs<ExtArgs>,
-            result: $Utils.Optional<AggregateUser>
-          }
-          groupBy: {
-            args: Prisma.UserGroupByArgs<ExtArgs>,
-            result: $Utils.Optional<UserGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.UserCountArgs<ExtArgs>,
-            result: $Utils.Optional<UserCountAggregateOutputType> | number
-          }
-        }
-      }
-      Customer: {
-        payload: Prisma.$CustomerPayload<ExtArgs>
-        fields: Prisma.CustomerFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.CustomerFindUniqueArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$CustomerPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.CustomerFindUniqueOrThrowArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
-          }
-          findFirst: {
-            args: Prisma.CustomerFindFirstArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$CustomerPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.CustomerFindFirstOrThrowArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
-          }
-          findMany: {
-            args: Prisma.CustomerFindManyArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>[]
-          }
-          create: {
-            args: Prisma.CustomerCreateArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
-          }
-          createMany: {
-            args: Prisma.CustomerCreateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
-          }
-          delete: {
-            args: Prisma.CustomerDeleteArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
-          }
-          update: {
-            args: Prisma.CustomerUpdateArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
-          }
-          deleteMany: {
-            args: Prisma.CustomerDeleteManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
-          }
-          updateMany: {
-            args: Prisma.CustomerUpdateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
-          }
-          upsert: {
-            args: Prisma.CustomerUpsertArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
-          }
-          aggregate: {
-            args: Prisma.CustomerAggregateArgs<ExtArgs>,
-            result: $Utils.Optional<AggregateCustomer>
-          }
-          groupBy: {
-            args: Prisma.CustomerGroupByArgs<ExtArgs>,
-            result: $Utils.Optional<CustomerGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.CustomerCountArgs<ExtArgs>,
-            result: $Utils.Optional<CustomerCountAggregateOutputType> | number
-          }
-        }
-      }
-      Procurement: {
-        payload: Prisma.$ProcurementPayload<ExtArgs>
-        fields: Prisma.ProcurementFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.ProcurementFindUniqueArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.ProcurementFindUniqueOrThrowArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload>
-          }
-          findFirst: {
-            args: Prisma.ProcurementFindFirstArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.ProcurementFindFirstOrThrowArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload>
-          }
-          findMany: {
-            args: Prisma.ProcurementFindManyArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload>[]
-          }
-          create: {
-            args: Prisma.ProcurementCreateArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload>
-          }
-          createMany: {
-            args: Prisma.ProcurementCreateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
-          }
-          delete: {
-            args: Prisma.ProcurementDeleteArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload>
-          }
-          update: {
-            args: Prisma.ProcurementUpdateArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload>
-          }
-          deleteMany: {
-            args: Prisma.ProcurementDeleteManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
-          }
-          updateMany: {
-            args: Prisma.ProcurementUpdateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
-          }
-          upsert: {
-            args: Prisma.ProcurementUpsertArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload>
-          }
-          aggregate: {
-            args: Prisma.ProcurementAggregateArgs<ExtArgs>,
-            result: $Utils.Optional<AggregateProcurement>
-          }
-          groupBy: {
-            args: Prisma.ProcurementGroupByArgs<ExtArgs>,
-            result: $Utils.Optional<ProcurementGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.ProcurementCountArgs<ExtArgs>,
-            result: $Utils.Optional<ProcurementCountAggregateOutputType> | number
-          }
-        }
-      }
-      JointProcurement: {
-        payload: Prisma.$JointProcurementPayload<ExtArgs>
-        fields: Prisma.JointProcurementFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.JointProcurementFindUniqueArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.JointProcurementFindUniqueOrThrowArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload>
-          }
-          findFirst: {
-            args: Prisma.JointProcurementFindFirstArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.JointProcurementFindFirstOrThrowArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload>
-          }
-          findMany: {
-            args: Prisma.JointProcurementFindManyArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload>[]
-          }
-          create: {
-            args: Prisma.JointProcurementCreateArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload>
-          }
-          createMany: {
-            args: Prisma.JointProcurementCreateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
-          }
-          delete: {
-            args: Prisma.JointProcurementDeleteArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload>
-          }
-          update: {
-            args: Prisma.JointProcurementUpdateArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload>
-          }
-          deleteMany: {
-            args: Prisma.JointProcurementDeleteManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
-          }
-          updateMany: {
-            args: Prisma.JointProcurementUpdateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
-          }
-          upsert: {
-            args: Prisma.JointProcurementUpsertArgs<ExtArgs>,
-            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload>
-          }
-          aggregate: {
-            args: Prisma.JointProcurementAggregateArgs<ExtArgs>,
-            result: $Utils.Optional<AggregateJointProcurement>
-          }
-          groupBy: {
-            args: Prisma.JointProcurementGroupByArgs<ExtArgs>,
-            result: $Utils.Optional<JointProcurementGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.JointProcurementCountArgs<ExtArgs>,
-            result: $Utils.Optional<JointProcurementCountAggregateOutputType> | number
-          }
-        }
-      }
       Contract: {
         payload: Prisma.$ContractPayload<ExtArgs>
         fields: Prisma.ContractFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ContractFindUniqueArgs<ExtArgs>,
+            args: Prisma.ContractFindUniqueArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$ContractPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ContractFindUniqueOrThrowArgs<ExtArgs>,
+            args: Prisma.ContractFindUniqueOrThrowArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$ContractPayload>
           }
           findFirst: {
-            args: Prisma.ContractFindFirstArgs<ExtArgs>,
+            args: Prisma.ContractFindFirstArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$ContractPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ContractFindFirstOrThrowArgs<ExtArgs>,
+            args: Prisma.ContractFindFirstOrThrowArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$ContractPayload>
           }
           findMany: {
-            args: Prisma.ContractFindManyArgs<ExtArgs>,
+            args: Prisma.ContractFindManyArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$ContractPayload>[]
           }
           create: {
-            args: Prisma.ContractCreateArgs<ExtArgs>,
+            args: Prisma.ContractCreateArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$ContractPayload>
           }
           createMany: {
-            args: Prisma.ContractCreateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.ContractCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ContractCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContractPayload>[]
           }
           delete: {
-            args: Prisma.ContractDeleteArgs<ExtArgs>,
+            args: Prisma.ContractDeleteArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$ContractPayload>
           }
           update: {
-            args: Prisma.ContractUpdateArgs<ExtArgs>,
+            args: Prisma.ContractUpdateArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$ContractPayload>
           }
           deleteMany: {
-            args: Prisma.ContractDeleteManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.ContractDeleteManyArgs<ExtArgs>
+            result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ContractUpdateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.ContractUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ContractUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContractPayload>[]
           }
           upsert: {
-            args: Prisma.ContractUpsertArgs<ExtArgs>,
+            args: Prisma.ContractUpsertArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$ContractPayload>
           }
           aggregate: {
-            args: Prisma.ContractAggregateArgs<ExtArgs>,
+            args: Prisma.ContractAggregateArgs<ExtArgs>
             result: $Utils.Optional<AggregateContract>
           }
           groupBy: {
-            args: Prisma.ContractGroupByArgs<ExtArgs>,
+            args: Prisma.ContractGroupByArgs<ExtArgs>
             result: $Utils.Optional<ContractGroupByOutputType>[]
           }
           count: {
-            args: Prisma.ContractCountArgs<ExtArgs>,
+            args: Prisma.ContractCountArgs<ExtArgs>
             result: $Utils.Optional<ContractCountAggregateOutputType> | number
           }
         }
@@ -1097,64 +806,294 @@ export namespace Prisma {
         fields: Prisma.contractAgreementFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.contractAgreementFindUniqueArgs<ExtArgs>,
+            args: Prisma.contractAgreementFindUniqueArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$contractAgreementPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.contractAgreementFindUniqueOrThrowArgs<ExtArgs>,
+            args: Prisma.contractAgreementFindUniqueOrThrowArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$contractAgreementPayload>
           }
           findFirst: {
-            args: Prisma.contractAgreementFindFirstArgs<ExtArgs>,
+            args: Prisma.contractAgreementFindFirstArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$contractAgreementPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.contractAgreementFindFirstOrThrowArgs<ExtArgs>,
+            args: Prisma.contractAgreementFindFirstOrThrowArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$contractAgreementPayload>
           }
           findMany: {
-            args: Prisma.contractAgreementFindManyArgs<ExtArgs>,
+            args: Prisma.contractAgreementFindManyArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$contractAgreementPayload>[]
           }
           create: {
-            args: Prisma.contractAgreementCreateArgs<ExtArgs>,
+            args: Prisma.contractAgreementCreateArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$contractAgreementPayload>
           }
           createMany: {
-            args: Prisma.contractAgreementCreateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.contractAgreementCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.contractAgreementCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$contractAgreementPayload>[]
           }
           delete: {
-            args: Prisma.contractAgreementDeleteArgs<ExtArgs>,
+            args: Prisma.contractAgreementDeleteArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$contractAgreementPayload>
           }
           update: {
-            args: Prisma.contractAgreementUpdateArgs<ExtArgs>,
+            args: Prisma.contractAgreementUpdateArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$contractAgreementPayload>
           }
           deleteMany: {
-            args: Prisma.contractAgreementDeleteManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.contractAgreementDeleteManyArgs<ExtArgs>
+            result: BatchPayload
           }
           updateMany: {
-            args: Prisma.contractAgreementUpdateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.contractAgreementUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.contractAgreementUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$contractAgreementPayload>[]
           }
           upsert: {
-            args: Prisma.contractAgreementUpsertArgs<ExtArgs>,
+            args: Prisma.contractAgreementUpsertArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$contractAgreementPayload>
           }
           aggregate: {
-            args: Prisma.ContractAgreementAggregateArgs<ExtArgs>,
+            args: Prisma.ContractAgreementAggregateArgs<ExtArgs>
             result: $Utils.Optional<AggregateContractAgreement>
           }
           groupBy: {
-            args: Prisma.contractAgreementGroupByArgs<ExtArgs>,
+            args: Prisma.contractAgreementGroupByArgs<ExtArgs>
             result: $Utils.Optional<ContractAgreementGroupByOutputType>[]
           }
           count: {
-            args: Prisma.contractAgreementCountArgs<ExtArgs>,
+            args: Prisma.contractAgreementCountArgs<ExtArgs>
             result: $Utils.Optional<ContractAgreementCountAggregateOutputType> | number
+          }
+        }
+      }
+      Customer: {
+        payload: Prisma.$CustomerPayload<ExtArgs>
+        fields: Prisma.CustomerFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CustomerFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CustomerFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
+          }
+          findFirst: {
+            args: Prisma.CustomerFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CustomerFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
+          }
+          findMany: {
+            args: Prisma.CustomerFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>[]
+          }
+          create: {
+            args: Prisma.CustomerCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
+          }
+          createMany: {
+            args: Prisma.CustomerCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CustomerCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>[]
+          }
+          delete: {
+            args: Prisma.CustomerDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
+          }
+          update: {
+            args: Prisma.CustomerUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
+          }
+          deleteMany: {
+            args: Prisma.CustomerDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CustomerUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CustomerUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>[]
+          }
+          upsert: {
+            args: Prisma.CustomerUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
+          }
+          aggregate: {
+            args: Prisma.CustomerAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCustomer>
+          }
+          groupBy: {
+            args: Prisma.CustomerGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CustomerGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CustomerCountArgs<ExtArgs>
+            result: $Utils.Optional<CustomerCountAggregateOutputType> | number
+          }
+        }
+      }
+      JointProcurement: {
+        payload: Prisma.$JointProcurementPayload<ExtArgs>
+        fields: Prisma.JointProcurementFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.JointProcurementFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.JointProcurementFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload>
+          }
+          findFirst: {
+            args: Prisma.JointProcurementFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.JointProcurementFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload>
+          }
+          findMany: {
+            args: Prisma.JointProcurementFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload>[]
+          }
+          create: {
+            args: Prisma.JointProcurementCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload>
+          }
+          createMany: {
+            args: Prisma.JointProcurementCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.JointProcurementCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload>[]
+          }
+          delete: {
+            args: Prisma.JointProcurementDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload>
+          }
+          update: {
+            args: Prisma.JointProcurementUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload>
+          }
+          deleteMany: {
+            args: Prisma.JointProcurementDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.JointProcurementUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.JointProcurementUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload>[]
+          }
+          upsert: {
+            args: Prisma.JointProcurementUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JointProcurementPayload>
+          }
+          aggregate: {
+            args: Prisma.JointProcurementAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateJointProcurement>
+          }
+          groupBy: {
+            args: Prisma.JointProcurementGroupByArgs<ExtArgs>
+            result: $Utils.Optional<JointProcurementGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.JointProcurementCountArgs<ExtArgs>
+            result: $Utils.Optional<JointProcurementCountAggregateOutputType> | number
+          }
+        }
+      }
+      Procurement: {
+        payload: Prisma.$ProcurementPayload<ExtArgs>
+        fields: Prisma.ProcurementFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProcurementFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProcurementFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload>
+          }
+          findFirst: {
+            args: Prisma.ProcurementFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProcurementFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload>
+          }
+          findMany: {
+            args: Prisma.ProcurementFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload>[]
+          }
+          create: {
+            args: Prisma.ProcurementCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload>
+          }
+          createMany: {
+            args: Prisma.ProcurementCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProcurementCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload>[]
+          }
+          delete: {
+            args: Prisma.ProcurementDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload>
+          }
+          update: {
+            args: Prisma.ProcurementUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProcurementDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProcurementUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProcurementUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload>[]
+          }
+          upsert: {
+            args: Prisma.ProcurementUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcurementPayload>
+          }
+          aggregate: {
+            args: Prisma.ProcurementAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProcurement>
+          }
+          groupBy: {
+            args: Prisma.ProcurementGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProcurementGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProcurementCountArgs<ExtArgs>
+            result: $Utils.Optional<ProcurementCountAggregateOutputType> | number
           }
         }
       }
@@ -1163,64 +1102,146 @@ export namespace Prisma {
         fields: Prisma.TaskFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.TaskFindUniqueArgs<ExtArgs>,
+            args: Prisma.TaskFindUniqueArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$TaskPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.TaskFindUniqueOrThrowArgs<ExtArgs>,
+            args: Prisma.TaskFindUniqueOrThrowArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$TaskPayload>
           }
           findFirst: {
-            args: Prisma.TaskFindFirstArgs<ExtArgs>,
+            args: Prisma.TaskFindFirstArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$TaskPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.TaskFindFirstOrThrowArgs<ExtArgs>,
+            args: Prisma.TaskFindFirstOrThrowArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$TaskPayload>
           }
           findMany: {
-            args: Prisma.TaskFindManyArgs<ExtArgs>,
+            args: Prisma.TaskFindManyArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$TaskPayload>[]
           }
           create: {
-            args: Prisma.TaskCreateArgs<ExtArgs>,
+            args: Prisma.TaskCreateArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$TaskPayload>
           }
           createMany: {
-            args: Prisma.TaskCreateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.TaskCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TaskCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>[]
           }
           delete: {
-            args: Prisma.TaskDeleteArgs<ExtArgs>,
+            args: Prisma.TaskDeleteArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$TaskPayload>
           }
           update: {
-            args: Prisma.TaskUpdateArgs<ExtArgs>,
+            args: Prisma.TaskUpdateArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$TaskPayload>
           }
           deleteMany: {
-            args: Prisma.TaskDeleteManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.TaskDeleteManyArgs<ExtArgs>
+            result: BatchPayload
           }
           updateMany: {
-            args: Prisma.TaskUpdateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.TaskUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TaskUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>[]
           }
           upsert: {
-            args: Prisma.TaskUpsertArgs<ExtArgs>,
+            args: Prisma.TaskUpsertArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$TaskPayload>
           }
           aggregate: {
-            args: Prisma.TaskAggregateArgs<ExtArgs>,
+            args: Prisma.TaskAggregateArgs<ExtArgs>
             result: $Utils.Optional<AggregateTask>
           }
           groupBy: {
-            args: Prisma.TaskGroupByArgs<ExtArgs>,
+            args: Prisma.TaskGroupByArgs<ExtArgs>
             result: $Utils.Optional<TaskGroupByOutputType>[]
           }
           count: {
-            args: Prisma.TaskCountArgs<ExtArgs>,
+            args: Prisma.TaskCountArgs<ExtArgs>
             result: $Utils.Optional<TaskCountAggregateOutputType> | number
+          }
+        }
+      }
+      User: {
+        payload: Prisma.$UserPayload<ExtArgs>
+        fields: Prisma.UserFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          findFirst: {
+            args: Prisma.UserFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          findMany: {
+            args: Prisma.UserFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          create: {
+            args: Prisma.UserCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          createMany: {
+            args: Prisma.UserCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          delete: {
+            args: Prisma.UserDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          update: {
+            args: Prisma.UserUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          aggregate: {
+            args: Prisma.UserAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUser>
+          }
+          groupBy: {
+            args: Prisma.UserGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserCountArgs<ExtArgs>
+            result: $Utils.Optional<UserCountAggregateOutputType> | number
           }
         }
       }
@@ -1229,15 +1250,11 @@ export namespace Prisma {
     other: {
       payload: any
       operations: {
-        $executeRawUnsafe: {
-          args: [query: string, ...values: any[]],
-          result: any
-        }
         $executeRaw: {
           args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
           result: any
         }
-        $queryRawUnsafe: {
+        $executeRawUnsafe: {
           args: [query: string, ...values: any[]],
           result: any
         }
@@ -1245,10 +1262,14 @@ export namespace Prisma {
           args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
           result: any
         }
+        $queryRawUnsafe: {
+          args: [query: string, ...values: any[]],
+          result: any
+        }
       }
     }
   }
-  export const defineExtension: $Extensions.ExtendsHook<'define', Prisma.TypeMapCb, $Extensions.DefaultArgs>
+  export const defineExtension: $Extensions.ExtendsHook<"define", Prisma.TypeMapCb, $Extensions.DefaultArgs>
   export type DefaultPrismaClient = PrismaClient
   export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
   export interface PrismaClientOptions {
@@ -1291,6 +1312,30 @@ export namespace Prisma {
       timeout?: number
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
+    /**
+     * Global configuration for omitting model fields by default.
+     * 
+     * @example
+     * ```
+     * const prisma = new PrismaClient({
+     *   omit: {
+     *     user: {
+     *       password: true
+     *     }
+     *   }
+     * })
+     * ```
+     */
+    omit?: Prisma.GlobalOmitConfig
+  }
+  export type GlobalOmitConfig = {
+    contract?: ContractOmit
+    contractAgreement?: contractAgreementOmit
+    customer?: CustomerOmit
+    jointProcurement?: JointProcurementOmit
+    procurement?: ProcurementOmit
+    task?: TaskOmit
+    user?: UserOmit
   }
 
   /* Types for Logging */
@@ -1329,8 +1374,10 @@ export namespace Prisma {
     | 'findFirstOrThrow'
     | 'create'
     | 'createMany'
+    | 'createManyAndReturn'
     | 'update'
     | 'updateMany'
+    | 'updateManyAndReturn'
     | 'upsert'
     | 'delete'
     | 'deleteMany'
@@ -1379,6 +1426,130 @@ export namespace Prisma {
 
 
   /**
+   * Count Type ContractCountOutputType
+   */
+
+  export type ContractCountOutputType = {
+    agreements: number
+  }
+
+  export type ContractCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    agreements?: boolean | ContractCountOutputTypeCountAgreementsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ContractCountOutputType without action
+   */
+  export type ContractCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContractCountOutputType
+     */
+    select?: ContractCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ContractCountOutputType without action
+   */
+  export type ContractCountOutputTypeCountAgreementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: contractAgreementWhereInput
+  }
+
+
+  /**
+   * Count Type CustomerCountOutputType
+   */
+
+  export type CustomerCountOutputType = {
+    procurements: number
+  }
+
+  export type CustomerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    procurements?: boolean | CustomerCountOutputTypeCountProcurementsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CustomerCountOutputType without action
+   */
+  export type CustomerCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerCountOutputType
+     */
+    select?: CustomerCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CustomerCountOutputType without action
+   */
+  export type CustomerCountOutputTypeCountProcurementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProcurementWhereInput
+  }
+
+
+  /**
+   * Count Type JointProcurementCountOutputType
+   */
+
+  export type JointProcurementCountOutputType = {
+    procurements: number
+  }
+
+  export type JointProcurementCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    procurements?: boolean | JointProcurementCountOutputTypeCountProcurementsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * JointProcurementCountOutputType without action
+   */
+  export type JointProcurementCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JointProcurementCountOutputType
+     */
+    select?: JointProcurementCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * JointProcurementCountOutputType without action
+   */
+  export type JointProcurementCountOutputTypeCountProcurementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProcurementWhereInput
+  }
+
+
+  /**
+   * Count Type ProcurementCountOutputType
+   */
+
+  export type ProcurementCountOutputType = {
+    contracts: number
+  }
+
+  export type ProcurementCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    contracts?: boolean | ProcurementCountOutputTypeCountContractsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ProcurementCountOutputType without action
+   */
+  export type ProcurementCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProcurementCountOutputType
+     */
+    select?: ProcurementCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ProcurementCountOutputType without action
+   */
+  export type ProcurementCountOutputTypeCountContractsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ContractWhereInput
+  }
+
+
+  /**
    * Count Type UserCountOutputType
    */
 
@@ -1419,561 +1590,512 @@ export namespace Prisma {
 
 
   /**
-   * Count Type CustomerCountOutputType
-   */
-
-  export type CustomerCountOutputType = {
-    procurements: number
-  }
-
-  export type CustomerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    procurements?: boolean | CustomerCountOutputTypeCountProcurementsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * CustomerCountOutputType without action
-   */
-  export type CustomerCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CustomerCountOutputType
-     */
-    select?: CustomerCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * CustomerCountOutputType without action
-   */
-  export type CustomerCountOutputTypeCountProcurementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProcurementWhereInput
-  }
-
-
-  /**
-   * Count Type ProcurementCountOutputType
-   */
-
-  export type ProcurementCountOutputType = {
-    contracts: number
-  }
-
-  export type ProcurementCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    contracts?: boolean | ProcurementCountOutputTypeCountContractsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * ProcurementCountOutputType without action
-   */
-  export type ProcurementCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ProcurementCountOutputType
-     */
-    select?: ProcurementCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * ProcurementCountOutputType without action
-   */
-  export type ProcurementCountOutputTypeCountContractsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ContractWhereInput
-  }
-
-
-  /**
-   * Count Type JointProcurementCountOutputType
-   */
-
-  export type JointProcurementCountOutputType = {
-    procurements: number
-  }
-
-  export type JointProcurementCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    procurements?: boolean | JointProcurementCountOutputTypeCountProcurementsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * JointProcurementCountOutputType without action
-   */
-  export type JointProcurementCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the JointProcurementCountOutputType
-     */
-    select?: JointProcurementCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * JointProcurementCountOutputType without action
-   */
-  export type JointProcurementCountOutputTypeCountProcurementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProcurementWhereInput
-  }
-
-
-  /**
-   * Count Type ContractCountOutputType
-   */
-
-  export type ContractCountOutputType = {
-    agreements: number
-  }
-
-  export type ContractCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    agreements?: boolean | ContractCountOutputTypeCountAgreementsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * ContractCountOutputType without action
-   */
-  export type ContractCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ContractCountOutputType
-     */
-    select?: ContractCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * ContractCountOutputType without action
-   */
-  export type ContractCountOutputTypeCountAgreementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: contractAgreementWhereInput
-  }
-
-
-  /**
    * Models
    */
 
   /**
-   * Model User
+   * Model Contract
    */
 
-  export type AggregateUser = {
-    _count: UserCountAggregateOutputType | null
-    _min: UserMinAggregateOutputType | null
-    _max: UserMaxAggregateOutputType | null
+  export type AggregateContract = {
+    _count: ContractCountAggregateOutputType | null
+    _avg: ContractAvgAggregateOutputType | null
+    _sum: ContractSumAggregateOutputType | null
+    _min: ContractMinAggregateOutputType | null
+    _max: ContractMaxAggregateOutputType | null
   }
 
-  export type UserMinAggregateOutputType = {
+  export type ContractAvgAggregateOutputType = {
+    startValue: Decimal | null
+    currentValue: Decimal | null
+  }
+
+  export type ContractSumAggregateOutputType = {
+    startValue: Decimal | null
+    currentValue: Decimal | null
+  }
+
+  export type ContractMinAggregateOutputType = {
     id: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    email: string | null
-    name: string | null
-    surname: string | null
-    password: string | null
-    position: string | null
-    role: string | null
+    number: string | null
+    startValue: Decimal | null
+    currentValue: Decimal | null
+    signatureDate: Date | null
+    terminationDate: Date | null
+    product: string | null
+    unit: string | null
+    scope: string | null
+    procurementId: string | null
   }
 
-  export type UserMaxAggregateOutputType = {
+  export type ContractMaxAggregateOutputType = {
     id: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    email: string | null
-    name: string | null
-    surname: string | null
-    password: string | null
-    position: string | null
-    role: string | null
+    number: string | null
+    startValue: Decimal | null
+    currentValue: Decimal | null
+    signatureDate: Date | null
+    terminationDate: Date | null
+    product: string | null
+    unit: string | null
+    scope: string | null
+    procurementId: string | null
   }
 
-  export type UserCountAggregateOutputType = {
+  export type ContractCountAggregateOutputType = {
     id: number
     createdAt: number
     updatedAt: number
-    email: number
-    name: number
-    surname: number
-    password: number
-    position: number
-    role: number
+    number: number
+    startValue: number
+    currentValue: number
+    signatureDate: number
+    terminationDate: number
+    product: number
+    unit: number
+    scope: number
+    procurementId: number
     _all: number
   }
 
 
-  export type UserMinAggregateInputType = {
-    id?: true
-    createdAt?: true
-    updatedAt?: true
-    email?: true
-    name?: true
-    surname?: true
-    password?: true
-    position?: true
-    role?: true
+  export type ContractAvgAggregateInputType = {
+    startValue?: true
+    currentValue?: true
   }
 
-  export type UserMaxAggregateInputType = {
-    id?: true
-    createdAt?: true
-    updatedAt?: true
-    email?: true
-    name?: true
-    surname?: true
-    password?: true
-    position?: true
-    role?: true
+  export type ContractSumAggregateInputType = {
+    startValue?: true
+    currentValue?: true
   }
 
-  export type UserCountAggregateInputType = {
+  export type ContractMinAggregateInputType = {
     id?: true
     createdAt?: true
     updatedAt?: true
-    email?: true
-    name?: true
-    surname?: true
-    password?: true
-    position?: true
-    role?: true
+    number?: true
+    startValue?: true
+    currentValue?: true
+    signatureDate?: true
+    terminationDate?: true
+    product?: true
+    unit?: true
+    scope?: true
+    procurementId?: true
+  }
+
+  export type ContractMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    number?: true
+    startValue?: true
+    currentValue?: true
+    signatureDate?: true
+    terminationDate?: true
+    product?: true
+    unit?: true
+    scope?: true
+    procurementId?: true
+  }
+
+  export type ContractCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    number?: true
+    startValue?: true
+    currentValue?: true
+    signatureDate?: true
+    terminationDate?: true
+    product?: true
+    unit?: true
+    scope?: true
+    procurementId?: true
     _all?: true
   }
 
-  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ContractAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which User to aggregate.
+     * Filter which Contract to aggregate.
      */
-    where?: UserWhereInput
+    where?: ContractWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Users to fetch.
+     * Determine the order of Contracts to fetch.
      */
-    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    orderBy?: ContractOrderByWithRelationInput | ContractOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: UserWhereUniqueInput
+    cursor?: ContractWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Users from the position of the cursor.
+     * Take `±n` Contracts from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Users.
+     * Skip the first `n` Contracts.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Users
+     * Count returned Contracts
     **/
-    _count?: true | UserCountAggregateInputType
+    _count?: true | ContractCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ContractAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ContractSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: UserMinAggregateInputType
+    _min?: ContractMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: UserMaxAggregateInputType
+    _max?: ContractMaxAggregateInputType
   }
 
-  export type GetUserAggregateType<T extends UserAggregateArgs> = {
-        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
+  export type GetContractAggregateType<T extends ContractAggregateArgs> = {
+        [P in keyof T & keyof AggregateContract]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateUser[P]>
-      : GetScalarType<T[P], AggregateUser[P]>
+        : GetScalarType<T[P], AggregateContract[P]>
+      : GetScalarType<T[P], AggregateContract[P]>
   }
 
 
 
 
-  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserWhereInput
-    orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
-    by: UserScalarFieldEnum[] | UserScalarFieldEnum
-    having?: UserScalarWhereWithAggregatesInput
+  export type ContractGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ContractWhereInput
+    orderBy?: ContractOrderByWithAggregationInput | ContractOrderByWithAggregationInput[]
+    by: ContractScalarFieldEnum[] | ContractScalarFieldEnum
+    having?: ContractScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: UserCountAggregateInputType | true
-    _min?: UserMinAggregateInputType
-    _max?: UserMaxAggregateInputType
+    _count?: ContractCountAggregateInputType | true
+    _avg?: ContractAvgAggregateInputType
+    _sum?: ContractSumAggregateInputType
+    _min?: ContractMinAggregateInputType
+    _max?: ContractMaxAggregateInputType
   }
 
-  export type UserGroupByOutputType = {
+  export type ContractGroupByOutputType = {
     id: string
     createdAt: Date
     updatedAt: Date
-    email: string
-    name: string | null
-    surname: string | null
-    password: string
-    position: string | null
-    role: string
-    _count: UserCountAggregateOutputType | null
-    _min: UserMinAggregateOutputType | null
-    _max: UserMaxAggregateOutputType | null
+    number: string
+    startValue: Decimal
+    currentValue: Decimal | null
+    signatureDate: Date
+    terminationDate: Date
+    product: string
+    unit: string
+    scope: string
+    procurementId: string
+    _count: ContractCountAggregateOutputType | null
+    _avg: ContractAvgAggregateOutputType | null
+    _sum: ContractSumAggregateOutputType | null
+    _min: ContractMinAggregateOutputType | null
+    _max: ContractMaxAggregateOutputType | null
   }
 
-  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
+  type GetContractGroupByPayload<T extends ContractGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<UserGroupByOutputType, T['by']> &
+      PickEnumerable<ContractGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof ContractGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], UserGroupByOutputType[P]>
-            : GetScalarType<T[P], UserGroupByOutputType[P]>
+              : GetScalarType<T[P], ContractGroupByOutputType[P]>
+            : GetScalarType<T[P], ContractGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ContractSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    email?: boolean
-    name?: boolean
-    surname?: boolean
-    password?: boolean
-    position?: boolean
-    role?: boolean
-    tasks?: boolean | User$tasksArgs<ExtArgs>
-    procurements?: boolean | User$procurementsArgs<ExtArgs>
-    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["user"]>
+    number?: boolean
+    startValue?: boolean
+    currentValue?: boolean
+    signatureDate?: boolean
+    terminationDate?: boolean
+    product?: boolean
+    unit?: boolean
+    scope?: boolean
+    procurementId?: boolean
+    procurement?: boolean | ProcurementDefaultArgs<ExtArgs>
+    agreements?: boolean | Contract$agreementsArgs<ExtArgs>
+    _count?: boolean | ContractCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contract"]>
 
-  export type UserSelectScalar = {
+  export type ContractSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    email?: boolean
-    name?: boolean
-    surname?: boolean
-    password?: boolean
-    position?: boolean
-    role?: boolean
+    number?: boolean
+    startValue?: boolean
+    currentValue?: boolean
+    signatureDate?: boolean
+    terminationDate?: boolean
+    product?: boolean
+    unit?: boolean
+    scope?: boolean
+    procurementId?: boolean
+    procurement?: boolean | ProcurementDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contract"]>
+
+  export type ContractSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    number?: boolean
+    startValue?: boolean
+    currentValue?: boolean
+    signatureDate?: boolean
+    terminationDate?: boolean
+    product?: boolean
+    unit?: boolean
+    scope?: boolean
+    procurementId?: boolean
+    procurement?: boolean | ProcurementDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contract"]>
+
+  export type ContractSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    number?: boolean
+    startValue?: boolean
+    currentValue?: boolean
+    signatureDate?: boolean
+    terminationDate?: boolean
+    product?: boolean
+    unit?: boolean
+    scope?: boolean
+    procurementId?: boolean
   }
 
-
-  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tasks?: boolean | User$tasksArgs<ExtArgs>
-    procurements?: boolean | User$procurementsArgs<ExtArgs>
-    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  export type ContractOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "number" | "startValue" | "currentValue" | "signatureDate" | "terminationDate" | "product" | "unit" | "scope" | "procurementId", ExtArgs["result"]["contract"]>
+  export type ContractInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    procurement?: boolean | ProcurementDefaultArgs<ExtArgs>
+    agreements?: boolean | Contract$agreementsArgs<ExtArgs>
+    _count?: boolean | ContractCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ContractIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    procurement?: boolean | ProcurementDefaultArgs<ExtArgs>
+  }
+  export type ContractIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    procurement?: boolean | ProcurementDefaultArgs<ExtArgs>
   }
 
-
-  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "User"
+  export type $ContractPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Contract"
     objects: {
-      tasks: Prisma.$TaskPayload<ExtArgs>[]
-      procurements: Prisma.$ProcurementPayload<ExtArgs>[]
+      procurement: Prisma.$ProcurementPayload<ExtArgs>
+      agreements: Prisma.$contractAgreementPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       createdAt: Date
       updatedAt: Date
-      email: string
-      name: string | null
-      surname: string | null
-      password: string
-      position: string | null
-      role: string
-    }, ExtArgs["result"]["user"]>
+      number: string
+      startValue: Prisma.Decimal
+      currentValue: Prisma.Decimal | null
+      signatureDate: Date
+      terminationDate: Date
+      product: string
+      unit: string
+      scope: string
+      procurementId: string
+    }, ExtArgs["result"]["contract"]>
     composites: {}
   }
 
+  type ContractGetPayload<S extends boolean | null | undefined | ContractDefaultArgs> = $Result.GetResult<Prisma.$ContractPayload, S>
 
-  type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
-
-  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct'> & {
-      select?: UserCountAggregateInputType | true
+  type ContractCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ContractFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ContractCountAggregateInputType | true
     }
 
-  export interface UserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User'], meta: { name: 'User' } }
+  export interface ContractDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Contract'], meta: { name: 'Contract' } }
     /**
-     * Find zero or one User that matches the filter.
-     * @param {UserFindUniqueArgs} args - Arguments to find a User
+     * Find zero or one Contract that matches the filter.
+     * @param {ContractFindUniqueArgs} args - Arguments to find a Contract
      * @example
-     * // Get one User
-     * const user = await prisma.user.findUnique({
+     * // Get one Contract
+     * const contract = await prisma.contract.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findUnique<T extends UserFindUniqueArgs<ExtArgs>>(
-      args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>
-    ): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+     */
+    findUnique<T extends ContractFindUniqueArgs>(args: SelectSubset<T, ContractFindUniqueArgs<ExtArgs>>): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one User that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
+     * Find one Contract that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ContractFindUniqueOrThrowArgs} args - Arguments to find a Contract
      * @example
-     * // Get one User
-     * const user = await prisma.user.findUniqueOrThrow({
+     * // Get one Contract
+     * const contract = await prisma.contract.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>
-    ): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+     */
+    findUniqueOrThrow<T extends ContractFindUniqueOrThrowArgs>(args: SelectSubset<T, ContractFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Find the first User that matches the filter.
+     * Find the first Contract that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserFindFirstArgs} args - Arguments to find a User
+     * @param {ContractFindFirstArgs} args - Arguments to find a Contract
      * @example
-     * // Get one User
-     * const user = await prisma.user.findFirst({
+     * // Get one Contract
+     * const contract = await prisma.contract.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findFirst<T extends UserFindFirstArgs<ExtArgs>>(
-      args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>
-    ): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+     */
+    findFirst<T extends ContractFindFirstArgs>(args?: SelectSubset<T, ContractFindFirstArgs<ExtArgs>>): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find the first User that matches the filter or
+     * Find the first Contract that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
+     * @param {ContractFindFirstOrThrowArgs} args - Arguments to find a Contract
      * @example
-     * // Get one User
-     * const user = await prisma.user.findFirstOrThrow({
+     * // Get one Contract
+     * const contract = await prisma.contract.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findFirstOrThrow<T extends UserFindFirstOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>
-    ): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+     */
+    findFirstOrThrow<T extends ContractFindFirstOrThrowArgs>(args?: SelectSubset<T, ContractFindFirstOrThrowArgs<ExtArgs>>): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Find zero or more Users that matches the filter.
+     * Find zero or more Contracts that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {ContractFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Users
-     * const users = await prisma.user.findMany()
+     * // Get all Contracts
+     * const contracts = await prisma.contract.findMany()
      * 
-     * // Get first 10 Users
-     * const users = await prisma.user.findMany({ take: 10 })
+     * // Get first 10 Contracts
+     * const contracts = await prisma.contract.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
+     * const contractWithIdOnly = await prisma.contract.findMany({ select: { id: true } })
      * 
-    **/
-    findMany<T extends UserFindManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findMany'>>
+     */
+    findMany<T extends ContractFindManyArgs>(args?: SelectSubset<T, ContractFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
     /**
-     * Create a User.
-     * @param {UserCreateArgs} args - Arguments to create a User.
+     * Create a Contract.
+     * @param {ContractCreateArgs} args - Arguments to create a Contract.
      * @example
-     * // Create one User
-     * const User = await prisma.user.create({
+     * // Create one Contract
+     * const Contract = await prisma.contract.create({
      *   data: {
-     *     // ... data to create a User
+     *     // ... data to create a Contract
      *   }
      * })
      * 
-    **/
-    create<T extends UserCreateArgs<ExtArgs>>(
-      args: SelectSubset<T, UserCreateArgs<ExtArgs>>
-    ): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+     */
+    create<T extends ContractCreateArgs>(args: SelectSubset<T, ContractCreateArgs<ExtArgs>>): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Create many Users.
-     *     @param {UserCreateManyArgs} args - Arguments to create many Users.
-     *     @example
-     *     // Create many Users
-     *     const user = await prisma.user.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends UserCreateManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a User.
-     * @param {UserDeleteArgs} args - Arguments to delete one User.
+     * Create many Contracts.
+     * @param {ContractCreateManyArgs} args - Arguments to create many Contracts.
      * @example
-     * // Delete one User
-     * const User = await prisma.user.delete({
-     *   where: {
-     *     // ... filter to delete one User
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends UserDeleteArgs<ExtArgs>>(
-      args: SelectSubset<T, UserDeleteArgs<ExtArgs>>
-    ): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
-
-    /**
-     * Update one User.
-     * @param {UserUpdateArgs} args - Arguments to update one User.
-     * @example
-     * // Update one User
-     * const user = await prisma.user.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
+     * // Create many Contracts
+     * const contract = await prisma.contract.createMany({
+     *   data: [
      *     // ... provide data here
-     *   }
+     *   ]
      * })
-     * 
-    **/
-    update<T extends UserUpdateArgs<ExtArgs>>(
-      args: SelectSubset<T, UserUpdateArgs<ExtArgs>>
-    ): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+     *     
+     */
+    createMany<T extends ContractCreateManyArgs>(args?: SelectSubset<T, ContractCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete zero or more Users.
-     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
+     * Create many Contracts and returns the data saved in the database.
+     * @param {ContractCreateManyAndReturnArgs} args - Arguments to create many Contracts.
      * @example
-     * // Delete a few Users
-     * const { count } = await prisma.user.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
+     * // Create many Contracts
+     * const contract = await prisma.contract.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
      * })
      * 
-    **/
-    deleteMany<T extends UserDeleteManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Users.
+     * // Create many Contracts and only return the `id`
+     * const contractWithIdOnly = await prisma.contract.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
+     * 
+     */
+    createManyAndReturn<T extends ContractCreateManyAndReturnArgs>(args?: SelectSubset<T, ContractCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a Contract.
+     * @param {ContractDeleteArgs} args - Arguments to delete one Contract.
      * @example
-     * // Update many Users
-     * const user = await prisma.user.updateMany({
+     * // Delete one Contract
+     * const Contract = await prisma.contract.delete({
+     *   where: {
+     *     // ... filter to delete one Contract
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ContractDeleteArgs>(args: SelectSubset<T, ContractDeleteArgs<ExtArgs>>): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one Contract.
+     * @param {ContractUpdateArgs} args - Arguments to update one Contract.
+     * @example
+     * // Update one Contract
+     * const contract = await prisma.contract.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1982,60 +2104,120 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    updateMany<T extends UserUpdateManyArgs<ExtArgs>>(
-      args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    update<T extends ContractUpdateArgs>(args: SelectSubset<T, ContractUpdateArgs<ExtArgs>>): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Create or update one User.
-     * @param {UserUpsertArgs} args - Arguments to update or create a User.
+     * Delete zero or more Contracts.
+     * @param {ContractDeleteManyArgs} args - Arguments to filter Contracts to delete.
      * @example
-     * // Update or create a User
-     * const user = await prisma.user.upsert({
+     * // Delete a few Contracts
+     * const { count } = await prisma.contract.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ContractDeleteManyArgs>(args?: SelectSubset<T, ContractDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Contracts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContractUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Contracts
+     * const contract = await prisma.contract.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ContractUpdateManyArgs>(args: SelectSubset<T, ContractUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Contracts and returns the data updated in the database.
+     * @param {ContractUpdateManyAndReturnArgs} args - Arguments to update many Contracts.
+     * @example
+     * // Update many Contracts
+     * const contract = await prisma.contract.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Contracts and only return the `id`
+     * const contractWithIdOnly = await prisma.contract.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ContractUpdateManyAndReturnArgs>(args: SelectSubset<T, ContractUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one Contract.
+     * @param {ContractUpsertArgs} args - Arguments to update or create a Contract.
+     * @example
+     * // Update or create a Contract
+     * const contract = await prisma.contract.upsert({
      *   create: {
-     *     // ... data to create a User
+     *     // ... data to create a Contract
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the User we want to update
+     *     // ... the filter for the Contract we want to update
      *   }
      * })
-    **/
-    upsert<T extends UserUpsertArgs<ExtArgs>>(
-      args: SelectSubset<T, UserUpsertArgs<ExtArgs>>
-    ): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+     */
+    upsert<T extends ContractUpsertArgs>(args: SelectSubset<T, ContractUpsertArgs<ExtArgs>>): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
 
     /**
-     * Count the number of Users.
+     * Count the number of Contracts.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserCountArgs} args - Arguments to filter Users to count.
+     * @param {ContractCountArgs} args - Arguments to filter Contracts to count.
      * @example
-     * // Count the number of Users
-     * const count = await prisma.user.count({
+     * // Count the number of Contracts
+     * const count = await prisma.contract.count({
      *   where: {
-     *     // ... the filter for the Users we want to count
+     *     // ... the filter for the Contracts we want to count
      *   }
      * })
     **/
-    count<T extends UserCountArgs>(
-      args?: Subset<T, UserCountArgs>,
+    count<T extends ContractCountArgs>(
+      args?: Subset<T, ContractCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], UserCountAggregateOutputType>
+          : GetScalarType<T['select'], ContractCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a User.
+     * Allows you to perform aggregations operations on a Contract.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {ContractAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -2055,13 +2237,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
+    aggregate<T extends ContractAggregateArgs>(args: Subset<T, ContractAggregateArgs>): Prisma.PrismaPromise<GetContractAggregateType<T>>
 
     /**
-     * Group by User.
+     * Group by Contract.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserGroupByArgs} args - Group by arguments.
+     * @param {ContractGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -2076,14 +2258,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends UserGroupByArgs,
+      T extends ContractGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: UserGroupByArgs['orderBy'] }
-        : { orderBy?: UserGroupByArgs['orderBy'] },
+        ? { orderBy: ContractGroupByArgs['orderBy'] }
+        : { orderBy?: ContractGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -2132,413 +2314,1559 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, ContractGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetContractGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the User model
+   * Fields of the Contract model
    */
-  readonly fields: UserFieldRefs;
+  readonly fields: ContractFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for User.
+   * The delegate class that acts as a "Promise-like" for Contract.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-
-    tasks<T extends User$tasksArgs<ExtArgs> = {}>(args?: Subset<T, User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, 'findMany'> | Null>;
-
-    procurements<T extends User$procurementsArgs<ExtArgs> = {}>(args?: Subset<T, User$procurementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, 'findMany'> | Null>;
-
+  export interface Prisma__ContractClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    procurement<T extends ProcurementDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProcurementDefaultArgs<ExtArgs>>): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    agreements<T extends Contract$agreementsArgs<ExtArgs> = {}>(args?: Subset<T, Contract$agreementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of which ever callback is executed.
      */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
     /**
      * Attaches a callback for only the rejection of the Promise.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of the callback.
      */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
     /**
      * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
      * resolved value cannot be modified from the callback.
      * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
      * @returns A Promise for the completion of the callback.
      */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
 
 
 
+
   /**
-   * Fields of the User model
+   * Fields of the Contract model
    */ 
-  interface UserFieldRefs {
-    readonly id: FieldRef<"User", 'String'>
-    readonly createdAt: FieldRef<"User", 'DateTime'>
-    readonly updatedAt: FieldRef<"User", 'DateTime'>
-    readonly email: FieldRef<"User", 'String'>
-    readonly name: FieldRef<"User", 'String'>
-    readonly surname: FieldRef<"User", 'String'>
-    readonly password: FieldRef<"User", 'String'>
-    readonly position: FieldRef<"User", 'String'>
-    readonly role: FieldRef<"User", 'String'>
+  interface ContractFieldRefs {
+    readonly id: FieldRef<"Contract", 'String'>
+    readonly createdAt: FieldRef<"Contract", 'DateTime'>
+    readonly updatedAt: FieldRef<"Contract", 'DateTime'>
+    readonly number: FieldRef<"Contract", 'String'>
+    readonly startValue: FieldRef<"Contract", 'Decimal'>
+    readonly currentValue: FieldRef<"Contract", 'Decimal'>
+    readonly signatureDate: FieldRef<"Contract", 'DateTime'>
+    readonly terminationDate: FieldRef<"Contract", 'DateTime'>
+    readonly product: FieldRef<"Contract", 'String'>
+    readonly unit: FieldRef<"Contract", 'String'>
+    readonly scope: FieldRef<"Contract", 'String'>
+    readonly procurementId: FieldRef<"Contract", 'String'>
   }
     
 
   // Custom InputTypes
   /**
-   * User findUnique
+   * Contract findUnique
    */
-  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ContractFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the User
+     * Select specific fields to fetch from the Contract
      */
-    select?: UserSelect<ExtArgs> | null
+    select?: ContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Contract
+     */
+    omit?: ContractOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserInclude<ExtArgs> | null
+    include?: ContractInclude<ExtArgs> | null
     /**
-     * Filter, which User to fetch.
+     * Filter, which Contract to fetch.
      */
-    where: UserWhereUniqueInput
+    where: ContractWhereUniqueInput
   }
 
   /**
-   * User findUniqueOrThrow
+   * Contract findUniqueOrThrow
    */
-  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ContractFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the User
+     * Select specific fields to fetch from the Contract
      */
-    select?: UserSelect<ExtArgs> | null
+    select?: ContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Contract
+     */
+    omit?: ContractOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserInclude<ExtArgs> | null
+    include?: ContractInclude<ExtArgs> | null
     /**
-     * Filter, which User to fetch.
+     * Filter, which Contract to fetch.
      */
-    where: UserWhereUniqueInput
+    where: ContractWhereUniqueInput
   }
 
   /**
-   * User findFirst
+   * Contract findFirst
    */
-  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ContractFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the User
+     * Select specific fields to fetch from the Contract
      */
-    select?: UserSelect<ExtArgs> | null
+    select?: ContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Contract
+     */
+    omit?: ContractOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserInclude<ExtArgs> | null
+    include?: ContractInclude<ExtArgs> | null
     /**
-     * Filter, which User to fetch.
+     * Filter, which Contract to fetch.
      */
-    where?: UserWhereInput
+    where?: ContractWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Users to fetch.
+     * Determine the order of Contracts to fetch.
      */
-    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    orderBy?: ContractOrderByWithRelationInput | ContractOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Users.
+     * Sets the position for searching for Contracts.
      */
-    cursor?: UserWhereUniqueInput
+    cursor?: ContractWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Users from the position of the cursor.
+     * Take `±n` Contracts from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Users.
+     * Skip the first `n` Contracts.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Users.
+     * Filter by unique combinations of Contracts.
      */
-    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+    distinct?: ContractScalarFieldEnum | ContractScalarFieldEnum[]
   }
 
   /**
-   * User findFirstOrThrow
+   * Contract findFirstOrThrow
    */
-  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ContractFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the User
+     * Select specific fields to fetch from the Contract
      */
-    select?: UserSelect<ExtArgs> | null
+    select?: ContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Contract
+     */
+    omit?: ContractOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserInclude<ExtArgs> | null
+    include?: ContractInclude<ExtArgs> | null
     /**
-     * Filter, which User to fetch.
+     * Filter, which Contract to fetch.
      */
-    where?: UserWhereInput
+    where?: ContractWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Users to fetch.
+     * Determine the order of Contracts to fetch.
      */
-    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    orderBy?: ContractOrderByWithRelationInput | ContractOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Users.
+     * Sets the position for searching for Contracts.
      */
-    cursor?: UserWhereUniqueInput
+    cursor?: ContractWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Users from the position of the cursor.
+     * Take `±n` Contracts from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Users.
+     * Skip the first `n` Contracts.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Users.
+     * Filter by unique combinations of Contracts.
      */
-    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+    distinct?: ContractScalarFieldEnum | ContractScalarFieldEnum[]
   }
 
   /**
-   * User findMany
+   * Contract findMany
    */
-  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ContractFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the User
+     * Select specific fields to fetch from the Contract
      */
-    select?: UserSelect<ExtArgs> | null
+    select?: ContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Contract
+     */
+    omit?: ContractOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserInclude<ExtArgs> | null
+    include?: ContractInclude<ExtArgs> | null
     /**
-     * Filter, which Users to fetch.
+     * Filter, which Contracts to fetch.
      */
-    where?: UserWhereInput
+    where?: ContractWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Users to fetch.
+     * Determine the order of Contracts to fetch.
      */
-    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    orderBy?: ContractOrderByWithRelationInput | ContractOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Users.
+     * Sets the position for listing Contracts.
      */
-    cursor?: UserWhereUniqueInput
+    cursor?: ContractWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Users from the position of the cursor.
+     * Take `±n` Contracts from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Users.
+     * Skip the first `n` Contracts.
      */
     skip?: number
-    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+    distinct?: ContractScalarFieldEnum | ContractScalarFieldEnum[]
   }
 
   /**
-   * User create
+   * Contract create
    */
-  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ContractCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the User
+     * Select specific fields to fetch from the Contract
      */
-    select?: UserSelect<ExtArgs> | null
+    select?: ContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Contract
+     */
+    omit?: ContractOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserInclude<ExtArgs> | null
+    include?: ContractInclude<ExtArgs> | null
     /**
-     * The data needed to create a User.
+     * The data needed to create a Contract.
      */
-    data: XOR<UserCreateInput, UserUncheckedCreateInput>
+    data: XOR<ContractCreateInput, ContractUncheckedCreateInput>
   }
 
   /**
-   * User createMany
+   * Contract createMany
    */
-  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ContractCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Users.
+     * The data used to create many Contracts.
      */
-    data: UserCreateManyInput | UserCreateManyInput[]
+    data: ContractCreateManyInput | ContractCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * User update
+   * Contract createManyAndReturn
    */
-  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ContractCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the User
+     * Select specific fields to fetch from the Contract
      */
-    select?: UserSelect<ExtArgs> | null
+    select?: ContractSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Contract
+     */
+    omit?: ContractOmit<ExtArgs> | null
+    /**
+     * The data used to create many Contracts.
+     */
+    data: ContractCreateManyInput | ContractCreateManyInput[]
+    skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserInclude<ExtArgs> | null
-    /**
-     * The data needed to update a User.
-     */
-    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
-    /**
-     * Choose, which User to update.
-     */
-    where: UserWhereUniqueInput
+    include?: ContractIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * User updateMany
+   * Contract update
    */
-  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ContractUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Users.
+     * Select specific fields to fetch from the Contract
      */
-    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    select?: ContractSelect<ExtArgs> | null
     /**
-     * Filter which Users to update
+     * Omit specific fields from the Contract
      */
-    where?: UserWhereInput
-  }
-
-  /**
-   * User upsert
-   */
-  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
+    omit?: ContractOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserInclude<ExtArgs> | null
+    include?: ContractInclude<ExtArgs> | null
     /**
-     * The filter to search for the User to update in case it exists.
+     * The data needed to update a Contract.
      */
-    where: UserWhereUniqueInput
+    data: XOR<ContractUpdateInput, ContractUncheckedUpdateInput>
     /**
-     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
+     * Choose, which Contract to update.
      */
-    create: XOR<UserCreateInput, UserUncheckedCreateInput>
-    /**
-     * In case the User was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+    where: ContractWhereUniqueInput
   }
 
   /**
-   * User delete
+   * Contract updateMany
    */
-  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ContractUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the User
+     * The data used to update Contracts.
      */
-    select?: UserSelect<ExtArgs> | null
+    data: XOR<ContractUpdateManyMutationInput, ContractUncheckedUpdateManyInput>
+    /**
+     * Filter which Contracts to update
+     */
+    where?: ContractWhereInput
+  }
+
+  /**
+   * Contract updateManyAndReturn
+   */
+  export type ContractUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Contract
+     */
+    select?: ContractSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Contract
+     */
+    omit?: ContractOmit<ExtArgs> | null
+    /**
+     * The data used to update Contracts.
+     */
+    data: XOR<ContractUpdateManyMutationInput, ContractUncheckedUpdateManyInput>
+    /**
+     * Filter which Contracts to update
+     */
+    where?: ContractWhereInput
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserInclude<ExtArgs> | null
-    /**
-     * Filter which User to delete.
-     */
-    where: UserWhereUniqueInput
+    include?: ContractIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * User deleteMany
+   * Contract upsert
    */
-  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ContractUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Users to delete
+     * Select specific fields to fetch from the Contract
      */
-    where?: UserWhereInput
-  }
-
-  /**
-   * User.tasks
-   */
-  export type User$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    select?: ContractSelect<ExtArgs> | null
     /**
-     * Select specific fields to fetch from the Task
+     * Omit specific fields from the Contract
      */
-    select?: TaskSelect<ExtArgs> | null
+    omit?: ContractOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TaskInclude<ExtArgs> | null
-    where?: TaskWhereInput
-    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
-    cursor?: TaskWhereUniqueInput
+    include?: ContractInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Contract to update in case it exists.
+     */
+    where: ContractWhereUniqueInput
+    /**
+     * In case the Contract found by the `where` argument doesn't exist, create a new Contract with this data.
+     */
+    create: XOR<ContractCreateInput, ContractUncheckedCreateInput>
+    /**
+     * In case the Contract was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ContractUpdateInput, ContractUncheckedUpdateInput>
+  }
+
+  /**
+   * Contract delete
+   */
+  export type ContractDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Contract
+     */
+    select?: ContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Contract
+     */
+    omit?: ContractOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContractInclude<ExtArgs> | null
+    /**
+     * Filter which Contract to delete.
+     */
+    where: ContractWhereUniqueInput
+  }
+
+  /**
+   * Contract deleteMany
+   */
+  export type ContractDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Contracts to delete
+     */
+    where?: ContractWhereInput
+  }
+
+  /**
+   * Contract.agreements
+   */
+  export type Contract$agreementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the contractAgreement
+     */
+    select?: contractAgreementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the contractAgreement
+     */
+    omit?: contractAgreementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: contractAgreementInclude<ExtArgs> | null
+    where?: contractAgreementWhereInput
+    orderBy?: contractAgreementOrderByWithRelationInput | contractAgreementOrderByWithRelationInput[]
+    cursor?: contractAgreementWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+    distinct?: ContractAgreementScalarFieldEnum | ContractAgreementScalarFieldEnum[]
   }
 
   /**
-   * User.procurements
+   * Contract without action
    */
-  export type User$procurementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ContractDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Procurement
+     * Select specific fields to fetch from the Contract
      */
-    select?: ProcurementSelect<ExtArgs> | null
+    select?: ContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Contract
+     */
+    omit?: ContractOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProcurementInclude<ExtArgs> | null
-    where?: ProcurementWhereInput
-    orderBy?: ProcurementOrderByWithRelationInput | ProcurementOrderByWithRelationInput[]
-    cursor?: ProcurementWhereUniqueInput
+    include?: ContractInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model contractAgreement
+   */
+
+  export type AggregateContractAgreement = {
+    _count: ContractAgreementCountAggregateOutputType | null
+    _min: ContractAgreementMinAggregateOutputType | null
+    _max: ContractAgreementMaxAggregateOutputType | null
+  }
+
+  export type ContractAgreementMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    number: string | null
+    signatureDate: Date | null
+    reason: string | null
+    changes: string | null
+    contractId: string | null
+  }
+
+  export type ContractAgreementMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    number: string | null
+    signatureDate: Date | null
+    reason: string | null
+    changes: string | null
+    contractId: string | null
+  }
+
+  export type ContractAgreementCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    number: number
+    signatureDate: number
+    reason: number
+    changes: number
+    contractId: number
+    _all: number
+  }
+
+
+  export type ContractAgreementMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    number?: true
+    signatureDate?: true
+    reason?: true
+    changes?: true
+    contractId?: true
+  }
+
+  export type ContractAgreementMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    number?: true
+    signatureDate?: true
+    reason?: true
+    changes?: true
+    contractId?: true
+  }
+
+  export type ContractAgreementCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    number?: true
+    signatureDate?: true
+    reason?: true
+    changes?: true
+    contractId?: true
+    _all?: true
+  }
+
+  export type ContractAgreementAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which contractAgreement to aggregate.
+     */
+    where?: contractAgreementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of contractAgreements to fetch.
+     */
+    orderBy?: contractAgreementOrderByWithRelationInput | contractAgreementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: contractAgreementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` contractAgreements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` contractAgreements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned contractAgreements
+    **/
+    _count?: true | ContractAgreementCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ContractAgreementMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ContractAgreementMaxAggregateInputType
+  }
+
+  export type GetContractAgreementAggregateType<T extends ContractAgreementAggregateArgs> = {
+        [P in keyof T & keyof AggregateContractAgreement]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateContractAgreement[P]>
+      : GetScalarType<T[P], AggregateContractAgreement[P]>
+  }
+
+
+
+
+  export type contractAgreementGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: contractAgreementWhereInput
+    orderBy?: contractAgreementOrderByWithAggregationInput | contractAgreementOrderByWithAggregationInput[]
+    by: ContractAgreementScalarFieldEnum[] | ContractAgreementScalarFieldEnum
+    having?: contractAgreementScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    distinct?: ProcurementScalarFieldEnum | ProcurementScalarFieldEnum[]
+    _count?: ContractAgreementCountAggregateInputType | true
+    _min?: ContractAgreementMinAggregateInputType
+    _max?: ContractAgreementMaxAggregateInputType
+  }
+
+  export type ContractAgreementGroupByOutputType = {
+    id: string
+    createdAt: Date
+    number: string
+    signatureDate: Date
+    reason: string
+    changes: string
+    contractId: string
+    _count: ContractAgreementCountAggregateOutputType | null
+    _min: ContractAgreementMinAggregateOutputType | null
+    _max: ContractAgreementMaxAggregateOutputType | null
+  }
+
+  type GetContractAgreementGroupByPayload<T extends contractAgreementGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ContractAgreementGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ContractAgreementGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ContractAgreementGroupByOutputType[P]>
+            : GetScalarType<T[P], ContractAgreementGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type contractAgreementSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    number?: boolean
+    signatureDate?: boolean
+    reason?: boolean
+    changes?: boolean
+    contractId?: boolean
+    contract?: boolean | ContractDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contractAgreement"]>
+
+  export type contractAgreementSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    number?: boolean
+    signatureDate?: boolean
+    reason?: boolean
+    changes?: boolean
+    contractId?: boolean
+    contract?: boolean | ContractDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contractAgreement"]>
+
+  export type contractAgreementSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    number?: boolean
+    signatureDate?: boolean
+    reason?: boolean
+    changes?: boolean
+    contractId?: boolean
+    contract?: boolean | ContractDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contractAgreement"]>
+
+  export type contractAgreementSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    number?: boolean
+    signatureDate?: boolean
+    reason?: boolean
+    changes?: boolean
+    contractId?: boolean
+  }
+
+  export type contractAgreementOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "number" | "signatureDate" | "reason" | "changes" | "contractId", ExtArgs["result"]["contractAgreement"]>
+  export type contractAgreementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    contract?: boolean | ContractDefaultArgs<ExtArgs>
+  }
+  export type contractAgreementIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    contract?: boolean | ContractDefaultArgs<ExtArgs>
+  }
+  export type contractAgreementIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    contract?: boolean | ContractDefaultArgs<ExtArgs>
+  }
+
+  export type $contractAgreementPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "contractAgreement"
+    objects: {
+      contract: Prisma.$ContractPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      number: string
+      signatureDate: Date
+      reason: string
+      changes: string
+      contractId: string
+    }, ExtArgs["result"]["contractAgreement"]>
+    composites: {}
+  }
+
+  type contractAgreementGetPayload<S extends boolean | null | undefined | contractAgreementDefaultArgs> = $Result.GetResult<Prisma.$contractAgreementPayload, S>
+
+  type contractAgreementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<contractAgreementFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ContractAgreementCountAggregateInputType | true
+    }
+
+  export interface contractAgreementDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['contractAgreement'], meta: { name: 'contractAgreement' } }
+    /**
+     * Find zero or one ContractAgreement that matches the filter.
+     * @param {contractAgreementFindUniqueArgs} args - Arguments to find a ContractAgreement
+     * @example
+     * // Get one ContractAgreement
+     * const contractAgreement = await prisma.contractAgreement.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends contractAgreementFindUniqueArgs>(args: SelectSubset<T, contractAgreementFindUniqueArgs<ExtArgs>>): Prisma__contractAgreementClient<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one ContractAgreement that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {contractAgreementFindUniqueOrThrowArgs} args - Arguments to find a ContractAgreement
+     * @example
+     * // Get one ContractAgreement
+     * const contractAgreement = await prisma.contractAgreement.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends contractAgreementFindUniqueOrThrowArgs>(args: SelectSubset<T, contractAgreementFindUniqueOrThrowArgs<ExtArgs>>): Prisma__contractAgreementClient<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first ContractAgreement that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {contractAgreementFindFirstArgs} args - Arguments to find a ContractAgreement
+     * @example
+     * // Get one ContractAgreement
+     * const contractAgreement = await prisma.contractAgreement.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends contractAgreementFindFirstArgs>(args?: SelectSubset<T, contractAgreementFindFirstArgs<ExtArgs>>): Prisma__contractAgreementClient<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first ContractAgreement that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {contractAgreementFindFirstOrThrowArgs} args - Arguments to find a ContractAgreement
+     * @example
+     * // Get one ContractAgreement
+     * const contractAgreement = await prisma.contractAgreement.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends contractAgreementFindFirstOrThrowArgs>(args?: SelectSubset<T, contractAgreementFindFirstOrThrowArgs<ExtArgs>>): Prisma__contractAgreementClient<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more ContractAgreements that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {contractAgreementFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ContractAgreements
+     * const contractAgreements = await prisma.contractAgreement.findMany()
+     * 
+     * // Get first 10 ContractAgreements
+     * const contractAgreements = await prisma.contractAgreement.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const contractAgreementWithIdOnly = await prisma.contractAgreement.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends contractAgreementFindManyArgs>(args?: SelectSubset<T, contractAgreementFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a ContractAgreement.
+     * @param {contractAgreementCreateArgs} args - Arguments to create a ContractAgreement.
+     * @example
+     * // Create one ContractAgreement
+     * const ContractAgreement = await prisma.contractAgreement.create({
+     *   data: {
+     *     // ... data to create a ContractAgreement
+     *   }
+     * })
+     * 
+     */
+    create<T extends contractAgreementCreateArgs>(args: SelectSubset<T, contractAgreementCreateArgs<ExtArgs>>): Prisma__contractAgreementClient<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many ContractAgreements.
+     * @param {contractAgreementCreateManyArgs} args - Arguments to create many ContractAgreements.
+     * @example
+     * // Create many ContractAgreements
+     * const contractAgreement = await prisma.contractAgreement.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends contractAgreementCreateManyArgs>(args?: SelectSubset<T, contractAgreementCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ContractAgreements and returns the data saved in the database.
+     * @param {contractAgreementCreateManyAndReturnArgs} args - Arguments to create many ContractAgreements.
+     * @example
+     * // Create many ContractAgreements
+     * const contractAgreement = await prisma.contractAgreement.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ContractAgreements and only return the `id`
+     * const contractAgreementWithIdOnly = await prisma.contractAgreement.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends contractAgreementCreateManyAndReturnArgs>(args?: SelectSubset<T, contractAgreementCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a ContractAgreement.
+     * @param {contractAgreementDeleteArgs} args - Arguments to delete one ContractAgreement.
+     * @example
+     * // Delete one ContractAgreement
+     * const ContractAgreement = await prisma.contractAgreement.delete({
+     *   where: {
+     *     // ... filter to delete one ContractAgreement
+     *   }
+     * })
+     * 
+     */
+    delete<T extends contractAgreementDeleteArgs>(args: SelectSubset<T, contractAgreementDeleteArgs<ExtArgs>>): Prisma__contractAgreementClient<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one ContractAgreement.
+     * @param {contractAgreementUpdateArgs} args - Arguments to update one ContractAgreement.
+     * @example
+     * // Update one ContractAgreement
+     * const contractAgreement = await prisma.contractAgreement.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends contractAgreementUpdateArgs>(args: SelectSubset<T, contractAgreementUpdateArgs<ExtArgs>>): Prisma__contractAgreementClient<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more ContractAgreements.
+     * @param {contractAgreementDeleteManyArgs} args - Arguments to filter ContractAgreements to delete.
+     * @example
+     * // Delete a few ContractAgreements
+     * const { count } = await prisma.contractAgreement.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends contractAgreementDeleteManyArgs>(args?: SelectSubset<T, contractAgreementDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ContractAgreements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {contractAgreementUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ContractAgreements
+     * const contractAgreement = await prisma.contractAgreement.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends contractAgreementUpdateManyArgs>(args: SelectSubset<T, contractAgreementUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ContractAgreements and returns the data updated in the database.
+     * @param {contractAgreementUpdateManyAndReturnArgs} args - Arguments to update many ContractAgreements.
+     * @example
+     * // Update many ContractAgreements
+     * const contractAgreement = await prisma.contractAgreement.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ContractAgreements and only return the `id`
+     * const contractAgreementWithIdOnly = await prisma.contractAgreement.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends contractAgreementUpdateManyAndReturnArgs>(args: SelectSubset<T, contractAgreementUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one ContractAgreement.
+     * @param {contractAgreementUpsertArgs} args - Arguments to update or create a ContractAgreement.
+     * @example
+     * // Update or create a ContractAgreement
+     * const contractAgreement = await prisma.contractAgreement.upsert({
+     *   create: {
+     *     // ... data to create a ContractAgreement
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ContractAgreement we want to update
+     *   }
+     * })
+     */
+    upsert<T extends contractAgreementUpsertArgs>(args: SelectSubset<T, contractAgreementUpsertArgs<ExtArgs>>): Prisma__contractAgreementClient<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of ContractAgreements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {contractAgreementCountArgs} args - Arguments to filter ContractAgreements to count.
+     * @example
+     * // Count the number of ContractAgreements
+     * const count = await prisma.contractAgreement.count({
+     *   where: {
+     *     // ... the filter for the ContractAgreements we want to count
+     *   }
+     * })
+    **/
+    count<T extends contractAgreementCountArgs>(
+      args?: Subset<T, contractAgreementCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ContractAgreementCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ContractAgreement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContractAgreementAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ContractAgreementAggregateArgs>(args: Subset<T, ContractAgreementAggregateArgs>): Prisma.PrismaPromise<GetContractAgreementAggregateType<T>>
+
+    /**
+     * Group by ContractAgreement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {contractAgreementGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends contractAgreementGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: contractAgreementGroupByArgs['orderBy'] }
+        : { orderBy?: contractAgreementGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, contractAgreementGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetContractAgreementGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the contractAgreement model
+   */
+  readonly fields: contractAgreementFieldRefs;
   }
 
   /**
-   * User without action
+   * The delegate class that acts as a "Promise-like" for contractAgreement.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface Prisma__contractAgreementClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    contract<T extends ContractDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ContractDefaultArgs<ExtArgs>>): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     /**
-     * Select specific fields to fetch from the User
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
      */
-    select?: UserSelect<ExtArgs> | null
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the contractAgreement model
+   */ 
+  interface contractAgreementFieldRefs {
+    readonly id: FieldRef<"contractAgreement", 'String'>
+    readonly createdAt: FieldRef<"contractAgreement", 'DateTime'>
+    readonly number: FieldRef<"contractAgreement", 'String'>
+    readonly signatureDate: FieldRef<"contractAgreement", 'DateTime'>
+    readonly reason: FieldRef<"contractAgreement", 'String'>
+    readonly changes: FieldRef<"contractAgreement", 'String'>
+    readonly contractId: FieldRef<"contractAgreement", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * contractAgreement findUnique
+   */
+  export type contractAgreementFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the contractAgreement
+     */
+    select?: contractAgreementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the contractAgreement
+     */
+    omit?: contractAgreementOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserInclude<ExtArgs> | null
+    include?: contractAgreementInclude<ExtArgs> | null
+    /**
+     * Filter, which contractAgreement to fetch.
+     */
+    where: contractAgreementWhereUniqueInput
+  }
+
+  /**
+   * contractAgreement findUniqueOrThrow
+   */
+  export type contractAgreementFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the contractAgreement
+     */
+    select?: contractAgreementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the contractAgreement
+     */
+    omit?: contractAgreementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: contractAgreementInclude<ExtArgs> | null
+    /**
+     * Filter, which contractAgreement to fetch.
+     */
+    where: contractAgreementWhereUniqueInput
+  }
+
+  /**
+   * contractAgreement findFirst
+   */
+  export type contractAgreementFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the contractAgreement
+     */
+    select?: contractAgreementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the contractAgreement
+     */
+    omit?: contractAgreementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: contractAgreementInclude<ExtArgs> | null
+    /**
+     * Filter, which contractAgreement to fetch.
+     */
+    where?: contractAgreementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of contractAgreements to fetch.
+     */
+    orderBy?: contractAgreementOrderByWithRelationInput | contractAgreementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for contractAgreements.
+     */
+    cursor?: contractAgreementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` contractAgreements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` contractAgreements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of contractAgreements.
+     */
+    distinct?: ContractAgreementScalarFieldEnum | ContractAgreementScalarFieldEnum[]
+  }
+
+  /**
+   * contractAgreement findFirstOrThrow
+   */
+  export type contractAgreementFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the contractAgreement
+     */
+    select?: contractAgreementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the contractAgreement
+     */
+    omit?: contractAgreementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: contractAgreementInclude<ExtArgs> | null
+    /**
+     * Filter, which contractAgreement to fetch.
+     */
+    where?: contractAgreementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of contractAgreements to fetch.
+     */
+    orderBy?: contractAgreementOrderByWithRelationInput | contractAgreementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for contractAgreements.
+     */
+    cursor?: contractAgreementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` contractAgreements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` contractAgreements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of contractAgreements.
+     */
+    distinct?: ContractAgreementScalarFieldEnum | ContractAgreementScalarFieldEnum[]
+  }
+
+  /**
+   * contractAgreement findMany
+   */
+  export type contractAgreementFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the contractAgreement
+     */
+    select?: contractAgreementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the contractAgreement
+     */
+    omit?: contractAgreementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: contractAgreementInclude<ExtArgs> | null
+    /**
+     * Filter, which contractAgreements to fetch.
+     */
+    where?: contractAgreementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of contractAgreements to fetch.
+     */
+    orderBy?: contractAgreementOrderByWithRelationInput | contractAgreementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing contractAgreements.
+     */
+    cursor?: contractAgreementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` contractAgreements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` contractAgreements.
+     */
+    skip?: number
+    distinct?: ContractAgreementScalarFieldEnum | ContractAgreementScalarFieldEnum[]
+  }
+
+  /**
+   * contractAgreement create
+   */
+  export type contractAgreementCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the contractAgreement
+     */
+    select?: contractAgreementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the contractAgreement
+     */
+    omit?: contractAgreementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: contractAgreementInclude<ExtArgs> | null
+    /**
+     * The data needed to create a contractAgreement.
+     */
+    data: XOR<contractAgreementCreateInput, contractAgreementUncheckedCreateInput>
+  }
+
+  /**
+   * contractAgreement createMany
+   */
+  export type contractAgreementCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many contractAgreements.
+     */
+    data: contractAgreementCreateManyInput | contractAgreementCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * contractAgreement createManyAndReturn
+   */
+  export type contractAgreementCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the contractAgreement
+     */
+    select?: contractAgreementSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the contractAgreement
+     */
+    omit?: contractAgreementOmit<ExtArgs> | null
+    /**
+     * The data used to create many contractAgreements.
+     */
+    data: contractAgreementCreateManyInput | contractAgreementCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: contractAgreementIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * contractAgreement update
+   */
+  export type contractAgreementUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the contractAgreement
+     */
+    select?: contractAgreementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the contractAgreement
+     */
+    omit?: contractAgreementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: contractAgreementInclude<ExtArgs> | null
+    /**
+     * The data needed to update a contractAgreement.
+     */
+    data: XOR<contractAgreementUpdateInput, contractAgreementUncheckedUpdateInput>
+    /**
+     * Choose, which contractAgreement to update.
+     */
+    where: contractAgreementWhereUniqueInput
+  }
+
+  /**
+   * contractAgreement updateMany
+   */
+  export type contractAgreementUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update contractAgreements.
+     */
+    data: XOR<contractAgreementUpdateManyMutationInput, contractAgreementUncheckedUpdateManyInput>
+    /**
+     * Filter which contractAgreements to update
+     */
+    where?: contractAgreementWhereInput
+  }
+
+  /**
+   * contractAgreement updateManyAndReturn
+   */
+  export type contractAgreementUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the contractAgreement
+     */
+    select?: contractAgreementSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the contractAgreement
+     */
+    omit?: contractAgreementOmit<ExtArgs> | null
+    /**
+     * The data used to update contractAgreements.
+     */
+    data: XOR<contractAgreementUpdateManyMutationInput, contractAgreementUncheckedUpdateManyInput>
+    /**
+     * Filter which contractAgreements to update
+     */
+    where?: contractAgreementWhereInput
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: contractAgreementIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * contractAgreement upsert
+   */
+  export type contractAgreementUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the contractAgreement
+     */
+    select?: contractAgreementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the contractAgreement
+     */
+    omit?: contractAgreementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: contractAgreementInclude<ExtArgs> | null
+    /**
+     * The filter to search for the contractAgreement to update in case it exists.
+     */
+    where: contractAgreementWhereUniqueInput
+    /**
+     * In case the contractAgreement found by the `where` argument doesn't exist, create a new contractAgreement with this data.
+     */
+    create: XOR<contractAgreementCreateInput, contractAgreementUncheckedCreateInput>
+    /**
+     * In case the contractAgreement was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<contractAgreementUpdateInput, contractAgreementUncheckedUpdateInput>
+  }
+
+  /**
+   * contractAgreement delete
+   */
+  export type contractAgreementDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the contractAgreement
+     */
+    select?: contractAgreementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the contractAgreement
+     */
+    omit?: contractAgreementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: contractAgreementInclude<ExtArgs> | null
+    /**
+     * Filter which contractAgreement to delete.
+     */
+    where: contractAgreementWhereUniqueInput
+  }
+
+  /**
+   * contractAgreement deleteMany
+   */
+  export type contractAgreementDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which contractAgreements to delete
+     */
+    where?: contractAgreementWhereInput
+  }
+
+  /**
+   * contractAgreement without action
+   */
+  export type contractAgreementDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the contractAgreement
+     */
+    select?: contractAgreementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the contractAgreement
+     */
+    omit?: contractAgreementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: contractAgreementInclude<ExtArgs> | null
   }
 
 
@@ -2558,6 +3886,7 @@ export namespace Prisma {
     code: string | null
     email: string | null
     phone: string | null
+    address: string | null
   }
 
   export type CustomerMaxAggregateOutputType = {
@@ -2566,6 +3895,7 @@ export namespace Prisma {
     code: string | null
     email: string | null
     phone: string | null
+    address: string | null
   }
 
   export type CustomerCountAggregateOutputType = {
@@ -2574,6 +3904,7 @@ export namespace Prisma {
     code: number
     email: number
     phone: number
+    address: number
     _all: number
   }
 
@@ -2584,6 +3915,7 @@ export namespace Prisma {
     code?: true
     email?: true
     phone?: true
+    address?: true
   }
 
   export type CustomerMaxAggregateInputType = {
@@ -2592,6 +3924,7 @@ export namespace Prisma {
     code?: true
     email?: true
     phone?: true
+    address?: true
   }
 
   export type CustomerCountAggregateInputType = {
@@ -2600,6 +3933,7 @@ export namespace Prisma {
     code?: true
     email?: true
     phone?: true
+    address?: true
     _all?: true
   }
 
@@ -2681,6 +4015,7 @@ export namespace Prisma {
     code: string
     email: string
     phone: string
+    address: string | null
     _count: CustomerCountAggregateOutputType | null
     _min: CustomerMinAggregateOutputType | null
     _max: CustomerMaxAggregateOutputType | null
@@ -2706,8 +4041,27 @@ export namespace Prisma {
     code?: boolean
     email?: boolean
     phone?: boolean
+    address?: boolean
     procurements?: boolean | Customer$procurementsArgs<ExtArgs>
     _count?: boolean | CustomerCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["customer"]>
+
+  export type CustomerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    code?: boolean
+    email?: boolean
+    phone?: boolean
+    address?: boolean
+  }, ExtArgs["result"]["customer"]>
+
+  export type CustomerSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    code?: boolean
+    email?: boolean
+    phone?: boolean
+    address?: boolean
   }, ExtArgs["result"]["customer"]>
 
   export type CustomerSelectScalar = {
@@ -2716,14 +4070,16 @@ export namespace Prisma {
     code?: boolean
     email?: boolean
     phone?: boolean
+    address?: boolean
   }
 
-
+  export type CustomerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "code" | "email" | "phone" | "address", ExtArgs["result"]["customer"]>
   export type CustomerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     procurements?: boolean | Customer$procurementsArgs<ExtArgs>
     _count?: boolean | CustomerCountOutputTypeDefaultArgs<ExtArgs>
   }
-
+  export type CustomerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type CustomerIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $CustomerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Customer"
@@ -2736,19 +4092,19 @@ export namespace Prisma {
       code: string
       email: string
       phone: string
+      address: string | null
     }, ExtArgs["result"]["customer"]>
     composites: {}
   }
 
-
   type CustomerGetPayload<S extends boolean | null | undefined | CustomerDefaultArgs> = $Result.GetResult<Prisma.$CustomerPayload, S>
 
-  type CustomerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<CustomerFindManyArgs, 'select' | 'include' | 'distinct'> & {
+  type CustomerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CustomerFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: CustomerCountAggregateInputType | true
     }
 
-  export interface CustomerDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+  export interface CustomerDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
     [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Customer'], meta: { name: 'Customer' } }
     /**
      * Find zero or one Customer that matches the filter.
@@ -2760,14 +4116,12 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findUnique<T extends CustomerFindUniqueArgs<ExtArgs>>(
-      args: SelectSubset<T, CustomerFindUniqueArgs<ExtArgs>>
-    ): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+     */
+    findUnique<T extends CustomerFindUniqueArgs>(args: SelectSubset<T, CustomerFindUniqueArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Customer that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
+     * Find one Customer that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
      * @param {CustomerFindUniqueOrThrowArgs} args - Arguments to find a Customer
      * @example
      * // Get one Customer
@@ -2776,10 +4130,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findUniqueOrThrow<T extends CustomerFindUniqueOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, CustomerFindUniqueOrThrowArgs<ExtArgs>>
-    ): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+     */
+    findUniqueOrThrow<T extends CustomerFindUniqueOrThrowArgs>(args: SelectSubset<T, CustomerFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
      * Find the first Customer that matches the filter.
@@ -2793,10 +4145,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findFirst<T extends CustomerFindFirstArgs<ExtArgs>>(
-      args?: SelectSubset<T, CustomerFindFirstArgs<ExtArgs>>
-    ): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+     */
+    findFirst<T extends CustomerFindFirstArgs>(args?: SelectSubset<T, CustomerFindFirstArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
      * Find the first Customer that matches the filter or
@@ -2811,16 +4161,14 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findFirstOrThrow<T extends CustomerFindFirstOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, CustomerFindFirstOrThrowArgs<ExtArgs>>
-    ): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+     */
+    findFirstOrThrow<T extends CustomerFindFirstOrThrowArgs>(args?: SelectSubset<T, CustomerFindFirstOrThrowArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
      * Find zero or more Customers that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CustomerFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {CustomerFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
      * // Get all Customers
      * const customers = await prisma.customer.findMany()
@@ -2831,10 +4179,8 @@ export namespace Prisma {
      * // Only select the `id`
      * const customerWithIdOnly = await prisma.customer.findMany({ select: { id: true } })
      * 
-    **/
-    findMany<T extends CustomerFindManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, CustomerFindManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, 'findMany'>>
+     */
+    findMany<T extends CustomerFindManyArgs>(args?: SelectSubset<T, CustomerFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
     /**
      * Create a Customer.
@@ -2847,26 +4193,46 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    create<T extends CustomerCreateArgs<ExtArgs>>(
-      args: SelectSubset<T, CustomerCreateArgs<ExtArgs>>
-    ): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+     */
+    create<T extends CustomerCreateArgs>(args: SelectSubset<T, CustomerCreateArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
      * Create many Customers.
-     *     @param {CustomerCreateManyArgs} args - Arguments to create many Customers.
-     *     @example
-     *     // Create many Customers
-     *     const customer = await prisma.customer.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
+     * @param {CustomerCreateManyArgs} args - Arguments to create many Customers.
+     * @example
+     * // Create many Customers
+     * const customer = await prisma.customer.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
      *     
-    **/
-    createMany<T extends CustomerCreateManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, CustomerCreateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    createMany<T extends CustomerCreateManyArgs>(args?: SelectSubset<T, CustomerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Customers and returns the data saved in the database.
+     * @param {CustomerCreateManyAndReturnArgs} args - Arguments to create many Customers.
+     * @example
+     * // Create many Customers
+     * const customer = await prisma.customer.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Customers and only return the `id`
+     * const customerWithIdOnly = await prisma.customer.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CustomerCreateManyAndReturnArgs>(args?: SelectSubset<T, CustomerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
     /**
      * Delete a Customer.
@@ -2879,10 +4245,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    delete<T extends CustomerDeleteArgs<ExtArgs>>(
-      args: SelectSubset<T, CustomerDeleteArgs<ExtArgs>>
-    ): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+     */
+    delete<T extends CustomerDeleteArgs>(args: SelectSubset<T, CustomerDeleteArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
      * Update one Customer.
@@ -2898,10 +4262,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    update<T extends CustomerUpdateArgs<ExtArgs>>(
-      args: SelectSubset<T, CustomerUpdateArgs<ExtArgs>>
-    ): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+     */
+    update<T extends CustomerUpdateArgs>(args: SelectSubset<T, CustomerUpdateArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
      * Delete zero or more Customers.
@@ -2914,10 +4276,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    deleteMany<T extends CustomerDeleteManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, CustomerDeleteManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    deleteMany<T extends CustomerDeleteManyArgs>(args?: SelectSubset<T, CustomerDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Update zero or more Customers.
@@ -2935,10 +4295,38 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    updateMany<T extends CustomerUpdateManyArgs<ExtArgs>>(
-      args: SelectSubset<T, CustomerUpdateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    updateMany<T extends CustomerUpdateManyArgs>(args: SelectSubset<T, CustomerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Customers and returns the data updated in the database.
+     * @param {CustomerUpdateManyAndReturnArgs} args - Arguments to update many Customers.
+     * @example
+     * // Update many Customers
+     * const customer = await prisma.customer.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Customers and only return the `id`
+     * const customerWithIdOnly = await prisma.customer.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CustomerUpdateManyAndReturnArgs>(args: SelectSubset<T, CustomerUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
 
     /**
      * Create or update one Customer.
@@ -2956,10 +4344,9 @@ export namespace Prisma {
      *     // ... the filter for the Customer we want to update
      *   }
      * })
-    **/
-    upsert<T extends CustomerUpsertArgs<ExtArgs>>(
-      args: SelectSubset<T, CustomerUpsertArgs<ExtArgs>>
-    ): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+     */
+    upsert<T extends CustomerUpsertArgs>(args: SelectSubset<T, CustomerUpsertArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
 
     /**
      * Count the number of Customers.
@@ -3098,32 +4485,31 @@ export namespace Prisma {
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__CustomerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-
-    procurements<T extends Customer$procurementsArgs<ExtArgs> = {}>(args?: Subset<T, Customer$procurementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, 'findMany'> | Null>;
-
+  export interface Prisma__CustomerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    procurements<T extends Customer$procurementsArgs<ExtArgs> = {}>(args?: Subset<T, Customer$procurementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of which ever callback is executed.
      */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
     /**
      * Attaches a callback for only the rejection of the Promise.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of the callback.
      */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
     /**
      * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
      * resolved value cannot be modified from the callback.
      * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
      * @returns A Promise for the completion of the callback.
      */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
+
 
 
 
@@ -3136,6 +4522,7 @@ export namespace Prisma {
     readonly code: FieldRef<"Customer", 'String'>
     readonly email: FieldRef<"Customer", 'String'>
     readonly phone: FieldRef<"Customer", 'String'>
+    readonly address: FieldRef<"Customer", 'String'>
   }
     
 
@@ -3148,6 +4535,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Customer
      */
     select?: CustomerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Customer
+     */
+    omit?: CustomerOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -3167,6 +4558,10 @@ export namespace Prisma {
      */
     select?: CustomerSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Customer
+     */
+    omit?: CustomerOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: CustomerInclude<ExtArgs> | null
@@ -3184,6 +4579,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Customer
      */
     select?: CustomerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Customer
+     */
+    omit?: CustomerOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -3233,6 +4632,10 @@ export namespace Prisma {
      */
     select?: CustomerSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Customer
+     */
+    omit?: CustomerOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: CustomerInclude<ExtArgs> | null
@@ -3281,6 +4684,10 @@ export namespace Prisma {
      */
     select?: CustomerSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Customer
+     */
+    omit?: CustomerOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: CustomerInclude<ExtArgs> | null
@@ -3324,6 +4731,10 @@ export namespace Prisma {
      */
     select?: CustomerSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Customer
+     */
+    omit?: CustomerOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: CustomerInclude<ExtArgs> | null
@@ -3345,6 +4756,25 @@ export namespace Prisma {
   }
 
   /**
+   * Customer createManyAndReturn
+   */
+  export type CustomerCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Customer
+     */
+    select?: CustomerSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Customer
+     */
+    omit?: CustomerOmit<ExtArgs> | null
+    /**
+     * The data used to create many Customers.
+     */
+    data: CustomerCreateManyInput | CustomerCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
    * Customer update
    */
   export type CustomerUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3352,6 +4782,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Customer
      */
     select?: CustomerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Customer
+     */
+    omit?: CustomerOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -3381,6 +4815,28 @@ export namespace Prisma {
   }
 
   /**
+   * Customer updateManyAndReturn
+   */
+  export type CustomerUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Customer
+     */
+    select?: CustomerSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Customer
+     */
+    omit?: CustomerOmit<ExtArgs> | null
+    /**
+     * The data used to update Customers.
+     */
+    data: XOR<CustomerUpdateManyMutationInput, CustomerUncheckedUpdateManyInput>
+    /**
+     * Filter which Customers to update
+     */
+    where?: CustomerWhereInput
+  }
+
+  /**
    * Customer upsert
    */
   export type CustomerUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3388,6 +4844,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Customer
      */
     select?: CustomerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Customer
+     */
+    omit?: CustomerOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -3414,6 +4874,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Customer
      */
     select?: CustomerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Customer
+     */
+    omit?: CustomerOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -3443,6 +4907,10 @@ export namespace Prisma {
      */
     select?: ProcurementSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Procurement
+     */
+    omit?: ProcurementOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: ProcurementInclude<ExtArgs> | null
@@ -3463,9 +4931,1213 @@ export namespace Prisma {
      */
     select?: CustomerSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Customer
+     */
+    omit?: CustomerOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: CustomerInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model JointProcurement
+   */
+
+  export type AggregateJointProcurement = {
+    _count: JointProcurementCountAggregateOutputType | null
+    _avg: JointProcurementAvgAggregateOutputType | null
+    _sum: JointProcurementSumAggregateOutputType | null
+    _min: JointProcurementMinAggregateOutputType | null
+    _max: JointProcurementMaxAggregateOutputType | null
+  }
+
+  export type JointProcurementAvgAggregateOutputType = {
+    expectedValue: Decimal | null
+    resultValue: Decimal | null
+  }
+
+  export type JointProcurementSumAggregateOutputType = {
+    expectedValue: Decimal | null
+    resultValue: Decimal | null
+  }
+
+  export type JointProcurementMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    expectedValue: Decimal | null
+    resultValue: Decimal | null
+    announcedAt: Date | null
+    finishedAt: Date | null
+    prozorroId: string | null
+    prozorroLink: string | null
+    product: string | null
+    unit: string | null
+    scope: string | null
+    status: string | null
+  }
+
+  export type JointProcurementMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    expectedValue: Decimal | null
+    resultValue: Decimal | null
+    announcedAt: Date | null
+    finishedAt: Date | null
+    prozorroId: string | null
+    prozorroLink: string | null
+    product: string | null
+    unit: string | null
+    scope: string | null
+    status: string | null
+  }
+
+  export type JointProcurementCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    expectedValue: number
+    resultValue: number
+    announcedAt: number
+    finishedAt: number
+    prozorroId: number
+    prozorroLink: number
+    product: number
+    unit: number
+    scope: number
+    status: number
+    _all: number
+  }
+
+
+  export type JointProcurementAvgAggregateInputType = {
+    expectedValue?: true
+    resultValue?: true
+  }
+
+  export type JointProcurementSumAggregateInputType = {
+    expectedValue?: true
+    resultValue?: true
+  }
+
+  export type JointProcurementMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    expectedValue?: true
+    resultValue?: true
+    announcedAt?: true
+    finishedAt?: true
+    prozorroId?: true
+    prozorroLink?: true
+    product?: true
+    unit?: true
+    scope?: true
+    status?: true
+  }
+
+  export type JointProcurementMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    expectedValue?: true
+    resultValue?: true
+    announcedAt?: true
+    finishedAt?: true
+    prozorroId?: true
+    prozorroLink?: true
+    product?: true
+    unit?: true
+    scope?: true
+    status?: true
+  }
+
+  export type JointProcurementCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    expectedValue?: true
+    resultValue?: true
+    announcedAt?: true
+    finishedAt?: true
+    prozorroId?: true
+    prozorroLink?: true
+    product?: true
+    unit?: true
+    scope?: true
+    status?: true
+    _all?: true
+  }
+
+  export type JointProcurementAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which JointProcurement to aggregate.
+     */
+    where?: JointProcurementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JointProcurements to fetch.
+     */
+    orderBy?: JointProcurementOrderByWithRelationInput | JointProcurementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: JointProcurementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JointProcurements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JointProcurements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned JointProcurements
+    **/
+    _count?: true | JointProcurementCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: JointProcurementAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: JointProcurementSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: JointProcurementMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: JointProcurementMaxAggregateInputType
+  }
+
+  export type GetJointProcurementAggregateType<T extends JointProcurementAggregateArgs> = {
+        [P in keyof T & keyof AggregateJointProcurement]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateJointProcurement[P]>
+      : GetScalarType<T[P], AggregateJointProcurement[P]>
+  }
+
+
+
+
+  export type JointProcurementGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JointProcurementWhereInput
+    orderBy?: JointProcurementOrderByWithAggregationInput | JointProcurementOrderByWithAggregationInput[]
+    by: JointProcurementScalarFieldEnum[] | JointProcurementScalarFieldEnum
+    having?: JointProcurementScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: JointProcurementCountAggregateInputType | true
+    _avg?: JointProcurementAvgAggregateInputType
+    _sum?: JointProcurementSumAggregateInputType
+    _min?: JointProcurementMinAggregateInputType
+    _max?: JointProcurementMaxAggregateInputType
+  }
+
+  export type JointProcurementGroupByOutputType = {
+    id: string
+    createdAt: Date
+    updatedAt: Date
+    expectedValue: Decimal
+    resultValue: Decimal | null
+    announcedAt: Date | null
+    finishedAt: Date | null
+    prozorroId: string | null
+    prozorroLink: string | null
+    product: string
+    unit: string
+    scope: string
+    status: string
+    _count: JointProcurementCountAggregateOutputType | null
+    _avg: JointProcurementAvgAggregateOutputType | null
+    _sum: JointProcurementSumAggregateOutputType | null
+    _min: JointProcurementMinAggregateOutputType | null
+    _max: JointProcurementMaxAggregateOutputType | null
+  }
+
+  type GetJointProcurementGroupByPayload<T extends JointProcurementGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<JointProcurementGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof JointProcurementGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], JointProcurementGroupByOutputType[P]>
+            : GetScalarType<T[P], JointProcurementGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type JointProcurementSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    expectedValue?: boolean
+    resultValue?: boolean
+    announcedAt?: boolean
+    finishedAt?: boolean
+    prozorroId?: boolean
+    prozorroLink?: boolean
+    product?: boolean
+    unit?: boolean
+    scope?: boolean
+    status?: boolean
+    procurements?: boolean | JointProcurement$procurementsArgs<ExtArgs>
+    _count?: boolean | JointProcurementCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["jointProcurement"]>
+
+  export type JointProcurementSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    expectedValue?: boolean
+    resultValue?: boolean
+    announcedAt?: boolean
+    finishedAt?: boolean
+    prozorroId?: boolean
+    prozorroLink?: boolean
+    product?: boolean
+    unit?: boolean
+    scope?: boolean
+    status?: boolean
+  }, ExtArgs["result"]["jointProcurement"]>
+
+  export type JointProcurementSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    expectedValue?: boolean
+    resultValue?: boolean
+    announcedAt?: boolean
+    finishedAt?: boolean
+    prozorroId?: boolean
+    prozorroLink?: boolean
+    product?: boolean
+    unit?: boolean
+    scope?: boolean
+    status?: boolean
+  }, ExtArgs["result"]["jointProcurement"]>
+
+  export type JointProcurementSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    expectedValue?: boolean
+    resultValue?: boolean
+    announcedAt?: boolean
+    finishedAt?: boolean
+    prozorroId?: boolean
+    prozorroLink?: boolean
+    product?: boolean
+    unit?: boolean
+    scope?: boolean
+    status?: boolean
+  }
+
+  export type JointProcurementOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "expectedValue" | "resultValue" | "announcedAt" | "finishedAt" | "prozorroId" | "prozorroLink" | "product" | "unit" | "scope" | "status", ExtArgs["result"]["jointProcurement"]>
+  export type JointProcurementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    procurements?: boolean | JointProcurement$procurementsArgs<ExtArgs>
+    _count?: boolean | JointProcurementCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type JointProcurementIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type JointProcurementIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $JointProcurementPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "JointProcurement"
+    objects: {
+      procurements: Prisma.$ProcurementPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      updatedAt: Date
+      expectedValue: Prisma.Decimal
+      resultValue: Prisma.Decimal | null
+      announcedAt: Date | null
+      finishedAt: Date | null
+      prozorroId: string | null
+      prozorroLink: string | null
+      product: string
+      unit: string
+      scope: string
+      status: string
+    }, ExtArgs["result"]["jointProcurement"]>
+    composites: {}
+  }
+
+  type JointProcurementGetPayload<S extends boolean | null | undefined | JointProcurementDefaultArgs> = $Result.GetResult<Prisma.$JointProcurementPayload, S>
+
+  type JointProcurementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<JointProcurementFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: JointProcurementCountAggregateInputType | true
+    }
+
+  export interface JointProcurementDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['JointProcurement'], meta: { name: 'JointProcurement' } }
+    /**
+     * Find zero or one JointProcurement that matches the filter.
+     * @param {JointProcurementFindUniqueArgs} args - Arguments to find a JointProcurement
+     * @example
+     * // Get one JointProcurement
+     * const jointProcurement = await prisma.jointProcurement.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends JointProcurementFindUniqueArgs>(args: SelectSubset<T, JointProcurementFindUniqueArgs<ExtArgs>>): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one JointProcurement that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {JointProcurementFindUniqueOrThrowArgs} args - Arguments to find a JointProcurement
+     * @example
+     * // Get one JointProcurement
+     * const jointProcurement = await prisma.jointProcurement.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends JointProcurementFindUniqueOrThrowArgs>(args: SelectSubset<T, JointProcurementFindUniqueOrThrowArgs<ExtArgs>>): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first JointProcurement that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JointProcurementFindFirstArgs} args - Arguments to find a JointProcurement
+     * @example
+     * // Get one JointProcurement
+     * const jointProcurement = await prisma.jointProcurement.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends JointProcurementFindFirstArgs>(args?: SelectSubset<T, JointProcurementFindFirstArgs<ExtArgs>>): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first JointProcurement that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JointProcurementFindFirstOrThrowArgs} args - Arguments to find a JointProcurement
+     * @example
+     * // Get one JointProcurement
+     * const jointProcurement = await prisma.jointProcurement.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends JointProcurementFindFirstOrThrowArgs>(args?: SelectSubset<T, JointProcurementFindFirstOrThrowArgs<ExtArgs>>): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more JointProcurements that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JointProcurementFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all JointProcurements
+     * const jointProcurements = await prisma.jointProcurement.findMany()
+     * 
+     * // Get first 10 JointProcurements
+     * const jointProcurements = await prisma.jointProcurement.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const jointProcurementWithIdOnly = await prisma.jointProcurement.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends JointProcurementFindManyArgs>(args?: SelectSubset<T, JointProcurementFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a JointProcurement.
+     * @param {JointProcurementCreateArgs} args - Arguments to create a JointProcurement.
+     * @example
+     * // Create one JointProcurement
+     * const JointProcurement = await prisma.jointProcurement.create({
+     *   data: {
+     *     // ... data to create a JointProcurement
+     *   }
+     * })
+     * 
+     */
+    create<T extends JointProcurementCreateArgs>(args: SelectSubset<T, JointProcurementCreateArgs<ExtArgs>>): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many JointProcurements.
+     * @param {JointProcurementCreateManyArgs} args - Arguments to create many JointProcurements.
+     * @example
+     * // Create many JointProcurements
+     * const jointProcurement = await prisma.jointProcurement.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends JointProcurementCreateManyArgs>(args?: SelectSubset<T, JointProcurementCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many JointProcurements and returns the data saved in the database.
+     * @param {JointProcurementCreateManyAndReturnArgs} args - Arguments to create many JointProcurements.
+     * @example
+     * // Create many JointProcurements
+     * const jointProcurement = await prisma.jointProcurement.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many JointProcurements and only return the `id`
+     * const jointProcurementWithIdOnly = await prisma.jointProcurement.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends JointProcurementCreateManyAndReturnArgs>(args?: SelectSubset<T, JointProcurementCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a JointProcurement.
+     * @param {JointProcurementDeleteArgs} args - Arguments to delete one JointProcurement.
+     * @example
+     * // Delete one JointProcurement
+     * const JointProcurement = await prisma.jointProcurement.delete({
+     *   where: {
+     *     // ... filter to delete one JointProcurement
+     *   }
+     * })
+     * 
+     */
+    delete<T extends JointProcurementDeleteArgs>(args: SelectSubset<T, JointProcurementDeleteArgs<ExtArgs>>): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one JointProcurement.
+     * @param {JointProcurementUpdateArgs} args - Arguments to update one JointProcurement.
+     * @example
+     * // Update one JointProcurement
+     * const jointProcurement = await prisma.jointProcurement.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends JointProcurementUpdateArgs>(args: SelectSubset<T, JointProcurementUpdateArgs<ExtArgs>>): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more JointProcurements.
+     * @param {JointProcurementDeleteManyArgs} args - Arguments to filter JointProcurements to delete.
+     * @example
+     * // Delete a few JointProcurements
+     * const { count } = await prisma.jointProcurement.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends JointProcurementDeleteManyArgs>(args?: SelectSubset<T, JointProcurementDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more JointProcurements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JointProcurementUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many JointProcurements
+     * const jointProcurement = await prisma.jointProcurement.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends JointProcurementUpdateManyArgs>(args: SelectSubset<T, JointProcurementUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more JointProcurements and returns the data updated in the database.
+     * @param {JointProcurementUpdateManyAndReturnArgs} args - Arguments to update many JointProcurements.
+     * @example
+     * // Update many JointProcurements
+     * const jointProcurement = await prisma.jointProcurement.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more JointProcurements and only return the `id`
+     * const jointProcurementWithIdOnly = await prisma.jointProcurement.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends JointProcurementUpdateManyAndReturnArgs>(args: SelectSubset<T, JointProcurementUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one JointProcurement.
+     * @param {JointProcurementUpsertArgs} args - Arguments to update or create a JointProcurement.
+     * @example
+     * // Update or create a JointProcurement
+     * const jointProcurement = await prisma.jointProcurement.upsert({
+     *   create: {
+     *     // ... data to create a JointProcurement
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the JointProcurement we want to update
+     *   }
+     * })
+     */
+    upsert<T extends JointProcurementUpsertArgs>(args: SelectSubset<T, JointProcurementUpsertArgs<ExtArgs>>): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of JointProcurements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JointProcurementCountArgs} args - Arguments to filter JointProcurements to count.
+     * @example
+     * // Count the number of JointProcurements
+     * const count = await prisma.jointProcurement.count({
+     *   where: {
+     *     // ... the filter for the JointProcurements we want to count
+     *   }
+     * })
+    **/
+    count<T extends JointProcurementCountArgs>(
+      args?: Subset<T, JointProcurementCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], JointProcurementCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a JointProcurement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JointProcurementAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends JointProcurementAggregateArgs>(args: Subset<T, JointProcurementAggregateArgs>): Prisma.PrismaPromise<GetJointProcurementAggregateType<T>>
+
+    /**
+     * Group by JointProcurement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JointProcurementGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends JointProcurementGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: JointProcurementGroupByArgs['orderBy'] }
+        : { orderBy?: JointProcurementGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, JointProcurementGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetJointProcurementGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the JointProcurement model
+   */
+  readonly fields: JointProcurementFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for JointProcurement.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__JointProcurementClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    procurements<T extends JointProcurement$procurementsArgs<ExtArgs> = {}>(args?: Subset<T, JointProcurement$procurementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the JointProcurement model
+   */ 
+  interface JointProcurementFieldRefs {
+    readonly id: FieldRef<"JointProcurement", 'String'>
+    readonly createdAt: FieldRef<"JointProcurement", 'DateTime'>
+    readonly updatedAt: FieldRef<"JointProcurement", 'DateTime'>
+    readonly expectedValue: FieldRef<"JointProcurement", 'Decimal'>
+    readonly resultValue: FieldRef<"JointProcurement", 'Decimal'>
+    readonly announcedAt: FieldRef<"JointProcurement", 'DateTime'>
+    readonly finishedAt: FieldRef<"JointProcurement", 'DateTime'>
+    readonly prozorroId: FieldRef<"JointProcurement", 'String'>
+    readonly prozorroLink: FieldRef<"JointProcurement", 'String'>
+    readonly product: FieldRef<"JointProcurement", 'String'>
+    readonly unit: FieldRef<"JointProcurement", 'String'>
+    readonly scope: FieldRef<"JointProcurement", 'String'>
+    readonly status: FieldRef<"JointProcurement", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * JointProcurement findUnique
+   */
+  export type JointProcurementFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JointProcurement
+     */
+    select?: JointProcurementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JointProcurement
+     */
+    omit?: JointProcurementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JointProcurementInclude<ExtArgs> | null
+    /**
+     * Filter, which JointProcurement to fetch.
+     */
+    where: JointProcurementWhereUniqueInput
+  }
+
+  /**
+   * JointProcurement findUniqueOrThrow
+   */
+  export type JointProcurementFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JointProcurement
+     */
+    select?: JointProcurementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JointProcurement
+     */
+    omit?: JointProcurementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JointProcurementInclude<ExtArgs> | null
+    /**
+     * Filter, which JointProcurement to fetch.
+     */
+    where: JointProcurementWhereUniqueInput
+  }
+
+  /**
+   * JointProcurement findFirst
+   */
+  export type JointProcurementFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JointProcurement
+     */
+    select?: JointProcurementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JointProcurement
+     */
+    omit?: JointProcurementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JointProcurementInclude<ExtArgs> | null
+    /**
+     * Filter, which JointProcurement to fetch.
+     */
+    where?: JointProcurementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JointProcurements to fetch.
+     */
+    orderBy?: JointProcurementOrderByWithRelationInput | JointProcurementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for JointProcurements.
+     */
+    cursor?: JointProcurementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JointProcurements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JointProcurements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JointProcurements.
+     */
+    distinct?: JointProcurementScalarFieldEnum | JointProcurementScalarFieldEnum[]
+  }
+
+  /**
+   * JointProcurement findFirstOrThrow
+   */
+  export type JointProcurementFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JointProcurement
+     */
+    select?: JointProcurementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JointProcurement
+     */
+    omit?: JointProcurementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JointProcurementInclude<ExtArgs> | null
+    /**
+     * Filter, which JointProcurement to fetch.
+     */
+    where?: JointProcurementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JointProcurements to fetch.
+     */
+    orderBy?: JointProcurementOrderByWithRelationInput | JointProcurementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for JointProcurements.
+     */
+    cursor?: JointProcurementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JointProcurements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JointProcurements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JointProcurements.
+     */
+    distinct?: JointProcurementScalarFieldEnum | JointProcurementScalarFieldEnum[]
+  }
+
+  /**
+   * JointProcurement findMany
+   */
+  export type JointProcurementFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JointProcurement
+     */
+    select?: JointProcurementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JointProcurement
+     */
+    omit?: JointProcurementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JointProcurementInclude<ExtArgs> | null
+    /**
+     * Filter, which JointProcurements to fetch.
+     */
+    where?: JointProcurementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JointProcurements to fetch.
+     */
+    orderBy?: JointProcurementOrderByWithRelationInput | JointProcurementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing JointProcurements.
+     */
+    cursor?: JointProcurementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JointProcurements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JointProcurements.
+     */
+    skip?: number
+    distinct?: JointProcurementScalarFieldEnum | JointProcurementScalarFieldEnum[]
+  }
+
+  /**
+   * JointProcurement create
+   */
+  export type JointProcurementCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JointProcurement
+     */
+    select?: JointProcurementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JointProcurement
+     */
+    omit?: JointProcurementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JointProcurementInclude<ExtArgs> | null
+    /**
+     * The data needed to create a JointProcurement.
+     */
+    data: XOR<JointProcurementCreateInput, JointProcurementUncheckedCreateInput>
+  }
+
+  /**
+   * JointProcurement createMany
+   */
+  export type JointProcurementCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many JointProcurements.
+     */
+    data: JointProcurementCreateManyInput | JointProcurementCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * JointProcurement createManyAndReturn
+   */
+  export type JointProcurementCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JointProcurement
+     */
+    select?: JointProcurementSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the JointProcurement
+     */
+    omit?: JointProcurementOmit<ExtArgs> | null
+    /**
+     * The data used to create many JointProcurements.
+     */
+    data: JointProcurementCreateManyInput | JointProcurementCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * JointProcurement update
+   */
+  export type JointProcurementUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JointProcurement
+     */
+    select?: JointProcurementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JointProcurement
+     */
+    omit?: JointProcurementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JointProcurementInclude<ExtArgs> | null
+    /**
+     * The data needed to update a JointProcurement.
+     */
+    data: XOR<JointProcurementUpdateInput, JointProcurementUncheckedUpdateInput>
+    /**
+     * Choose, which JointProcurement to update.
+     */
+    where: JointProcurementWhereUniqueInput
+  }
+
+  /**
+   * JointProcurement updateMany
+   */
+  export type JointProcurementUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update JointProcurements.
+     */
+    data: XOR<JointProcurementUpdateManyMutationInput, JointProcurementUncheckedUpdateManyInput>
+    /**
+     * Filter which JointProcurements to update
+     */
+    where?: JointProcurementWhereInput
+  }
+
+  /**
+   * JointProcurement updateManyAndReturn
+   */
+  export type JointProcurementUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JointProcurement
+     */
+    select?: JointProcurementSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the JointProcurement
+     */
+    omit?: JointProcurementOmit<ExtArgs> | null
+    /**
+     * The data used to update JointProcurements.
+     */
+    data: XOR<JointProcurementUpdateManyMutationInput, JointProcurementUncheckedUpdateManyInput>
+    /**
+     * Filter which JointProcurements to update
+     */
+    where?: JointProcurementWhereInput
+  }
+
+  /**
+   * JointProcurement upsert
+   */
+  export type JointProcurementUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JointProcurement
+     */
+    select?: JointProcurementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JointProcurement
+     */
+    omit?: JointProcurementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JointProcurementInclude<ExtArgs> | null
+    /**
+     * The filter to search for the JointProcurement to update in case it exists.
+     */
+    where: JointProcurementWhereUniqueInput
+    /**
+     * In case the JointProcurement found by the `where` argument doesn't exist, create a new JointProcurement with this data.
+     */
+    create: XOR<JointProcurementCreateInput, JointProcurementUncheckedCreateInput>
+    /**
+     * In case the JointProcurement was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<JointProcurementUpdateInput, JointProcurementUncheckedUpdateInput>
+  }
+
+  /**
+   * JointProcurement delete
+   */
+  export type JointProcurementDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JointProcurement
+     */
+    select?: JointProcurementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JointProcurement
+     */
+    omit?: JointProcurementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JointProcurementInclude<ExtArgs> | null
+    /**
+     * Filter which JointProcurement to delete.
+     */
+    where: JointProcurementWhereUniqueInput
+  }
+
+  /**
+   * JointProcurement deleteMany
+   */
+  export type JointProcurementDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which JointProcurements to delete
+     */
+    where?: JointProcurementWhereInput
+  }
+
+  /**
+   * JointProcurement.procurements
+   */
+  export type JointProcurement$procurementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Procurement
+     */
+    select?: ProcurementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Procurement
+     */
+    omit?: ProcurementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProcurementInclude<ExtArgs> | null
+    where?: ProcurementWhereInput
+    orderBy?: ProcurementOrderByWithRelationInput | ProcurementOrderByWithRelationInput[]
+    cursor?: ProcurementWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProcurementScalarFieldEnum | ProcurementScalarFieldEnum[]
+  }
+
+  /**
+   * JointProcurement without action
+   */
+  export type JointProcurementDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JointProcurement
+     */
+    select?: JointProcurementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JointProcurement
+     */
+    omit?: JointProcurementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JointProcurementInclude<ExtArgs> | null
   }
 
 
@@ -3766,6 +6438,50 @@ export namespace Prisma {
     _count?: boolean | ProcurementCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["procurement"]>
 
+  export type ProcurementSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    expectedValue?: boolean
+    resultValue?: boolean
+    announcedAt?: boolean
+    finishedAt?: boolean
+    prozorroId?: boolean
+    prozorroLink?: boolean
+    product?: boolean
+    unit?: boolean
+    scope?: boolean
+    status?: boolean
+    customerId?: boolean
+    userId?: boolean
+    jointProcurementid?: boolean
+    customer?: boolean | CustomerDefaultArgs<ExtArgs>
+    manager?: boolean | UserDefaultArgs<ExtArgs>
+    jointProcurement?: boolean | Procurement$jointProcurementArgs<ExtArgs>
+  }, ExtArgs["result"]["procurement"]>
+
+  export type ProcurementSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    expectedValue?: boolean
+    resultValue?: boolean
+    announcedAt?: boolean
+    finishedAt?: boolean
+    prozorroId?: boolean
+    prozorroLink?: boolean
+    product?: boolean
+    unit?: boolean
+    scope?: boolean
+    status?: boolean
+    customerId?: boolean
+    userId?: boolean
+    jointProcurementid?: boolean
+    customer?: boolean | CustomerDefaultArgs<ExtArgs>
+    manager?: boolean | UserDefaultArgs<ExtArgs>
+    jointProcurement?: boolean | Procurement$jointProcurementArgs<ExtArgs>
+  }, ExtArgs["result"]["procurement"]>
+
   export type ProcurementSelectScalar = {
     id?: boolean
     createdAt?: boolean
@@ -3785,7 +6501,7 @@ export namespace Prisma {
     jointProcurementid?: boolean
   }
 
-
+  export type ProcurementOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "expectedValue" | "resultValue" | "announcedAt" | "finishedAt" | "prozorroId" | "prozorroLink" | "product" | "unit" | "scope" | "status" | "customerId" | "userId" | "jointProcurementid", ExtArgs["result"]["procurement"]>
   export type ProcurementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     customer?: boolean | CustomerDefaultArgs<ExtArgs>
     manager?: boolean | UserDefaultArgs<ExtArgs>
@@ -3793,7 +6509,16 @@ export namespace Prisma {
     contracts?: boolean | Procurement$contractsArgs<ExtArgs>
     _count?: boolean | ProcurementCountOutputTypeDefaultArgs<ExtArgs>
   }
-
+  export type ProcurementIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    customer?: boolean | CustomerDefaultArgs<ExtArgs>
+    manager?: boolean | UserDefaultArgs<ExtArgs>
+    jointProcurement?: boolean | Procurement$jointProcurementArgs<ExtArgs>
+  }
+  export type ProcurementIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    customer?: boolean | CustomerDefaultArgs<ExtArgs>
+    manager?: boolean | UserDefaultArgs<ExtArgs>
+    jointProcurement?: boolean | Procurement$jointProcurementArgs<ExtArgs>
+  }
 
   export type $ProcurementPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Procurement"
@@ -3824,15 +6549,14 @@ export namespace Prisma {
     composites: {}
   }
 
-
   type ProcurementGetPayload<S extends boolean | null | undefined | ProcurementDefaultArgs> = $Result.GetResult<Prisma.$ProcurementPayload, S>
 
-  type ProcurementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<ProcurementFindManyArgs, 'select' | 'include' | 'distinct'> & {
+  type ProcurementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProcurementFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: ProcurementCountAggregateInputType | true
     }
 
-  export interface ProcurementDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+  export interface ProcurementDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
     [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Procurement'], meta: { name: 'Procurement' } }
     /**
      * Find zero or one Procurement that matches the filter.
@@ -3844,14 +6568,12 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findUnique<T extends ProcurementFindUniqueArgs<ExtArgs>>(
-      args: SelectSubset<T, ProcurementFindUniqueArgs<ExtArgs>>
-    ): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+     */
+    findUnique<T extends ProcurementFindUniqueArgs>(args: SelectSubset<T, ProcurementFindUniqueArgs<ExtArgs>>): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Procurement that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
+     * Find one Procurement that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
      * @param {ProcurementFindUniqueOrThrowArgs} args - Arguments to find a Procurement
      * @example
      * // Get one Procurement
@@ -3860,10 +6582,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findUniqueOrThrow<T extends ProcurementFindUniqueOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, ProcurementFindUniqueOrThrowArgs<ExtArgs>>
-    ): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+     */
+    findUniqueOrThrow<T extends ProcurementFindUniqueOrThrowArgs>(args: SelectSubset<T, ProcurementFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
      * Find the first Procurement that matches the filter.
@@ -3877,10 +6597,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findFirst<T extends ProcurementFindFirstArgs<ExtArgs>>(
-      args?: SelectSubset<T, ProcurementFindFirstArgs<ExtArgs>>
-    ): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+     */
+    findFirst<T extends ProcurementFindFirstArgs>(args?: SelectSubset<T, ProcurementFindFirstArgs<ExtArgs>>): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
      * Find the first Procurement that matches the filter or
@@ -3895,16 +6613,14 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findFirstOrThrow<T extends ProcurementFindFirstOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, ProcurementFindFirstOrThrowArgs<ExtArgs>>
-    ): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+     */
+    findFirstOrThrow<T extends ProcurementFindFirstOrThrowArgs>(args?: SelectSubset<T, ProcurementFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
      * Find zero or more Procurements that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProcurementFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {ProcurementFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
      * // Get all Procurements
      * const procurements = await prisma.procurement.findMany()
@@ -3915,10 +6631,8 @@ export namespace Prisma {
      * // Only select the `id`
      * const procurementWithIdOnly = await prisma.procurement.findMany({ select: { id: true } })
      * 
-    **/
-    findMany<T extends ProcurementFindManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, ProcurementFindManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, 'findMany'>>
+     */
+    findMany<T extends ProcurementFindManyArgs>(args?: SelectSubset<T, ProcurementFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
     /**
      * Create a Procurement.
@@ -3931,26 +6645,46 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    create<T extends ProcurementCreateArgs<ExtArgs>>(
-      args: SelectSubset<T, ProcurementCreateArgs<ExtArgs>>
-    ): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+     */
+    create<T extends ProcurementCreateArgs>(args: SelectSubset<T, ProcurementCreateArgs<ExtArgs>>): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
      * Create many Procurements.
-     *     @param {ProcurementCreateManyArgs} args - Arguments to create many Procurements.
-     *     @example
-     *     // Create many Procurements
-     *     const procurement = await prisma.procurement.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
+     * @param {ProcurementCreateManyArgs} args - Arguments to create many Procurements.
+     * @example
+     * // Create many Procurements
+     * const procurement = await prisma.procurement.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
      *     
-    **/
-    createMany<T extends ProcurementCreateManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, ProcurementCreateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    createMany<T extends ProcurementCreateManyArgs>(args?: SelectSubset<T, ProcurementCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Procurements and returns the data saved in the database.
+     * @param {ProcurementCreateManyAndReturnArgs} args - Arguments to create many Procurements.
+     * @example
+     * // Create many Procurements
+     * const procurement = await prisma.procurement.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Procurements and only return the `id`
+     * const procurementWithIdOnly = await prisma.procurement.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProcurementCreateManyAndReturnArgs>(args?: SelectSubset<T, ProcurementCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
     /**
      * Delete a Procurement.
@@ -3963,10 +6697,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    delete<T extends ProcurementDeleteArgs<ExtArgs>>(
-      args: SelectSubset<T, ProcurementDeleteArgs<ExtArgs>>
-    ): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+     */
+    delete<T extends ProcurementDeleteArgs>(args: SelectSubset<T, ProcurementDeleteArgs<ExtArgs>>): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
      * Update one Procurement.
@@ -3982,10 +6714,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    update<T extends ProcurementUpdateArgs<ExtArgs>>(
-      args: SelectSubset<T, ProcurementUpdateArgs<ExtArgs>>
-    ): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+     */
+    update<T extends ProcurementUpdateArgs>(args: SelectSubset<T, ProcurementUpdateArgs<ExtArgs>>): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
      * Delete zero or more Procurements.
@@ -3998,10 +6728,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    deleteMany<T extends ProcurementDeleteManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, ProcurementDeleteManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    deleteMany<T extends ProcurementDeleteManyArgs>(args?: SelectSubset<T, ProcurementDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Update zero or more Procurements.
@@ -4019,10 +6747,38 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    updateMany<T extends ProcurementUpdateManyArgs<ExtArgs>>(
-      args: SelectSubset<T, ProcurementUpdateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    updateMany<T extends ProcurementUpdateManyArgs>(args: SelectSubset<T, ProcurementUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Procurements and returns the data updated in the database.
+     * @param {ProcurementUpdateManyAndReturnArgs} args - Arguments to update many Procurements.
+     * @example
+     * // Update many Procurements
+     * const procurement = await prisma.procurement.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Procurements and only return the `id`
+     * const procurementWithIdOnly = await prisma.procurement.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProcurementUpdateManyAndReturnArgs>(args: SelectSubset<T, ProcurementUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
 
     /**
      * Create or update one Procurement.
@@ -4040,10 +6796,9 @@ export namespace Prisma {
      *     // ... the filter for the Procurement we want to update
      *   }
      * })
-    **/
-    upsert<T extends ProcurementUpsertArgs<ExtArgs>>(
-      args: SelectSubset<T, ProcurementUpsertArgs<ExtArgs>>
-    ): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+     */
+    upsert<T extends ProcurementUpsertArgs>(args: SelectSubset<T, ProcurementUpsertArgs<ExtArgs>>): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
 
     /**
      * Count the number of Procurements.
@@ -4182,38 +6937,34 @@ export namespace Prisma {
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__ProcurementClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-
-    customer<T extends CustomerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CustomerDefaultArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
-
-    manager<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
-
-    jointProcurement<T extends Procurement$jointProcurementArgs<ExtArgs> = {}>(args?: Subset<T, Procurement$jointProcurementArgs<ExtArgs>>): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
-
-    contracts<T extends Procurement$contractsArgs<ExtArgs> = {}>(args?: Subset<T, Procurement$contractsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, 'findMany'> | Null>;
-
+  export interface Prisma__ProcurementClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    customer<T extends CustomerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CustomerDefaultArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    manager<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    jointProcurement<T extends Procurement$jointProcurementArgs<ExtArgs> = {}>(args?: Subset<T, Procurement$jointProcurementArgs<ExtArgs>>): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    contracts<T extends Procurement$contractsArgs<ExtArgs> = {}>(args?: Subset<T, Procurement$contractsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of which ever callback is executed.
      */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
     /**
      * Attaches a callback for only the rejection of the Promise.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of the callback.
      */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
     /**
      * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
      * resolved value cannot be modified from the callback.
      * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
      * @returns A Promise for the completion of the callback.
      */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
+
 
 
 
@@ -4250,6 +7001,10 @@ export namespace Prisma {
      */
     select?: ProcurementSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Procurement
+     */
+    omit?: ProcurementOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: ProcurementInclude<ExtArgs> | null
@@ -4268,6 +7023,10 @@ export namespace Prisma {
      */
     select?: ProcurementSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Procurement
+     */
+    omit?: ProcurementOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: ProcurementInclude<ExtArgs> | null
@@ -4285,6 +7044,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Procurement
      */
     select?: ProcurementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Procurement
+     */
+    omit?: ProcurementOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -4334,6 +7097,10 @@ export namespace Prisma {
      */
     select?: ProcurementSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Procurement
+     */
+    omit?: ProcurementOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: ProcurementInclude<ExtArgs> | null
@@ -4382,6 +7149,10 @@ export namespace Prisma {
      */
     select?: ProcurementSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Procurement
+     */
+    omit?: ProcurementOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: ProcurementInclude<ExtArgs> | null
@@ -4425,6 +7196,10 @@ export namespace Prisma {
      */
     select?: ProcurementSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Procurement
+     */
+    omit?: ProcurementOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: ProcurementInclude<ExtArgs> | null
@@ -4446,6 +7221,29 @@ export namespace Prisma {
   }
 
   /**
+   * Procurement createManyAndReturn
+   */
+  export type ProcurementCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Procurement
+     */
+    select?: ProcurementSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Procurement
+     */
+    omit?: ProcurementOmit<ExtArgs> | null
+    /**
+     * The data used to create many Procurements.
+     */
+    data: ProcurementCreateManyInput | ProcurementCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProcurementIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
    * Procurement update
    */
   export type ProcurementUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4453,6 +7251,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Procurement
      */
     select?: ProcurementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Procurement
+     */
+    omit?: ProcurementOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -4482,6 +7284,32 @@ export namespace Prisma {
   }
 
   /**
+   * Procurement updateManyAndReturn
+   */
+  export type ProcurementUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Procurement
+     */
+    select?: ProcurementSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Procurement
+     */
+    omit?: ProcurementOmit<ExtArgs> | null
+    /**
+     * The data used to update Procurements.
+     */
+    data: XOR<ProcurementUpdateManyMutationInput, ProcurementUncheckedUpdateManyInput>
+    /**
+     * Filter which Procurements to update
+     */
+    where?: ProcurementWhereInput
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProcurementIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
    * Procurement upsert
    */
   export type ProcurementUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4489,6 +7317,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Procurement
      */
     select?: ProcurementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Procurement
+     */
+    omit?: ProcurementOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -4515,6 +7347,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Procurement
      */
     select?: ProcurementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Procurement
+     */
+    omit?: ProcurementOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -4544,6 +7380,10 @@ export namespace Prisma {
      */
     select?: JointProcurementSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the JointProcurement
+     */
+    omit?: JointProcurementOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: JointProcurementInclude<ExtArgs> | null
@@ -4558,6 +7398,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Contract
      */
     select?: ContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Contract
+     */
+    omit?: ContractOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -4579,3047 +7423,13 @@ export namespace Prisma {
      */
     select?: ProcurementSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Omit specific fields from the Procurement
      */
-    include?: ProcurementInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model JointProcurement
-   */
-
-  export type AggregateJointProcurement = {
-    _count: JointProcurementCountAggregateOutputType | null
-    _avg: JointProcurementAvgAggregateOutputType | null
-    _sum: JointProcurementSumAggregateOutputType | null
-    _min: JointProcurementMinAggregateOutputType | null
-    _max: JointProcurementMaxAggregateOutputType | null
-  }
-
-  export type JointProcurementAvgAggregateOutputType = {
-    expectedValue: Decimal | null
-    resultValue: Decimal | null
-  }
-
-  export type JointProcurementSumAggregateOutputType = {
-    expectedValue: Decimal | null
-    resultValue: Decimal | null
-  }
-
-  export type JointProcurementMinAggregateOutputType = {
-    id: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    expectedValue: Decimal | null
-    resultValue: Decimal | null
-    announcedAt: Date | null
-    finishedAt: Date | null
-    prozorroId: string | null
-    prozorroLink: string | null
-    product: string | null
-    unit: string | null
-    scope: string | null
-    status: string | null
-  }
-
-  export type JointProcurementMaxAggregateOutputType = {
-    id: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    expectedValue: Decimal | null
-    resultValue: Decimal | null
-    announcedAt: Date | null
-    finishedAt: Date | null
-    prozorroId: string | null
-    prozorroLink: string | null
-    product: string | null
-    unit: string | null
-    scope: string | null
-    status: string | null
-  }
-
-  export type JointProcurementCountAggregateOutputType = {
-    id: number
-    createdAt: number
-    updatedAt: number
-    expectedValue: number
-    resultValue: number
-    announcedAt: number
-    finishedAt: number
-    prozorroId: number
-    prozorroLink: number
-    product: number
-    unit: number
-    scope: number
-    status: number
-    _all: number
-  }
-
-
-  export type JointProcurementAvgAggregateInputType = {
-    expectedValue?: true
-    resultValue?: true
-  }
-
-  export type JointProcurementSumAggregateInputType = {
-    expectedValue?: true
-    resultValue?: true
-  }
-
-  export type JointProcurementMinAggregateInputType = {
-    id?: true
-    createdAt?: true
-    updatedAt?: true
-    expectedValue?: true
-    resultValue?: true
-    announcedAt?: true
-    finishedAt?: true
-    prozorroId?: true
-    prozorroLink?: true
-    product?: true
-    unit?: true
-    scope?: true
-    status?: true
-  }
-
-  export type JointProcurementMaxAggregateInputType = {
-    id?: true
-    createdAt?: true
-    updatedAt?: true
-    expectedValue?: true
-    resultValue?: true
-    announcedAt?: true
-    finishedAt?: true
-    prozorroId?: true
-    prozorroLink?: true
-    product?: true
-    unit?: true
-    scope?: true
-    status?: true
-  }
-
-  export type JointProcurementCountAggregateInputType = {
-    id?: true
-    createdAt?: true
-    updatedAt?: true
-    expectedValue?: true
-    resultValue?: true
-    announcedAt?: true
-    finishedAt?: true
-    prozorroId?: true
-    prozorroLink?: true
-    product?: true
-    unit?: true
-    scope?: true
-    status?: true
-    _all?: true
-  }
-
-  export type JointProcurementAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which JointProcurement to aggregate.
-     */
-    where?: JointProcurementWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of JointProcurements to fetch.
-     */
-    orderBy?: JointProcurementOrderByWithRelationInput | JointProcurementOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: JointProcurementWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` JointProcurements from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` JointProcurements.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned JointProcurements
-    **/
-    _count?: true | JointProcurementCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: JointProcurementAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: JointProcurementSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: JointProcurementMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: JointProcurementMaxAggregateInputType
-  }
-
-  export type GetJointProcurementAggregateType<T extends JointProcurementAggregateArgs> = {
-        [P in keyof T & keyof AggregateJointProcurement]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateJointProcurement[P]>
-      : GetScalarType<T[P], AggregateJointProcurement[P]>
-  }
-
-
-
-
-  export type JointProcurementGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: JointProcurementWhereInput
-    orderBy?: JointProcurementOrderByWithAggregationInput | JointProcurementOrderByWithAggregationInput[]
-    by: JointProcurementScalarFieldEnum[] | JointProcurementScalarFieldEnum
-    having?: JointProcurementScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: JointProcurementCountAggregateInputType | true
-    _avg?: JointProcurementAvgAggregateInputType
-    _sum?: JointProcurementSumAggregateInputType
-    _min?: JointProcurementMinAggregateInputType
-    _max?: JointProcurementMaxAggregateInputType
-  }
-
-  export type JointProcurementGroupByOutputType = {
-    id: string
-    createdAt: Date
-    updatedAt: Date
-    expectedValue: Decimal
-    resultValue: Decimal | null
-    announcedAt: Date | null
-    finishedAt: Date | null
-    prozorroId: string | null
-    prozorroLink: string | null
-    product: string
-    unit: string
-    scope: string
-    status: string
-    _count: JointProcurementCountAggregateOutputType | null
-    _avg: JointProcurementAvgAggregateOutputType | null
-    _sum: JointProcurementSumAggregateOutputType | null
-    _min: JointProcurementMinAggregateOutputType | null
-    _max: JointProcurementMaxAggregateOutputType | null
-  }
-
-  type GetJointProcurementGroupByPayload<T extends JointProcurementGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<JointProcurementGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof JointProcurementGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], JointProcurementGroupByOutputType[P]>
-            : GetScalarType<T[P], JointProcurementGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type JointProcurementSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    expectedValue?: boolean
-    resultValue?: boolean
-    announcedAt?: boolean
-    finishedAt?: boolean
-    prozorroId?: boolean
-    prozorroLink?: boolean
-    product?: boolean
-    unit?: boolean
-    scope?: boolean
-    status?: boolean
-    procurements?: boolean | JointProcurement$procurementsArgs<ExtArgs>
-    _count?: boolean | JointProcurementCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["jointProcurement"]>
-
-  export type JointProcurementSelectScalar = {
-    id?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    expectedValue?: boolean
-    resultValue?: boolean
-    announcedAt?: boolean
-    finishedAt?: boolean
-    prozorroId?: boolean
-    prozorroLink?: boolean
-    product?: boolean
-    unit?: boolean
-    scope?: boolean
-    status?: boolean
-  }
-
-
-  export type JointProcurementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    procurements?: boolean | JointProcurement$procurementsArgs<ExtArgs>
-    _count?: boolean | JointProcurementCountOutputTypeDefaultArgs<ExtArgs>
-  }
-
-
-  export type $JointProcurementPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "JointProcurement"
-    objects: {
-      procurements: Prisma.$ProcurementPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      createdAt: Date
-      updatedAt: Date
-      expectedValue: Prisma.Decimal
-      resultValue: Prisma.Decimal | null
-      announcedAt: Date | null
-      finishedAt: Date | null
-      prozorroId: string | null
-      prozorroLink: string | null
-      product: string
-      unit: string
-      scope: string
-      status: string
-    }, ExtArgs["result"]["jointProcurement"]>
-    composites: {}
-  }
-
-
-  type JointProcurementGetPayload<S extends boolean | null | undefined | JointProcurementDefaultArgs> = $Result.GetResult<Prisma.$JointProcurementPayload, S>
-
-  type JointProcurementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<JointProcurementFindManyArgs, 'select' | 'include' | 'distinct'> & {
-      select?: JointProcurementCountAggregateInputType | true
-    }
-
-  export interface JointProcurementDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['JointProcurement'], meta: { name: 'JointProcurement' } }
-    /**
-     * Find zero or one JointProcurement that matches the filter.
-     * @param {JointProcurementFindUniqueArgs} args - Arguments to find a JointProcurement
-     * @example
-     * // Get one JointProcurement
-     * const jointProcurement = await prisma.jointProcurement.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends JointProcurementFindUniqueArgs<ExtArgs>>(
-      args: SelectSubset<T, JointProcurementFindUniqueArgs<ExtArgs>>
-    ): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
-
-    /**
-     * Find one JointProcurement that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {JointProcurementFindUniqueOrThrowArgs} args - Arguments to find a JointProcurement
-     * @example
-     * // Get one JointProcurement
-     * const jointProcurement = await prisma.jointProcurement.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends JointProcurementFindUniqueOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, JointProcurementFindUniqueOrThrowArgs<ExtArgs>>
-    ): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
-
-    /**
-     * Find the first JointProcurement that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {JointProcurementFindFirstArgs} args - Arguments to find a JointProcurement
-     * @example
-     * // Get one JointProcurement
-     * const jointProcurement = await prisma.jointProcurement.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends JointProcurementFindFirstArgs<ExtArgs>>(
-      args?: SelectSubset<T, JointProcurementFindFirstArgs<ExtArgs>>
-    ): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
-
-    /**
-     * Find the first JointProcurement that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {JointProcurementFindFirstOrThrowArgs} args - Arguments to find a JointProcurement
-     * @example
-     * // Get one JointProcurement
-     * const jointProcurement = await prisma.jointProcurement.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends JointProcurementFindFirstOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, JointProcurementFindFirstOrThrowArgs<ExtArgs>>
-    ): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
-
-    /**
-     * Find zero or more JointProcurements that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {JointProcurementFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all JointProcurements
-     * const jointProcurements = await prisma.jointProcurement.findMany()
-     * 
-     * // Get first 10 JointProcurements
-     * const jointProcurements = await prisma.jointProcurement.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const jointProcurementWithIdOnly = await prisma.jointProcurement.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends JointProcurementFindManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, JointProcurementFindManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, 'findMany'>>
-
-    /**
-     * Create a JointProcurement.
-     * @param {JointProcurementCreateArgs} args - Arguments to create a JointProcurement.
-     * @example
-     * // Create one JointProcurement
-     * const JointProcurement = await prisma.jointProcurement.create({
-     *   data: {
-     *     // ... data to create a JointProcurement
-     *   }
-     * })
-     * 
-    **/
-    create<T extends JointProcurementCreateArgs<ExtArgs>>(
-      args: SelectSubset<T, JointProcurementCreateArgs<ExtArgs>>
-    ): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
-
-    /**
-     * Create many JointProcurements.
-     *     @param {JointProcurementCreateManyArgs} args - Arguments to create many JointProcurements.
-     *     @example
-     *     // Create many JointProcurements
-     *     const jointProcurement = await prisma.jointProcurement.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends JointProcurementCreateManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, JointProcurementCreateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a JointProcurement.
-     * @param {JointProcurementDeleteArgs} args - Arguments to delete one JointProcurement.
-     * @example
-     * // Delete one JointProcurement
-     * const JointProcurement = await prisma.jointProcurement.delete({
-     *   where: {
-     *     // ... filter to delete one JointProcurement
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends JointProcurementDeleteArgs<ExtArgs>>(
-      args: SelectSubset<T, JointProcurementDeleteArgs<ExtArgs>>
-    ): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
-
-    /**
-     * Update one JointProcurement.
-     * @param {JointProcurementUpdateArgs} args - Arguments to update one JointProcurement.
-     * @example
-     * // Update one JointProcurement
-     * const jointProcurement = await prisma.jointProcurement.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends JointProcurementUpdateArgs<ExtArgs>>(
-      args: SelectSubset<T, JointProcurementUpdateArgs<ExtArgs>>
-    ): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
-
-    /**
-     * Delete zero or more JointProcurements.
-     * @param {JointProcurementDeleteManyArgs} args - Arguments to filter JointProcurements to delete.
-     * @example
-     * // Delete a few JointProcurements
-     * const { count } = await prisma.jointProcurement.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends JointProcurementDeleteManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, JointProcurementDeleteManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more JointProcurements.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {JointProcurementUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many JointProcurements
-     * const jointProcurement = await prisma.jointProcurement.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends JointProcurementUpdateManyArgs<ExtArgs>>(
-      args: SelectSubset<T, JointProcurementUpdateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one JointProcurement.
-     * @param {JointProcurementUpsertArgs} args - Arguments to update or create a JointProcurement.
-     * @example
-     * // Update or create a JointProcurement
-     * const jointProcurement = await prisma.jointProcurement.upsert({
-     *   create: {
-     *     // ... data to create a JointProcurement
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the JointProcurement we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends JointProcurementUpsertArgs<ExtArgs>>(
-      args: SelectSubset<T, JointProcurementUpsertArgs<ExtArgs>>
-    ): Prisma__JointProcurementClient<$Result.GetResult<Prisma.$JointProcurementPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
-
-    /**
-     * Count the number of JointProcurements.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {JointProcurementCountArgs} args - Arguments to filter JointProcurements to count.
-     * @example
-     * // Count the number of JointProcurements
-     * const count = await prisma.jointProcurement.count({
-     *   where: {
-     *     // ... the filter for the JointProcurements we want to count
-     *   }
-     * })
-    **/
-    count<T extends JointProcurementCountArgs>(
-      args?: Subset<T, JointProcurementCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], JointProcurementCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a JointProcurement.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {JointProcurementAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends JointProcurementAggregateArgs>(args: Subset<T, JointProcurementAggregateArgs>): Prisma.PrismaPromise<GetJointProcurementAggregateType<T>>
-
-    /**
-     * Group by JointProcurement.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {JointProcurementGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends JointProcurementGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: JointProcurementGroupByArgs['orderBy'] }
-        : { orderBy?: JointProcurementGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, JointProcurementGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetJointProcurementGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the JointProcurement model
-   */
-  readonly fields: JointProcurementFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for JointProcurement.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__JointProcurementClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-
-    procurements<T extends JointProcurement$procurementsArgs<ExtArgs> = {}>(args?: Subset<T, JointProcurement$procurementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, 'findMany'> | Null>;
-
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
-  }
-
-
-
-  /**
-   * Fields of the JointProcurement model
-   */ 
-  interface JointProcurementFieldRefs {
-    readonly id: FieldRef<"JointProcurement", 'String'>
-    readonly createdAt: FieldRef<"JointProcurement", 'DateTime'>
-    readonly updatedAt: FieldRef<"JointProcurement", 'DateTime'>
-    readonly expectedValue: FieldRef<"JointProcurement", 'Decimal'>
-    readonly resultValue: FieldRef<"JointProcurement", 'Decimal'>
-    readonly announcedAt: FieldRef<"JointProcurement", 'DateTime'>
-    readonly finishedAt: FieldRef<"JointProcurement", 'DateTime'>
-    readonly prozorroId: FieldRef<"JointProcurement", 'String'>
-    readonly prozorroLink: FieldRef<"JointProcurement", 'String'>
-    readonly product: FieldRef<"JointProcurement", 'String'>
-    readonly unit: FieldRef<"JointProcurement", 'String'>
-    readonly scope: FieldRef<"JointProcurement", 'String'>
-    readonly status: FieldRef<"JointProcurement", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * JointProcurement findUnique
-   */
-  export type JointProcurementFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the JointProcurement
-     */
-    select?: JointProcurementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: JointProcurementInclude<ExtArgs> | null
-    /**
-     * Filter, which JointProcurement to fetch.
-     */
-    where: JointProcurementWhereUniqueInput
-  }
-
-  /**
-   * JointProcurement findUniqueOrThrow
-   */
-  export type JointProcurementFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the JointProcurement
-     */
-    select?: JointProcurementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: JointProcurementInclude<ExtArgs> | null
-    /**
-     * Filter, which JointProcurement to fetch.
-     */
-    where: JointProcurementWhereUniqueInput
-  }
-
-  /**
-   * JointProcurement findFirst
-   */
-  export type JointProcurementFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the JointProcurement
-     */
-    select?: JointProcurementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: JointProcurementInclude<ExtArgs> | null
-    /**
-     * Filter, which JointProcurement to fetch.
-     */
-    where?: JointProcurementWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of JointProcurements to fetch.
-     */
-    orderBy?: JointProcurementOrderByWithRelationInput | JointProcurementOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for JointProcurements.
-     */
-    cursor?: JointProcurementWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` JointProcurements from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` JointProcurements.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of JointProcurements.
-     */
-    distinct?: JointProcurementScalarFieldEnum | JointProcurementScalarFieldEnum[]
-  }
-
-  /**
-   * JointProcurement findFirstOrThrow
-   */
-  export type JointProcurementFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the JointProcurement
-     */
-    select?: JointProcurementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: JointProcurementInclude<ExtArgs> | null
-    /**
-     * Filter, which JointProcurement to fetch.
-     */
-    where?: JointProcurementWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of JointProcurements to fetch.
-     */
-    orderBy?: JointProcurementOrderByWithRelationInput | JointProcurementOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for JointProcurements.
-     */
-    cursor?: JointProcurementWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` JointProcurements from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` JointProcurements.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of JointProcurements.
-     */
-    distinct?: JointProcurementScalarFieldEnum | JointProcurementScalarFieldEnum[]
-  }
-
-  /**
-   * JointProcurement findMany
-   */
-  export type JointProcurementFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the JointProcurement
-     */
-    select?: JointProcurementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: JointProcurementInclude<ExtArgs> | null
-    /**
-     * Filter, which JointProcurements to fetch.
-     */
-    where?: JointProcurementWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of JointProcurements to fetch.
-     */
-    orderBy?: JointProcurementOrderByWithRelationInput | JointProcurementOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing JointProcurements.
-     */
-    cursor?: JointProcurementWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` JointProcurements from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` JointProcurements.
-     */
-    skip?: number
-    distinct?: JointProcurementScalarFieldEnum | JointProcurementScalarFieldEnum[]
-  }
-
-  /**
-   * JointProcurement create
-   */
-  export type JointProcurementCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the JointProcurement
-     */
-    select?: JointProcurementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: JointProcurementInclude<ExtArgs> | null
-    /**
-     * The data needed to create a JointProcurement.
-     */
-    data: XOR<JointProcurementCreateInput, JointProcurementUncheckedCreateInput>
-  }
-
-  /**
-   * JointProcurement createMany
-   */
-  export type JointProcurementCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many JointProcurements.
-     */
-    data: JointProcurementCreateManyInput | JointProcurementCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * JointProcurement update
-   */
-  export type JointProcurementUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the JointProcurement
-     */
-    select?: JointProcurementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: JointProcurementInclude<ExtArgs> | null
-    /**
-     * The data needed to update a JointProcurement.
-     */
-    data: XOR<JointProcurementUpdateInput, JointProcurementUncheckedUpdateInput>
-    /**
-     * Choose, which JointProcurement to update.
-     */
-    where: JointProcurementWhereUniqueInput
-  }
-
-  /**
-   * JointProcurement updateMany
-   */
-  export type JointProcurementUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update JointProcurements.
-     */
-    data: XOR<JointProcurementUpdateManyMutationInput, JointProcurementUncheckedUpdateManyInput>
-    /**
-     * Filter which JointProcurements to update
-     */
-    where?: JointProcurementWhereInput
-  }
-
-  /**
-   * JointProcurement upsert
-   */
-  export type JointProcurementUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the JointProcurement
-     */
-    select?: JointProcurementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: JointProcurementInclude<ExtArgs> | null
-    /**
-     * The filter to search for the JointProcurement to update in case it exists.
-     */
-    where: JointProcurementWhereUniqueInput
-    /**
-     * In case the JointProcurement found by the `where` argument doesn't exist, create a new JointProcurement with this data.
-     */
-    create: XOR<JointProcurementCreateInput, JointProcurementUncheckedCreateInput>
-    /**
-     * In case the JointProcurement was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<JointProcurementUpdateInput, JointProcurementUncheckedUpdateInput>
-  }
-
-  /**
-   * JointProcurement delete
-   */
-  export type JointProcurementDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the JointProcurement
-     */
-    select?: JointProcurementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: JointProcurementInclude<ExtArgs> | null
-    /**
-     * Filter which JointProcurement to delete.
-     */
-    where: JointProcurementWhereUniqueInput
-  }
-
-  /**
-   * JointProcurement deleteMany
-   */
-  export type JointProcurementDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which JointProcurements to delete
-     */
-    where?: JointProcurementWhereInput
-  }
-
-  /**
-   * JointProcurement.procurements
-   */
-  export type JointProcurement$procurementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Procurement
-     */
-    select?: ProcurementSelect<ExtArgs> | null
+    omit?: ProcurementOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
     include?: ProcurementInclude<ExtArgs> | null
-    where?: ProcurementWhereInput
-    orderBy?: ProcurementOrderByWithRelationInput | ProcurementOrderByWithRelationInput[]
-    cursor?: ProcurementWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ProcurementScalarFieldEnum | ProcurementScalarFieldEnum[]
-  }
-
-  /**
-   * JointProcurement without action
-   */
-  export type JointProcurementDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the JointProcurement
-     */
-    select?: JointProcurementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: JointProcurementInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Contract
-   */
-
-  export type AggregateContract = {
-    _count: ContractCountAggregateOutputType | null
-    _avg: ContractAvgAggregateOutputType | null
-    _sum: ContractSumAggregateOutputType | null
-    _min: ContractMinAggregateOutputType | null
-    _max: ContractMaxAggregateOutputType | null
-  }
-
-  export type ContractAvgAggregateOutputType = {
-    startValue: Decimal | null
-    currentValue: Decimal | null
-  }
-
-  export type ContractSumAggregateOutputType = {
-    startValue: Decimal | null
-    currentValue: Decimal | null
-  }
-
-  export type ContractMinAggregateOutputType = {
-    id: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    number: string | null
-    prozorroLink: string | null
-    startValue: Decimal | null
-    currentValue: Decimal | null
-    signatureDate: Date | null
-    terminationDate: Date | null
-    product: string | null
-    unit: string | null
-    scope: string | null
-    procurementId: string | null
-  }
-
-  export type ContractMaxAggregateOutputType = {
-    id: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    number: string | null
-    prozorroLink: string | null
-    startValue: Decimal | null
-    currentValue: Decimal | null
-    signatureDate: Date | null
-    terminationDate: Date | null
-    product: string | null
-    unit: string | null
-    scope: string | null
-    procurementId: string | null
-  }
-
-  export type ContractCountAggregateOutputType = {
-    id: number
-    createdAt: number
-    updatedAt: number
-    number: number
-    prozorroLink: number
-    startValue: number
-    currentValue: number
-    signatureDate: number
-    terminationDate: number
-    product: number
-    unit: number
-    scope: number
-    procurementId: number
-    _all: number
-  }
-
-
-  export type ContractAvgAggregateInputType = {
-    startValue?: true
-    currentValue?: true
-  }
-
-  export type ContractSumAggregateInputType = {
-    startValue?: true
-    currentValue?: true
-  }
-
-  export type ContractMinAggregateInputType = {
-    id?: true
-    createdAt?: true
-    updatedAt?: true
-    number?: true
-    prozorroLink?: true
-    startValue?: true
-    currentValue?: true
-    signatureDate?: true
-    terminationDate?: true
-    product?: true
-    unit?: true
-    scope?: true
-    procurementId?: true
-  }
-
-  export type ContractMaxAggregateInputType = {
-    id?: true
-    createdAt?: true
-    updatedAt?: true
-    number?: true
-    prozorroLink?: true
-    startValue?: true
-    currentValue?: true
-    signatureDate?: true
-    terminationDate?: true
-    product?: true
-    unit?: true
-    scope?: true
-    procurementId?: true
-  }
-
-  export type ContractCountAggregateInputType = {
-    id?: true
-    createdAt?: true
-    updatedAt?: true
-    number?: true
-    prozorroLink?: true
-    startValue?: true
-    currentValue?: true
-    signatureDate?: true
-    terminationDate?: true
-    product?: true
-    unit?: true
-    scope?: true
-    procurementId?: true
-    _all?: true
-  }
-
-  export type ContractAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Contract to aggregate.
-     */
-    where?: ContractWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Contracts to fetch.
-     */
-    orderBy?: ContractOrderByWithRelationInput | ContractOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: ContractWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Contracts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Contracts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Contracts
-    **/
-    _count?: true | ContractCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: ContractAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: ContractSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: ContractMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: ContractMaxAggregateInputType
-  }
-
-  export type GetContractAggregateType<T extends ContractAggregateArgs> = {
-        [P in keyof T & keyof AggregateContract]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateContract[P]>
-      : GetScalarType<T[P], AggregateContract[P]>
-  }
-
-
-
-
-  export type ContractGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ContractWhereInput
-    orderBy?: ContractOrderByWithAggregationInput | ContractOrderByWithAggregationInput[]
-    by: ContractScalarFieldEnum[] | ContractScalarFieldEnum
-    having?: ContractScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: ContractCountAggregateInputType | true
-    _avg?: ContractAvgAggregateInputType
-    _sum?: ContractSumAggregateInputType
-    _min?: ContractMinAggregateInputType
-    _max?: ContractMaxAggregateInputType
-  }
-
-  export type ContractGroupByOutputType = {
-    id: string
-    createdAt: Date
-    updatedAt: Date
-    number: string
-    prozorroLink: string | null
-    startValue: Decimal
-    currentValue: Decimal | null
-    signatureDate: Date
-    terminationDate: Date
-    product: string
-    unit: string
-    scope: string
-    procurementId: string
-    _count: ContractCountAggregateOutputType | null
-    _avg: ContractAvgAggregateOutputType | null
-    _sum: ContractSumAggregateOutputType | null
-    _min: ContractMinAggregateOutputType | null
-    _max: ContractMaxAggregateOutputType | null
-  }
-
-  type GetContractGroupByPayload<T extends ContractGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<ContractGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof ContractGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], ContractGroupByOutputType[P]>
-            : GetScalarType<T[P], ContractGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type ContractSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    number?: boolean
-    prozorroLink?: boolean
-    startValue?: boolean
-    currentValue?: boolean
-    signatureDate?: boolean
-    terminationDate?: boolean
-    product?: boolean
-    unit?: boolean
-    scope?: boolean
-    procurementId?: boolean
-    procurement?: boolean | ProcurementDefaultArgs<ExtArgs>
-    agreements?: boolean | Contract$agreementsArgs<ExtArgs>
-    _count?: boolean | ContractCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["contract"]>
-
-  export type ContractSelectScalar = {
-    id?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    number?: boolean
-    prozorroLink?: boolean
-    startValue?: boolean
-    currentValue?: boolean
-    signatureDate?: boolean
-    terminationDate?: boolean
-    product?: boolean
-    unit?: boolean
-    scope?: boolean
-    procurementId?: boolean
-  }
-
-
-  export type ContractInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    procurement?: boolean | ProcurementDefaultArgs<ExtArgs>
-    agreements?: boolean | Contract$agreementsArgs<ExtArgs>
-    _count?: boolean | ContractCountOutputTypeDefaultArgs<ExtArgs>
-  }
-
-
-  export type $ContractPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Contract"
-    objects: {
-      procurement: Prisma.$ProcurementPayload<ExtArgs>
-      agreements: Prisma.$contractAgreementPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      createdAt: Date
-      updatedAt: Date
-      number: string
-      prozorroLink: string | null
-      startValue: Prisma.Decimal
-      currentValue: Prisma.Decimal | null
-      signatureDate: Date
-      terminationDate: Date
-      product: string
-      unit: string
-      scope: string
-      procurementId: string
-    }, ExtArgs["result"]["contract"]>
-    composites: {}
-  }
-
-
-  type ContractGetPayload<S extends boolean | null | undefined | ContractDefaultArgs> = $Result.GetResult<Prisma.$ContractPayload, S>
-
-  type ContractCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<ContractFindManyArgs, 'select' | 'include' | 'distinct'> & {
-      select?: ContractCountAggregateInputType | true
-    }
-
-  export interface ContractDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Contract'], meta: { name: 'Contract' } }
-    /**
-     * Find zero or one Contract that matches the filter.
-     * @param {ContractFindUniqueArgs} args - Arguments to find a Contract
-     * @example
-     * // Get one Contract
-     * const contract = await prisma.contract.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends ContractFindUniqueArgs<ExtArgs>>(
-      args: SelectSubset<T, ContractFindUniqueArgs<ExtArgs>>
-    ): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
-
-    /**
-     * Find one Contract that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {ContractFindUniqueOrThrowArgs} args - Arguments to find a Contract
-     * @example
-     * // Get one Contract
-     * const contract = await prisma.contract.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends ContractFindUniqueOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, ContractFindUniqueOrThrowArgs<ExtArgs>>
-    ): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
-
-    /**
-     * Find the first Contract that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ContractFindFirstArgs} args - Arguments to find a Contract
-     * @example
-     * // Get one Contract
-     * const contract = await prisma.contract.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends ContractFindFirstArgs<ExtArgs>>(
-      args?: SelectSubset<T, ContractFindFirstArgs<ExtArgs>>
-    ): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
-
-    /**
-     * Find the first Contract that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ContractFindFirstOrThrowArgs} args - Arguments to find a Contract
-     * @example
-     * // Get one Contract
-     * const contract = await prisma.contract.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends ContractFindFirstOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, ContractFindFirstOrThrowArgs<ExtArgs>>
-    ): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
-
-    /**
-     * Find zero or more Contracts that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ContractFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Contracts
-     * const contracts = await prisma.contract.findMany()
-     * 
-     * // Get first 10 Contracts
-     * const contracts = await prisma.contract.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const contractWithIdOnly = await prisma.contract.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends ContractFindManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, ContractFindManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, 'findMany'>>
-
-    /**
-     * Create a Contract.
-     * @param {ContractCreateArgs} args - Arguments to create a Contract.
-     * @example
-     * // Create one Contract
-     * const Contract = await prisma.contract.create({
-     *   data: {
-     *     // ... data to create a Contract
-     *   }
-     * })
-     * 
-    **/
-    create<T extends ContractCreateArgs<ExtArgs>>(
-      args: SelectSubset<T, ContractCreateArgs<ExtArgs>>
-    ): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
-
-    /**
-     * Create many Contracts.
-     *     @param {ContractCreateManyArgs} args - Arguments to create many Contracts.
-     *     @example
-     *     // Create many Contracts
-     *     const contract = await prisma.contract.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends ContractCreateManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, ContractCreateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a Contract.
-     * @param {ContractDeleteArgs} args - Arguments to delete one Contract.
-     * @example
-     * // Delete one Contract
-     * const Contract = await prisma.contract.delete({
-     *   where: {
-     *     // ... filter to delete one Contract
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends ContractDeleteArgs<ExtArgs>>(
-      args: SelectSubset<T, ContractDeleteArgs<ExtArgs>>
-    ): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
-
-    /**
-     * Update one Contract.
-     * @param {ContractUpdateArgs} args - Arguments to update one Contract.
-     * @example
-     * // Update one Contract
-     * const contract = await prisma.contract.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends ContractUpdateArgs<ExtArgs>>(
-      args: SelectSubset<T, ContractUpdateArgs<ExtArgs>>
-    ): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
-
-    /**
-     * Delete zero or more Contracts.
-     * @param {ContractDeleteManyArgs} args - Arguments to filter Contracts to delete.
-     * @example
-     * // Delete a few Contracts
-     * const { count } = await prisma.contract.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends ContractDeleteManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, ContractDeleteManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Contracts.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ContractUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Contracts
-     * const contract = await prisma.contract.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends ContractUpdateManyArgs<ExtArgs>>(
-      args: SelectSubset<T, ContractUpdateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Contract.
-     * @param {ContractUpsertArgs} args - Arguments to update or create a Contract.
-     * @example
-     * // Update or create a Contract
-     * const contract = await prisma.contract.upsert({
-     *   create: {
-     *     // ... data to create a Contract
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Contract we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends ContractUpsertArgs<ExtArgs>>(
-      args: SelectSubset<T, ContractUpsertArgs<ExtArgs>>
-    ): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
-
-    /**
-     * Count the number of Contracts.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ContractCountArgs} args - Arguments to filter Contracts to count.
-     * @example
-     * // Count the number of Contracts
-     * const count = await prisma.contract.count({
-     *   where: {
-     *     // ... the filter for the Contracts we want to count
-     *   }
-     * })
-    **/
-    count<T extends ContractCountArgs>(
-      args?: Subset<T, ContractCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], ContractCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Contract.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ContractAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends ContractAggregateArgs>(args: Subset<T, ContractAggregateArgs>): Prisma.PrismaPromise<GetContractAggregateType<T>>
-
-    /**
-     * Group by Contract.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ContractGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends ContractGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ContractGroupByArgs['orderBy'] }
-        : { orderBy?: ContractGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, ContractGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetContractGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Contract model
-   */
-  readonly fields: ContractFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Contract.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__ContractClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-
-    procurement<T extends ProcurementDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProcurementDefaultArgs<ExtArgs>>): Prisma__ProcurementClient<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
-
-    agreements<T extends Contract$agreementsArgs<ExtArgs> = {}>(args?: Subset<T, Contract$agreementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, 'findMany'> | Null>;
-
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
-  }
-
-
-
-  /**
-   * Fields of the Contract model
-   */ 
-  interface ContractFieldRefs {
-    readonly id: FieldRef<"Contract", 'String'>
-    readonly createdAt: FieldRef<"Contract", 'DateTime'>
-    readonly updatedAt: FieldRef<"Contract", 'DateTime'>
-    readonly number: FieldRef<"Contract", 'String'>
-    readonly prozorroLink: FieldRef<"Contract", 'String'>
-    readonly startValue: FieldRef<"Contract", 'Decimal'>
-    readonly currentValue: FieldRef<"Contract", 'Decimal'>
-    readonly signatureDate: FieldRef<"Contract", 'DateTime'>
-    readonly terminationDate: FieldRef<"Contract", 'DateTime'>
-    readonly product: FieldRef<"Contract", 'String'>
-    readonly unit: FieldRef<"Contract", 'String'>
-    readonly scope: FieldRef<"Contract", 'String'>
-    readonly procurementId: FieldRef<"Contract", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Contract findUnique
-   */
-  export type ContractFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Contract
-     */
-    select?: ContractSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ContractInclude<ExtArgs> | null
-    /**
-     * Filter, which Contract to fetch.
-     */
-    where: ContractWhereUniqueInput
-  }
-
-  /**
-   * Contract findUniqueOrThrow
-   */
-  export type ContractFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Contract
-     */
-    select?: ContractSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ContractInclude<ExtArgs> | null
-    /**
-     * Filter, which Contract to fetch.
-     */
-    where: ContractWhereUniqueInput
-  }
-
-  /**
-   * Contract findFirst
-   */
-  export type ContractFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Contract
-     */
-    select?: ContractSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ContractInclude<ExtArgs> | null
-    /**
-     * Filter, which Contract to fetch.
-     */
-    where?: ContractWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Contracts to fetch.
-     */
-    orderBy?: ContractOrderByWithRelationInput | ContractOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Contracts.
-     */
-    cursor?: ContractWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Contracts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Contracts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Contracts.
-     */
-    distinct?: ContractScalarFieldEnum | ContractScalarFieldEnum[]
-  }
-
-  /**
-   * Contract findFirstOrThrow
-   */
-  export type ContractFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Contract
-     */
-    select?: ContractSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ContractInclude<ExtArgs> | null
-    /**
-     * Filter, which Contract to fetch.
-     */
-    where?: ContractWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Contracts to fetch.
-     */
-    orderBy?: ContractOrderByWithRelationInput | ContractOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Contracts.
-     */
-    cursor?: ContractWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Contracts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Contracts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Contracts.
-     */
-    distinct?: ContractScalarFieldEnum | ContractScalarFieldEnum[]
-  }
-
-  /**
-   * Contract findMany
-   */
-  export type ContractFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Contract
-     */
-    select?: ContractSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ContractInclude<ExtArgs> | null
-    /**
-     * Filter, which Contracts to fetch.
-     */
-    where?: ContractWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Contracts to fetch.
-     */
-    orderBy?: ContractOrderByWithRelationInput | ContractOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Contracts.
-     */
-    cursor?: ContractWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Contracts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Contracts.
-     */
-    skip?: number
-    distinct?: ContractScalarFieldEnum | ContractScalarFieldEnum[]
-  }
-
-  /**
-   * Contract create
-   */
-  export type ContractCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Contract
-     */
-    select?: ContractSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ContractInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Contract.
-     */
-    data: XOR<ContractCreateInput, ContractUncheckedCreateInput>
-  }
-
-  /**
-   * Contract createMany
-   */
-  export type ContractCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Contracts.
-     */
-    data: ContractCreateManyInput | ContractCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Contract update
-   */
-  export type ContractUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Contract
-     */
-    select?: ContractSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ContractInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Contract.
-     */
-    data: XOR<ContractUpdateInput, ContractUncheckedUpdateInput>
-    /**
-     * Choose, which Contract to update.
-     */
-    where: ContractWhereUniqueInput
-  }
-
-  /**
-   * Contract updateMany
-   */
-  export type ContractUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Contracts.
-     */
-    data: XOR<ContractUpdateManyMutationInput, ContractUncheckedUpdateManyInput>
-    /**
-     * Filter which Contracts to update
-     */
-    where?: ContractWhereInput
-  }
-
-  /**
-   * Contract upsert
-   */
-  export type ContractUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Contract
-     */
-    select?: ContractSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ContractInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Contract to update in case it exists.
-     */
-    where: ContractWhereUniqueInput
-    /**
-     * In case the Contract found by the `where` argument doesn't exist, create a new Contract with this data.
-     */
-    create: XOR<ContractCreateInput, ContractUncheckedCreateInput>
-    /**
-     * In case the Contract was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<ContractUpdateInput, ContractUncheckedUpdateInput>
-  }
-
-  /**
-   * Contract delete
-   */
-  export type ContractDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Contract
-     */
-    select?: ContractSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ContractInclude<ExtArgs> | null
-    /**
-     * Filter which Contract to delete.
-     */
-    where: ContractWhereUniqueInput
-  }
-
-  /**
-   * Contract deleteMany
-   */
-  export type ContractDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Contracts to delete
-     */
-    where?: ContractWhereInput
-  }
-
-  /**
-   * Contract.agreements
-   */
-  export type Contract$agreementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the contractAgreement
-     */
-    select?: contractAgreementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: contractAgreementInclude<ExtArgs> | null
-    where?: contractAgreementWhereInput
-    orderBy?: contractAgreementOrderByWithRelationInput | contractAgreementOrderByWithRelationInput[]
-    cursor?: contractAgreementWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ContractAgreementScalarFieldEnum | ContractAgreementScalarFieldEnum[]
-  }
-
-  /**
-   * Contract without action
-   */
-  export type ContractDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Contract
-     */
-    select?: ContractSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ContractInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model contractAgreement
-   */
-
-  export type AggregateContractAgreement = {
-    _count: ContractAgreementCountAggregateOutputType | null
-    _min: ContractAgreementMinAggregateOutputType | null
-    _max: ContractAgreementMaxAggregateOutputType | null
-  }
-
-  export type ContractAgreementMinAggregateOutputType = {
-    id: string | null
-    createdAt: Date | null
-    number: string | null
-    signatureDate: Date | null
-    reason: string | null
-    changes: string | null
-    contractId: string | null
-  }
-
-  export type ContractAgreementMaxAggregateOutputType = {
-    id: string | null
-    createdAt: Date | null
-    number: string | null
-    signatureDate: Date | null
-    reason: string | null
-    changes: string | null
-    contractId: string | null
-  }
-
-  export type ContractAgreementCountAggregateOutputType = {
-    id: number
-    createdAt: number
-    number: number
-    signatureDate: number
-    reason: number
-    changes: number
-    contractId: number
-    _all: number
-  }
-
-
-  export type ContractAgreementMinAggregateInputType = {
-    id?: true
-    createdAt?: true
-    number?: true
-    signatureDate?: true
-    reason?: true
-    changes?: true
-    contractId?: true
-  }
-
-  export type ContractAgreementMaxAggregateInputType = {
-    id?: true
-    createdAt?: true
-    number?: true
-    signatureDate?: true
-    reason?: true
-    changes?: true
-    contractId?: true
-  }
-
-  export type ContractAgreementCountAggregateInputType = {
-    id?: true
-    createdAt?: true
-    number?: true
-    signatureDate?: true
-    reason?: true
-    changes?: true
-    contractId?: true
-    _all?: true
-  }
-
-  export type ContractAgreementAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which contractAgreement to aggregate.
-     */
-    where?: contractAgreementWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of contractAgreements to fetch.
-     */
-    orderBy?: contractAgreementOrderByWithRelationInput | contractAgreementOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: contractAgreementWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` contractAgreements from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` contractAgreements.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned contractAgreements
-    **/
-    _count?: true | ContractAgreementCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: ContractAgreementMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: ContractAgreementMaxAggregateInputType
-  }
-
-  export type GetContractAgreementAggregateType<T extends ContractAgreementAggregateArgs> = {
-        [P in keyof T & keyof AggregateContractAgreement]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateContractAgreement[P]>
-      : GetScalarType<T[P], AggregateContractAgreement[P]>
-  }
-
-
-
-
-  export type contractAgreementGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: contractAgreementWhereInput
-    orderBy?: contractAgreementOrderByWithAggregationInput | contractAgreementOrderByWithAggregationInput[]
-    by: ContractAgreementScalarFieldEnum[] | ContractAgreementScalarFieldEnum
-    having?: contractAgreementScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: ContractAgreementCountAggregateInputType | true
-    _min?: ContractAgreementMinAggregateInputType
-    _max?: ContractAgreementMaxAggregateInputType
-  }
-
-  export type ContractAgreementGroupByOutputType = {
-    id: string
-    createdAt: Date
-    number: string
-    signatureDate: Date
-    reason: string
-    changes: string
-    contractId: string
-    _count: ContractAgreementCountAggregateOutputType | null
-    _min: ContractAgreementMinAggregateOutputType | null
-    _max: ContractAgreementMaxAggregateOutputType | null
-  }
-
-  type GetContractAgreementGroupByPayload<T extends contractAgreementGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<ContractAgreementGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof ContractAgreementGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], ContractAgreementGroupByOutputType[P]>
-            : GetScalarType<T[P], ContractAgreementGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type contractAgreementSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    createdAt?: boolean
-    number?: boolean
-    signatureDate?: boolean
-    reason?: boolean
-    changes?: boolean
-    contractId?: boolean
-    contract?: boolean | ContractDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["contractAgreement"]>
-
-  export type contractAgreementSelectScalar = {
-    id?: boolean
-    createdAt?: boolean
-    number?: boolean
-    signatureDate?: boolean
-    reason?: boolean
-    changes?: boolean
-    contractId?: boolean
-  }
-
-
-  export type contractAgreementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    contract?: boolean | ContractDefaultArgs<ExtArgs>
-  }
-
-
-  export type $contractAgreementPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "contractAgreement"
-    objects: {
-      contract: Prisma.$ContractPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      createdAt: Date
-      number: string
-      signatureDate: Date
-      reason: string
-      changes: string
-      contractId: string
-    }, ExtArgs["result"]["contractAgreement"]>
-    composites: {}
-  }
-
-
-  type contractAgreementGetPayload<S extends boolean | null | undefined | contractAgreementDefaultArgs> = $Result.GetResult<Prisma.$contractAgreementPayload, S>
-
-  type contractAgreementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<contractAgreementFindManyArgs, 'select' | 'include' | 'distinct'> & {
-      select?: ContractAgreementCountAggregateInputType | true
-    }
-
-  export interface contractAgreementDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['contractAgreement'], meta: { name: 'contractAgreement' } }
-    /**
-     * Find zero or one ContractAgreement that matches the filter.
-     * @param {contractAgreementFindUniqueArgs} args - Arguments to find a ContractAgreement
-     * @example
-     * // Get one ContractAgreement
-     * const contractAgreement = await prisma.contractAgreement.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends contractAgreementFindUniqueArgs<ExtArgs>>(
-      args: SelectSubset<T, contractAgreementFindUniqueArgs<ExtArgs>>
-    ): Prisma__contractAgreementClient<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
-
-    /**
-     * Find one ContractAgreement that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {contractAgreementFindUniqueOrThrowArgs} args - Arguments to find a ContractAgreement
-     * @example
-     * // Get one ContractAgreement
-     * const contractAgreement = await prisma.contractAgreement.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends contractAgreementFindUniqueOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, contractAgreementFindUniqueOrThrowArgs<ExtArgs>>
-    ): Prisma__contractAgreementClient<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
-
-    /**
-     * Find the first ContractAgreement that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {contractAgreementFindFirstArgs} args - Arguments to find a ContractAgreement
-     * @example
-     * // Get one ContractAgreement
-     * const contractAgreement = await prisma.contractAgreement.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends contractAgreementFindFirstArgs<ExtArgs>>(
-      args?: SelectSubset<T, contractAgreementFindFirstArgs<ExtArgs>>
-    ): Prisma__contractAgreementClient<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
-
-    /**
-     * Find the first ContractAgreement that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {contractAgreementFindFirstOrThrowArgs} args - Arguments to find a ContractAgreement
-     * @example
-     * // Get one ContractAgreement
-     * const contractAgreement = await prisma.contractAgreement.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends contractAgreementFindFirstOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, contractAgreementFindFirstOrThrowArgs<ExtArgs>>
-    ): Prisma__contractAgreementClient<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
-
-    /**
-     * Find zero or more ContractAgreements that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {contractAgreementFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all ContractAgreements
-     * const contractAgreements = await prisma.contractAgreement.findMany()
-     * 
-     * // Get first 10 ContractAgreements
-     * const contractAgreements = await prisma.contractAgreement.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const contractAgreementWithIdOnly = await prisma.contractAgreement.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends contractAgreementFindManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, contractAgreementFindManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, 'findMany'>>
-
-    /**
-     * Create a ContractAgreement.
-     * @param {contractAgreementCreateArgs} args - Arguments to create a ContractAgreement.
-     * @example
-     * // Create one ContractAgreement
-     * const ContractAgreement = await prisma.contractAgreement.create({
-     *   data: {
-     *     // ... data to create a ContractAgreement
-     *   }
-     * })
-     * 
-    **/
-    create<T extends contractAgreementCreateArgs<ExtArgs>>(
-      args: SelectSubset<T, contractAgreementCreateArgs<ExtArgs>>
-    ): Prisma__contractAgreementClient<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
-
-    /**
-     * Create many ContractAgreements.
-     *     @param {contractAgreementCreateManyArgs} args - Arguments to create many ContractAgreements.
-     *     @example
-     *     // Create many ContractAgreements
-     *     const contractAgreement = await prisma.contractAgreement.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends contractAgreementCreateManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, contractAgreementCreateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a ContractAgreement.
-     * @param {contractAgreementDeleteArgs} args - Arguments to delete one ContractAgreement.
-     * @example
-     * // Delete one ContractAgreement
-     * const ContractAgreement = await prisma.contractAgreement.delete({
-     *   where: {
-     *     // ... filter to delete one ContractAgreement
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends contractAgreementDeleteArgs<ExtArgs>>(
-      args: SelectSubset<T, contractAgreementDeleteArgs<ExtArgs>>
-    ): Prisma__contractAgreementClient<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
-
-    /**
-     * Update one ContractAgreement.
-     * @param {contractAgreementUpdateArgs} args - Arguments to update one ContractAgreement.
-     * @example
-     * // Update one ContractAgreement
-     * const contractAgreement = await prisma.contractAgreement.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends contractAgreementUpdateArgs<ExtArgs>>(
-      args: SelectSubset<T, contractAgreementUpdateArgs<ExtArgs>>
-    ): Prisma__contractAgreementClient<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
-
-    /**
-     * Delete zero or more ContractAgreements.
-     * @param {contractAgreementDeleteManyArgs} args - Arguments to filter ContractAgreements to delete.
-     * @example
-     * // Delete a few ContractAgreements
-     * const { count } = await prisma.contractAgreement.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends contractAgreementDeleteManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, contractAgreementDeleteManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more ContractAgreements.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {contractAgreementUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many ContractAgreements
-     * const contractAgreement = await prisma.contractAgreement.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends contractAgreementUpdateManyArgs<ExtArgs>>(
-      args: SelectSubset<T, contractAgreementUpdateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one ContractAgreement.
-     * @param {contractAgreementUpsertArgs} args - Arguments to update or create a ContractAgreement.
-     * @example
-     * // Update or create a ContractAgreement
-     * const contractAgreement = await prisma.contractAgreement.upsert({
-     *   create: {
-     *     // ... data to create a ContractAgreement
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the ContractAgreement we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends contractAgreementUpsertArgs<ExtArgs>>(
-      args: SelectSubset<T, contractAgreementUpsertArgs<ExtArgs>>
-    ): Prisma__contractAgreementClient<$Result.GetResult<Prisma.$contractAgreementPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
-
-    /**
-     * Count the number of ContractAgreements.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {contractAgreementCountArgs} args - Arguments to filter ContractAgreements to count.
-     * @example
-     * // Count the number of ContractAgreements
-     * const count = await prisma.contractAgreement.count({
-     *   where: {
-     *     // ... the filter for the ContractAgreements we want to count
-     *   }
-     * })
-    **/
-    count<T extends contractAgreementCountArgs>(
-      args?: Subset<T, contractAgreementCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], ContractAgreementCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a ContractAgreement.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ContractAgreementAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends ContractAgreementAggregateArgs>(args: Subset<T, ContractAgreementAggregateArgs>): Prisma.PrismaPromise<GetContractAgreementAggregateType<T>>
-
-    /**
-     * Group by ContractAgreement.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {contractAgreementGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends contractAgreementGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: contractAgreementGroupByArgs['orderBy'] }
-        : { orderBy?: contractAgreementGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, contractAgreementGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetContractAgreementGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the contractAgreement model
-   */
-  readonly fields: contractAgreementFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for contractAgreement.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__contractAgreementClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-
-    contract<T extends ContractDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ContractDefaultArgs<ExtArgs>>): Prisma__ContractClient<$Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
-
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
-  }
-
-
-
-  /**
-   * Fields of the contractAgreement model
-   */ 
-  interface contractAgreementFieldRefs {
-    readonly id: FieldRef<"contractAgreement", 'String'>
-    readonly createdAt: FieldRef<"contractAgreement", 'DateTime'>
-    readonly number: FieldRef<"contractAgreement", 'String'>
-    readonly signatureDate: FieldRef<"contractAgreement", 'DateTime'>
-    readonly reason: FieldRef<"contractAgreement", 'String'>
-    readonly changes: FieldRef<"contractAgreement", 'String'>
-    readonly contractId: FieldRef<"contractAgreement", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * contractAgreement findUnique
-   */
-  export type contractAgreementFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the contractAgreement
-     */
-    select?: contractAgreementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: contractAgreementInclude<ExtArgs> | null
-    /**
-     * Filter, which contractAgreement to fetch.
-     */
-    where: contractAgreementWhereUniqueInput
-  }
-
-  /**
-   * contractAgreement findUniqueOrThrow
-   */
-  export type contractAgreementFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the contractAgreement
-     */
-    select?: contractAgreementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: contractAgreementInclude<ExtArgs> | null
-    /**
-     * Filter, which contractAgreement to fetch.
-     */
-    where: contractAgreementWhereUniqueInput
-  }
-
-  /**
-   * contractAgreement findFirst
-   */
-  export type contractAgreementFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the contractAgreement
-     */
-    select?: contractAgreementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: contractAgreementInclude<ExtArgs> | null
-    /**
-     * Filter, which contractAgreement to fetch.
-     */
-    where?: contractAgreementWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of contractAgreements to fetch.
-     */
-    orderBy?: contractAgreementOrderByWithRelationInput | contractAgreementOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for contractAgreements.
-     */
-    cursor?: contractAgreementWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` contractAgreements from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` contractAgreements.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of contractAgreements.
-     */
-    distinct?: ContractAgreementScalarFieldEnum | ContractAgreementScalarFieldEnum[]
-  }
-
-  /**
-   * contractAgreement findFirstOrThrow
-   */
-  export type contractAgreementFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the contractAgreement
-     */
-    select?: contractAgreementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: contractAgreementInclude<ExtArgs> | null
-    /**
-     * Filter, which contractAgreement to fetch.
-     */
-    where?: contractAgreementWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of contractAgreements to fetch.
-     */
-    orderBy?: contractAgreementOrderByWithRelationInput | contractAgreementOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for contractAgreements.
-     */
-    cursor?: contractAgreementWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` contractAgreements from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` contractAgreements.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of contractAgreements.
-     */
-    distinct?: ContractAgreementScalarFieldEnum | ContractAgreementScalarFieldEnum[]
-  }
-
-  /**
-   * contractAgreement findMany
-   */
-  export type contractAgreementFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the contractAgreement
-     */
-    select?: contractAgreementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: contractAgreementInclude<ExtArgs> | null
-    /**
-     * Filter, which contractAgreements to fetch.
-     */
-    where?: contractAgreementWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of contractAgreements to fetch.
-     */
-    orderBy?: contractAgreementOrderByWithRelationInput | contractAgreementOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing contractAgreements.
-     */
-    cursor?: contractAgreementWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` contractAgreements from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` contractAgreements.
-     */
-    skip?: number
-    distinct?: ContractAgreementScalarFieldEnum | ContractAgreementScalarFieldEnum[]
-  }
-
-  /**
-   * contractAgreement create
-   */
-  export type contractAgreementCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the contractAgreement
-     */
-    select?: contractAgreementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: contractAgreementInclude<ExtArgs> | null
-    /**
-     * The data needed to create a contractAgreement.
-     */
-    data: XOR<contractAgreementCreateInput, contractAgreementUncheckedCreateInput>
-  }
-
-  /**
-   * contractAgreement createMany
-   */
-  export type contractAgreementCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many contractAgreements.
-     */
-    data: contractAgreementCreateManyInput | contractAgreementCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * contractAgreement update
-   */
-  export type contractAgreementUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the contractAgreement
-     */
-    select?: contractAgreementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: contractAgreementInclude<ExtArgs> | null
-    /**
-     * The data needed to update a contractAgreement.
-     */
-    data: XOR<contractAgreementUpdateInput, contractAgreementUncheckedUpdateInput>
-    /**
-     * Choose, which contractAgreement to update.
-     */
-    where: contractAgreementWhereUniqueInput
-  }
-
-  /**
-   * contractAgreement updateMany
-   */
-  export type contractAgreementUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update contractAgreements.
-     */
-    data: XOR<contractAgreementUpdateManyMutationInput, contractAgreementUncheckedUpdateManyInput>
-    /**
-     * Filter which contractAgreements to update
-     */
-    where?: contractAgreementWhereInput
-  }
-
-  /**
-   * contractAgreement upsert
-   */
-  export type contractAgreementUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the contractAgreement
-     */
-    select?: contractAgreementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: contractAgreementInclude<ExtArgs> | null
-    /**
-     * The filter to search for the contractAgreement to update in case it exists.
-     */
-    where: contractAgreementWhereUniqueInput
-    /**
-     * In case the contractAgreement found by the `where` argument doesn't exist, create a new contractAgreement with this data.
-     */
-    create: XOR<contractAgreementCreateInput, contractAgreementUncheckedCreateInput>
-    /**
-     * In case the contractAgreement was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<contractAgreementUpdateInput, contractAgreementUncheckedUpdateInput>
-  }
-
-  /**
-   * contractAgreement delete
-   */
-  export type contractAgreementDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the contractAgreement
-     */
-    select?: contractAgreementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: contractAgreementInclude<ExtArgs> | null
-    /**
-     * Filter which contractAgreement to delete.
-     */
-    where: contractAgreementWhereUniqueInput
-  }
-
-  /**
-   * contractAgreement deleteMany
-   */
-  export type contractAgreementDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which contractAgreements to delete
-     */
-    where?: contractAgreementWhereInput
-  }
-
-  /**
-   * contractAgreement without action
-   */
-  export type contractAgreementDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the contractAgreement
-     */
-    select?: contractAgreementSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: contractAgreementInclude<ExtArgs> | null
   }
 
 
@@ -7643,6 +7453,7 @@ export namespace Prisma {
     terminationDate: Date | null
     isCompleted: boolean | null
     notes: string | null
+    managerId: string | null
     userId: string | null
   }
 
@@ -7656,6 +7467,7 @@ export namespace Prisma {
     terminationDate: Date | null
     isCompleted: boolean | null
     notes: string | null
+    managerId: string | null
     userId: string | null
   }
 
@@ -7669,6 +7481,7 @@ export namespace Prisma {
     terminationDate: number
     isCompleted: number
     notes: number
+    managerId: number
     userId: number
     _all: number
   }
@@ -7684,6 +7497,7 @@ export namespace Prisma {
     terminationDate?: true
     isCompleted?: true
     notes?: true
+    managerId?: true
     userId?: true
   }
 
@@ -7697,6 +7511,7 @@ export namespace Prisma {
     terminationDate?: true
     isCompleted?: true
     notes?: true
+    managerId?: true
     userId?: true
   }
 
@@ -7710,6 +7525,7 @@ export namespace Prisma {
     terminationDate?: true
     isCompleted?: true
     notes?: true
+    managerId?: true
     userId?: true
     _all?: true
   }
@@ -7796,6 +7612,7 @@ export namespace Prisma {
     terminationDate: Date
     isCompleted: boolean
     notes: string | null
+    managerId: string | null
     userId: string
     _count: TaskCountAggregateOutputType | null
     _min: TaskMinAggregateOutputType | null
@@ -7826,8 +7643,39 @@ export namespace Prisma {
     terminationDate?: boolean
     isCompleted?: boolean
     notes?: boolean
+    managerId?: boolean
     userId?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    createdByUser?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["task"]>
+
+  export type TaskSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    name?: boolean
+    priority?: boolean
+    status?: boolean
+    terminationDate?: boolean
+    isCompleted?: boolean
+    notes?: boolean
+    managerId?: boolean
+    userId?: boolean
+    createdByUser?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["task"]>
+
+  export type TaskSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    name?: boolean
+    priority?: boolean
+    status?: boolean
+    terminationDate?: boolean
+    isCompleted?: boolean
+    notes?: boolean
+    managerId?: boolean
+    userId?: boolean
+    createdByUser?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
 
   export type TaskSelectScalar = {
@@ -7840,19 +7688,25 @@ export namespace Prisma {
     terminationDate?: boolean
     isCompleted?: boolean
     notes?: boolean
+    managerId?: boolean
     userId?: boolean
   }
 
-
+  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "name" | "priority" | "status" | "terminationDate" | "isCompleted" | "notes" | "managerId" | "userId", ExtArgs["result"]["task"]>
   export type TaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    createdByUser?: boolean | UserDefaultArgs<ExtArgs>
   }
-
+  export type TaskIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdByUser?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type TaskIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdByUser?: boolean | UserDefaultArgs<ExtArgs>
+  }
 
   export type $TaskPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Task"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
+      createdByUser: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7864,20 +7718,20 @@ export namespace Prisma {
       terminationDate: Date
       isCompleted: boolean
       notes: string | null
+      managerId: string | null
       userId: string
     }, ExtArgs["result"]["task"]>
     composites: {}
   }
 
-
   type TaskGetPayload<S extends boolean | null | undefined | TaskDefaultArgs> = $Result.GetResult<Prisma.$TaskPayload, S>
 
-  type TaskCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<TaskFindManyArgs, 'select' | 'include' | 'distinct'> & {
+  type TaskCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TaskFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: TaskCountAggregateInputType | true
     }
 
-  export interface TaskDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+  export interface TaskDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
     [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Task'], meta: { name: 'Task' } }
     /**
      * Find zero or one Task that matches the filter.
@@ -7889,14 +7743,12 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findUnique<T extends TaskFindUniqueArgs<ExtArgs>>(
-      args: SelectSubset<T, TaskFindUniqueArgs<ExtArgs>>
-    ): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+     */
+    findUnique<T extends TaskFindUniqueArgs>(args: SelectSubset<T, TaskFindUniqueArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Task that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
+     * Find one Task that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
      * @param {TaskFindUniqueOrThrowArgs} args - Arguments to find a Task
      * @example
      * // Get one Task
@@ -7905,10 +7757,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findUniqueOrThrow<T extends TaskFindUniqueOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, TaskFindUniqueOrThrowArgs<ExtArgs>>
-    ): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+     */
+    findUniqueOrThrow<T extends TaskFindUniqueOrThrowArgs>(args: SelectSubset<T, TaskFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
      * Find the first Task that matches the filter.
@@ -7922,10 +7772,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findFirst<T extends TaskFindFirstArgs<ExtArgs>>(
-      args?: SelectSubset<T, TaskFindFirstArgs<ExtArgs>>
-    ): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+     */
+    findFirst<T extends TaskFindFirstArgs>(args?: SelectSubset<T, TaskFindFirstArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
      * Find the first Task that matches the filter or
@@ -7940,16 +7788,14 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findFirstOrThrow<T extends TaskFindFirstOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, TaskFindFirstOrThrowArgs<ExtArgs>>
-    ): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+     */
+    findFirstOrThrow<T extends TaskFindFirstOrThrowArgs>(args?: SelectSubset<T, TaskFindFirstOrThrowArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
      * Find zero or more Tasks that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TaskFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {TaskFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
      * // Get all Tasks
      * const tasks = await prisma.task.findMany()
@@ -7960,10 +7806,8 @@ export namespace Prisma {
      * // Only select the `id`
      * const taskWithIdOnly = await prisma.task.findMany({ select: { id: true } })
      * 
-    **/
-    findMany<T extends TaskFindManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, TaskFindManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, 'findMany'>>
+     */
+    findMany<T extends TaskFindManyArgs>(args?: SelectSubset<T, TaskFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
     /**
      * Create a Task.
@@ -7976,26 +7820,46 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    create<T extends TaskCreateArgs<ExtArgs>>(
-      args: SelectSubset<T, TaskCreateArgs<ExtArgs>>
-    ): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+     */
+    create<T extends TaskCreateArgs>(args: SelectSubset<T, TaskCreateArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
      * Create many Tasks.
-     *     @param {TaskCreateManyArgs} args - Arguments to create many Tasks.
-     *     @example
-     *     // Create many Tasks
-     *     const task = await prisma.task.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
+     * @param {TaskCreateManyArgs} args - Arguments to create many Tasks.
+     * @example
+     * // Create many Tasks
+     * const task = await prisma.task.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
      *     
-    **/
-    createMany<T extends TaskCreateManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, TaskCreateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    createMany<T extends TaskCreateManyArgs>(args?: SelectSubset<T, TaskCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Tasks and returns the data saved in the database.
+     * @param {TaskCreateManyAndReturnArgs} args - Arguments to create many Tasks.
+     * @example
+     * // Create many Tasks
+     * const task = await prisma.task.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Tasks and only return the `id`
+     * const taskWithIdOnly = await prisma.task.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TaskCreateManyAndReturnArgs>(args?: SelectSubset<T, TaskCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
     /**
      * Delete a Task.
@@ -8008,10 +7872,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    delete<T extends TaskDeleteArgs<ExtArgs>>(
-      args: SelectSubset<T, TaskDeleteArgs<ExtArgs>>
-    ): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+     */
+    delete<T extends TaskDeleteArgs>(args: SelectSubset<T, TaskDeleteArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
      * Update one Task.
@@ -8027,10 +7889,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    update<T extends TaskUpdateArgs<ExtArgs>>(
-      args: SelectSubset<T, TaskUpdateArgs<ExtArgs>>
-    ): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+     */
+    update<T extends TaskUpdateArgs>(args: SelectSubset<T, TaskUpdateArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
      * Delete zero or more Tasks.
@@ -8043,10 +7903,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    deleteMany<T extends TaskDeleteManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, TaskDeleteManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    deleteMany<T extends TaskDeleteManyArgs>(args?: SelectSubset<T, TaskDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Update zero or more Tasks.
@@ -8064,10 +7922,38 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    updateMany<T extends TaskUpdateManyArgs<ExtArgs>>(
-      args: SelectSubset<T, TaskUpdateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    updateMany<T extends TaskUpdateManyArgs>(args: SelectSubset<T, TaskUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tasks and returns the data updated in the database.
+     * @param {TaskUpdateManyAndReturnArgs} args - Arguments to update many Tasks.
+     * @example
+     * // Update many Tasks
+     * const task = await prisma.task.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Tasks and only return the `id`
+     * const taskWithIdOnly = await prisma.task.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TaskUpdateManyAndReturnArgs>(args: SelectSubset<T, TaskUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
 
     /**
      * Create or update one Task.
@@ -8085,10 +7971,9 @@ export namespace Prisma {
      *     // ... the filter for the Task we want to update
      *   }
      * })
-    **/
-    upsert<T extends TaskUpsertArgs<ExtArgs>>(
-      args: SelectSubset<T, TaskUpsertArgs<ExtArgs>>
-    ): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+     */
+    upsert<T extends TaskUpsertArgs>(args: SelectSubset<T, TaskUpsertArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
 
     /**
      * Count the number of Tasks.
@@ -8227,32 +8112,31 @@ export namespace Prisma {
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__TaskClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
-
+  export interface Prisma__TaskClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    createdByUser<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of which ever callback is executed.
      */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
     /**
      * Attaches a callback for only the rejection of the Promise.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of the callback.
      */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
     /**
      * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
      * resolved value cannot be modified from the callback.
      * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
      * @returns A Promise for the completion of the callback.
      */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
+
 
 
 
@@ -8269,6 +8153,7 @@ export namespace Prisma {
     readonly terminationDate: FieldRef<"Task", 'DateTime'>
     readonly isCompleted: FieldRef<"Task", 'Boolean'>
     readonly notes: FieldRef<"Task", 'String'>
+    readonly managerId: FieldRef<"Task", 'String'>
     readonly userId: FieldRef<"Task", 'String'>
   }
     
@@ -8282,6 +8167,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Task
      */
     select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -8301,6 +8190,10 @@ export namespace Prisma {
      */
     select?: TaskSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: TaskInclude<ExtArgs> | null
@@ -8318,6 +8211,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Task
      */
     select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -8367,6 +8264,10 @@ export namespace Prisma {
      */
     select?: TaskSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: TaskInclude<ExtArgs> | null
@@ -8415,6 +8316,10 @@ export namespace Prisma {
      */
     select?: TaskSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: TaskInclude<ExtArgs> | null
@@ -8458,6 +8363,10 @@ export namespace Prisma {
      */
     select?: TaskSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: TaskInclude<ExtArgs> | null
@@ -8479,6 +8388,29 @@ export namespace Prisma {
   }
 
   /**
+   * Task createManyAndReturn
+   */
+  export type TaskCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * The data used to create many Tasks.
+     */
+    data: TaskCreateManyInput | TaskCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
    * Task update
    */
   export type TaskUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8486,6 +8418,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Task
      */
     select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -8515,6 +8451,32 @@ export namespace Prisma {
   }
 
   /**
+   * Task updateManyAndReturn
+   */
+  export type TaskUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * The data used to update Tasks.
+     */
+    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyInput>
+    /**
+     * Filter which Tasks to update
+     */
+    where?: TaskWhereInput
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
    * Task upsert
    */
   export type TaskUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8522,6 +8484,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Task
      */
     select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -8548,6 +8514,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Task
      */
     select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -8577,9 +8547,1164 @@ export namespace Prisma {
      */
     select?: TaskSelect<ExtArgs> | null
     /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
      * Choose, which related nodes to fetch as well
      */
     include?: TaskInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model User
+   */
+
+  export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    email: string | null
+    name: string | null
+    surname: string | null
+    password: string | null
+    isAdmin: boolean | null
+    isManager: boolean | null
+    isGuest: boolean | null
+  }
+
+  export type UserMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    email: string | null
+    name: string | null
+    surname: string | null
+    password: string | null
+    isAdmin: boolean | null
+    isManager: boolean | null
+    isGuest: boolean | null
+  }
+
+  export type UserCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    email: number
+    name: number
+    surname: number
+    password: number
+    isAdmin: number
+    isManager: number
+    isGuest: number
+    _all: number
+  }
+
+
+  export type UserMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    email?: true
+    name?: true
+    surname?: true
+    password?: true
+    isAdmin?: true
+    isManager?: true
+    isGuest?: true
+  }
+
+  export type UserMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    email?: true
+    name?: true
+    surname?: true
+    password?: true
+    isAdmin?: true
+    isManager?: true
+    isGuest?: true
+  }
+
+  export type UserCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    email?: true
+    name?: true
+    surname?: true
+    password?: true
+    isAdmin?: true
+    isManager?: true
+    isGuest?: true
+    _all?: true
+  }
+
+  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which User to aggregate.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Users
+    **/
+    _count?: true | UserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type GetUserAggregateType<T extends UserAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUser[P]>
+      : GetScalarType<T[P], AggregateUser[P]>
+  }
+
+
+
+
+  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
+    by: UserScalarFieldEnum[] | UserScalarFieldEnum
+    having?: UserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserCountAggregateInputType | true
+    _min?: UserMinAggregateInputType
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type UserGroupByOutputType = {
+    id: string
+    createdAt: Date
+    updatedAt: Date
+    email: string
+    name: string
+    surname: string
+    password: string
+    isAdmin: boolean
+    isManager: boolean
+    isGuest: boolean
+    _count: UserCountAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    email?: boolean
+    name?: boolean
+    surname?: boolean
+    password?: boolean
+    isAdmin?: boolean
+    isManager?: boolean
+    isGuest?: boolean
+    tasks?: boolean | User$tasksArgs<ExtArgs>
+    procurements?: boolean | User$procurementsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    email?: boolean
+    name?: boolean
+    surname?: boolean
+    password?: boolean
+    isAdmin?: boolean
+    isManager?: boolean
+    isGuest?: boolean
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    email?: boolean
+    name?: boolean
+    surname?: boolean
+    password?: boolean
+    isAdmin?: boolean
+    isManager?: boolean
+    isGuest?: boolean
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    email?: boolean
+    name?: boolean
+    surname?: boolean
+    password?: boolean
+    isAdmin?: boolean
+    isManager?: boolean
+    isGuest?: boolean
+  }
+
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "email" | "name" | "surname" | "password" | "isAdmin" | "isManager" | "isGuest", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tasks?: boolean | User$tasksArgs<ExtArgs>
+    procurements?: boolean | User$procurementsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "User"
+    objects: {
+      tasks: Prisma.$TaskPayload<ExtArgs>[]
+      procurements: Prisma.$ProcurementPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      updatedAt: Date
+      email: string
+      name: string
+      surname: string
+      password: string
+      isAdmin: boolean
+      isManager: boolean
+      isGuest: boolean
+    }, ExtArgs["result"]["user"]>
+    composites: {}
+  }
+
+  type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
+
+  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserCountAggregateInputType | true
+    }
+
+  export interface UserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User'], meta: { name: 'User' } }
+    /**
+     * Find zero or one User that matches the filter.
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one User that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first User that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first User that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more Users that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Users
+     * const users = await prisma.user.findMany()
+     * 
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
+     * @example
+     * // Create one User
+     * const User = await prisma.user.create({
+     *   data: {
+     *     // ... data to create a User
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many Users.
+     * @param {UserCreateManyArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserCreateManyArgs>(args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Users and returns the data saved in the database.
+     * @param {UserCreateManyAndReturnArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserCreateManyAndReturnArgs>(args?: SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
+     * @example
+     * // Delete one User
+     * const User = await prisma.user.delete({
+     *   where: {
+     *     // ... filter to delete one User
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
+     * @example
+     * // Update one User
+     * const user = await prisma.user.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more Users.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
+     * @example
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserDeleteManyArgs>(args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users and returns the data updated in the database.
+     * @param {UserUpdateManyAndReturnArgs} args - Arguments to update many Users.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserUpdateManyAndReturnArgs>(args: SelectSubset<T, UserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
+     * @example
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
+     *   create: {
+     *     // ... data to create a User
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the User we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
+     * @example
+     * // Count the number of Users
+     * const count = await prisma.user.count({
+     *   where: {
+     *     // ... the filter for the Users we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserCountArgs>(
+      args?: Subset<T, UserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
+
+    /**
+     * Group by User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the User model
+   */
+  readonly fields: UserFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for User.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tasks<T extends User$tasksArgs<ExtArgs> = {}>(args?: Subset<T, User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    procurements<T extends User$procurementsArgs<ExtArgs> = {}>(args?: Subset<T, User$procurementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProcurementPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the User model
+   */ 
+  interface UserFieldRefs {
+    readonly id: FieldRef<"User", 'String'>
+    readonly createdAt: FieldRef<"User", 'DateTime'>
+    readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly email: FieldRef<"User", 'String'>
+    readonly name: FieldRef<"User", 'String'>
+    readonly surname: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
+    readonly isAdmin: FieldRef<"User", 'Boolean'>
+    readonly isManager: FieldRef<"User", 'Boolean'>
+    readonly isGuest: FieldRef<"User", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * User findUnique
+   */
+  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findUniqueOrThrow
+   */
+  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findFirst
+   */
+  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findFirstOrThrow
+   */
+  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findMany
+   */
+  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which Users to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User create
+   */
+  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to create a User.
+     */
+    data: XOR<UserCreateInput, UserUncheckedCreateInput>
+  }
+
+  /**
+   * User createMany
+   */
+  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * User createManyAndReturn
+   */
+  export type UserCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * User update
+   */
+  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to update a User.
+     */
+    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+    /**
+     * Choose, which User to update.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User updateMany
+   */
+  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+  }
+
+  /**
+   * User updateManyAndReturn
+   */
+  export type UserUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+  }
+
+  /**
+   * User upsert
+   */
+  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The filter to search for the User to update in case it exists.
+     */
+    where: UserWhereUniqueInput
+    /**
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
+     */
+    create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    /**
+     * In case the User was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+  }
+
+  /**
+   * User delete
+   */
+  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter which User to delete.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User deleteMany
+   */
+  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Users to delete
+     */
+    where?: UserWhereInput
+  }
+
+  /**
+   * User.tasks
+   */
+  export type User$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    where?: TaskWhereInput
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    cursor?: TaskWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+  }
+
+  /**
+   * User.procurements
+   */
+  export type User$procurementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Procurement
+     */
+    select?: ProcurementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Procurement
+     */
+    omit?: ProcurementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProcurementInclude<ExtArgs> | null
+    where?: ProcurementWhereInput
+    orderBy?: ProcurementOrderByWithRelationInput | ProcurementOrderByWithRelationInput[]
+    cursor?: ProcurementWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProcurementScalarFieldEnum | ProcurementScalarFieldEnum[]
+  }
+
+  /**
+   * User without action
+   */
+  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
   }
 
 
@@ -8597,79 +9722,11 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-  export const UserScalarFieldEnum: {
-    id: 'id',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    email: 'email',
-    name: 'name',
-    surname: 'surname',
-    password: 'password',
-    position: 'position',
-    role: 'role'
-  };
-
-  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
-
-
-  export const CustomerScalarFieldEnum: {
-    id: 'id',
-    name: 'name',
-    code: 'code',
-    email: 'email',
-    phone: 'phone'
-  };
-
-  export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
-
-
-  export const ProcurementScalarFieldEnum: {
-    id: 'id',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    expectedValue: 'expectedValue',
-    resultValue: 'resultValue',
-    announcedAt: 'announcedAt',
-    finishedAt: 'finishedAt',
-    prozorroId: 'prozorroId',
-    prozorroLink: 'prozorroLink',
-    product: 'product',
-    unit: 'unit',
-    scope: 'scope',
-    status: 'status',
-    customerId: 'customerId',
-    userId: 'userId',
-    jointProcurementid: 'jointProcurementid'
-  };
-
-  export type ProcurementScalarFieldEnum = (typeof ProcurementScalarFieldEnum)[keyof typeof ProcurementScalarFieldEnum]
-
-
-  export const JointProcurementScalarFieldEnum: {
-    id: 'id',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    expectedValue: 'expectedValue',
-    resultValue: 'resultValue',
-    announcedAt: 'announcedAt',
-    finishedAt: 'finishedAt',
-    prozorroId: 'prozorroId',
-    prozorroLink: 'prozorroLink',
-    product: 'product',
-    unit: 'unit',
-    scope: 'scope',
-    status: 'status'
-  };
-
-  export type JointProcurementScalarFieldEnum = (typeof JointProcurementScalarFieldEnum)[keyof typeof JointProcurementScalarFieldEnum]
-
-
   export const ContractScalarFieldEnum: {
     id: 'id',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     number: 'number',
-    prozorroLink: 'prozorroLink',
     startValue: 'startValue',
     currentValue: 'currentValue',
     signatureDate: 'signatureDate',
@@ -8696,6 +9753,59 @@ export namespace Prisma {
   export type ContractAgreementScalarFieldEnum = (typeof ContractAgreementScalarFieldEnum)[keyof typeof ContractAgreementScalarFieldEnum]
 
 
+  export const CustomerScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    code: 'code',
+    email: 'email',
+    phone: 'phone',
+    address: 'address'
+  };
+
+  export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
+
+
+  export const JointProcurementScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    expectedValue: 'expectedValue',
+    resultValue: 'resultValue',
+    announcedAt: 'announcedAt',
+    finishedAt: 'finishedAt',
+    prozorroId: 'prozorroId',
+    prozorroLink: 'prozorroLink',
+    product: 'product',
+    unit: 'unit',
+    scope: 'scope',
+    status: 'status'
+  };
+
+  export type JointProcurementScalarFieldEnum = (typeof JointProcurementScalarFieldEnum)[keyof typeof JointProcurementScalarFieldEnum]
+
+
+  export const ProcurementScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    expectedValue: 'expectedValue',
+    resultValue: 'resultValue',
+    announcedAt: 'announcedAt',
+    finishedAt: 'finishedAt',
+    prozorroId: 'prozorroId',
+    prozorroLink: 'prozorroLink',
+    product: 'product',
+    unit: 'unit',
+    scope: 'scope',
+    status: 'status',
+    customerId: 'customerId',
+    userId: 'userId',
+    jointProcurementid: 'jointProcurementid'
+  };
+
+  export type ProcurementScalarFieldEnum = (typeof ProcurementScalarFieldEnum)[keyof typeof ProcurementScalarFieldEnum]
+
+
   export const TaskScalarFieldEnum: {
     id: 'id',
     createdAt: 'createdAt',
@@ -8706,10 +9816,27 @@ export namespace Prisma {
     terminationDate: 'terminationDate',
     isCompleted: 'isCompleted',
     notes: 'notes',
+    managerId: 'managerId',
     userId: 'userId'
   };
 
   export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
+
+
+  export const UserScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    email: 'email',
+    name: 'name',
+    surname: 'surname',
+    password: 'password',
+    isAdmin: 'isAdmin',
+    isManager: 'isManager',
+    isGuest: 'isGuest'
+  };
+
+  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -8821,82 +9948,164 @@ export namespace Prisma {
    */
 
 
-  export type UserWhereInput = {
-    AND?: UserWhereInput | UserWhereInput[]
-    OR?: UserWhereInput[]
-    NOT?: UserWhereInput | UserWhereInput[]
-    id?: StringFilter<"User"> | string
-    createdAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
-    email?: StringFilter<"User"> | string
-    name?: StringNullableFilter<"User"> | string | null
-    surname?: StringNullableFilter<"User"> | string | null
-    password?: StringFilter<"User"> | string
-    position?: StringNullableFilter<"User"> | string | null
-    role?: StringFilter<"User"> | string
-    tasks?: TaskListRelationFilter
-    procurements?: ProcurementListRelationFilter
+  export type ContractWhereInput = {
+    AND?: ContractWhereInput | ContractWhereInput[]
+    OR?: ContractWhereInput[]
+    NOT?: ContractWhereInput | ContractWhereInput[]
+    id?: StringFilter<"Contract"> | string
+    createdAt?: DateTimeFilter<"Contract"> | Date | string
+    updatedAt?: DateTimeFilter<"Contract"> | Date | string
+    number?: StringFilter<"Contract"> | string
+    startValue?: DecimalFilter<"Contract"> | Decimal | DecimalJsLike | number | string
+    currentValue?: DecimalNullableFilter<"Contract"> | Decimal | DecimalJsLike | number | string | null
+    signatureDate?: DateTimeFilter<"Contract"> | Date | string
+    terminationDate?: DateTimeFilter<"Contract"> | Date | string
+    product?: StringFilter<"Contract"> | string
+    unit?: StringFilter<"Contract"> | string
+    scope?: StringFilter<"Contract"> | string
+    procurementId?: StringFilter<"Contract"> | string
+    procurement?: XOR<ProcurementScalarRelationFilter, ProcurementWhereInput>
+    agreements?: ContractAgreementListRelationFilter
   }
 
-  export type UserOrderByWithRelationInput = {
+  export type ContractOrderByWithRelationInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    email?: SortOrder
-    name?: SortOrderInput | SortOrder
-    surname?: SortOrderInput | SortOrder
-    password?: SortOrder
-    position?: SortOrderInput | SortOrder
-    role?: SortOrder
-    tasks?: TaskOrderByRelationAggregateInput
-    procurements?: ProcurementOrderByRelationAggregateInput
+    number?: SortOrder
+    startValue?: SortOrder
+    currentValue?: SortOrderInput | SortOrder
+    signatureDate?: SortOrder
+    terminationDate?: SortOrder
+    product?: SortOrder
+    unit?: SortOrder
+    scope?: SortOrder
+    procurementId?: SortOrder
+    procurement?: ProcurementOrderByWithRelationInput
+    agreements?: contractAgreementOrderByRelationAggregateInput
   }
 
-  export type UserWhereUniqueInput = Prisma.AtLeast<{
+  export type ContractWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    email?: string
-    AND?: UserWhereInput | UserWhereInput[]
-    OR?: UserWhereInput[]
-    NOT?: UserWhereInput | UserWhereInput[]
-    createdAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
-    name?: StringNullableFilter<"User"> | string | null
-    surname?: StringNullableFilter<"User"> | string | null
-    password?: StringFilter<"User"> | string
-    position?: StringNullableFilter<"User"> | string | null
-    role?: StringFilter<"User"> | string
-    tasks?: TaskListRelationFilter
-    procurements?: ProcurementListRelationFilter
-  }, "id" | "email">
+    AND?: ContractWhereInput | ContractWhereInput[]
+    OR?: ContractWhereInput[]
+    NOT?: ContractWhereInput | ContractWhereInput[]
+    createdAt?: DateTimeFilter<"Contract"> | Date | string
+    updatedAt?: DateTimeFilter<"Contract"> | Date | string
+    number?: StringFilter<"Contract"> | string
+    startValue?: DecimalFilter<"Contract"> | Decimal | DecimalJsLike | number | string
+    currentValue?: DecimalNullableFilter<"Contract"> | Decimal | DecimalJsLike | number | string | null
+    signatureDate?: DateTimeFilter<"Contract"> | Date | string
+    terminationDate?: DateTimeFilter<"Contract"> | Date | string
+    product?: StringFilter<"Contract"> | string
+    unit?: StringFilter<"Contract"> | string
+    scope?: StringFilter<"Contract"> | string
+    procurementId?: StringFilter<"Contract"> | string
+    procurement?: XOR<ProcurementScalarRelationFilter, ProcurementWhereInput>
+    agreements?: ContractAgreementListRelationFilter
+  }, "id">
 
-  export type UserOrderByWithAggregationInput = {
+  export type ContractOrderByWithAggregationInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    email?: SortOrder
-    name?: SortOrderInput | SortOrder
-    surname?: SortOrderInput | SortOrder
-    password?: SortOrder
-    position?: SortOrderInput | SortOrder
-    role?: SortOrder
-    _count?: UserCountOrderByAggregateInput
-    _max?: UserMaxOrderByAggregateInput
-    _min?: UserMinOrderByAggregateInput
+    number?: SortOrder
+    startValue?: SortOrder
+    currentValue?: SortOrderInput | SortOrder
+    signatureDate?: SortOrder
+    terminationDate?: SortOrder
+    product?: SortOrder
+    unit?: SortOrder
+    scope?: SortOrder
+    procurementId?: SortOrder
+    _count?: ContractCountOrderByAggregateInput
+    _avg?: ContractAvgOrderByAggregateInput
+    _max?: ContractMaxOrderByAggregateInput
+    _min?: ContractMinOrderByAggregateInput
+    _sum?: ContractSumOrderByAggregateInput
   }
 
-  export type UserScalarWhereWithAggregatesInput = {
-    AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
-    OR?: UserScalarWhereWithAggregatesInput[]
-    NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"User"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
-    email?: StringWithAggregatesFilter<"User"> | string
-    name?: StringNullableWithAggregatesFilter<"User"> | string | null
-    surname?: StringNullableWithAggregatesFilter<"User"> | string | null
-    password?: StringWithAggregatesFilter<"User"> | string
-    position?: StringNullableWithAggregatesFilter<"User"> | string | null
-    role?: StringWithAggregatesFilter<"User"> | string
+  export type ContractScalarWhereWithAggregatesInput = {
+    AND?: ContractScalarWhereWithAggregatesInput | ContractScalarWhereWithAggregatesInput[]
+    OR?: ContractScalarWhereWithAggregatesInput[]
+    NOT?: ContractScalarWhereWithAggregatesInput | ContractScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Contract"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Contract"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Contract"> | Date | string
+    number?: StringWithAggregatesFilter<"Contract"> | string
+    startValue?: DecimalWithAggregatesFilter<"Contract"> | Decimal | DecimalJsLike | number | string
+    currentValue?: DecimalNullableWithAggregatesFilter<"Contract"> | Decimal | DecimalJsLike | number | string | null
+    signatureDate?: DateTimeWithAggregatesFilter<"Contract"> | Date | string
+    terminationDate?: DateTimeWithAggregatesFilter<"Contract"> | Date | string
+    product?: StringWithAggregatesFilter<"Contract"> | string
+    unit?: StringWithAggregatesFilter<"Contract"> | string
+    scope?: StringWithAggregatesFilter<"Contract"> | string
+    procurementId?: StringWithAggregatesFilter<"Contract"> | string
+  }
+
+  export type contractAgreementWhereInput = {
+    AND?: contractAgreementWhereInput | contractAgreementWhereInput[]
+    OR?: contractAgreementWhereInput[]
+    NOT?: contractAgreementWhereInput | contractAgreementWhereInput[]
+    id?: StringFilter<"contractAgreement"> | string
+    createdAt?: DateTimeFilter<"contractAgreement"> | Date | string
+    number?: StringFilter<"contractAgreement"> | string
+    signatureDate?: DateTimeFilter<"contractAgreement"> | Date | string
+    reason?: StringFilter<"contractAgreement"> | string
+    changes?: StringFilter<"contractAgreement"> | string
+    contractId?: StringFilter<"contractAgreement"> | string
+    contract?: XOR<ContractScalarRelationFilter, ContractWhereInput>
+  }
+
+  export type contractAgreementOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    number?: SortOrder
+    signatureDate?: SortOrder
+    reason?: SortOrder
+    changes?: SortOrder
+    contractId?: SortOrder
+    contract?: ContractOrderByWithRelationInput
+  }
+
+  export type contractAgreementWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: contractAgreementWhereInput | contractAgreementWhereInput[]
+    OR?: contractAgreementWhereInput[]
+    NOT?: contractAgreementWhereInput | contractAgreementWhereInput[]
+    createdAt?: DateTimeFilter<"contractAgreement"> | Date | string
+    number?: StringFilter<"contractAgreement"> | string
+    signatureDate?: DateTimeFilter<"contractAgreement"> | Date | string
+    reason?: StringFilter<"contractAgreement"> | string
+    changes?: StringFilter<"contractAgreement"> | string
+    contractId?: StringFilter<"contractAgreement"> | string
+    contract?: XOR<ContractScalarRelationFilter, ContractWhereInput>
+  }, "id">
+
+  export type contractAgreementOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    number?: SortOrder
+    signatureDate?: SortOrder
+    reason?: SortOrder
+    changes?: SortOrder
+    contractId?: SortOrder
+    _count?: contractAgreementCountOrderByAggregateInput
+    _max?: contractAgreementMaxOrderByAggregateInput
+    _min?: contractAgreementMinOrderByAggregateInput
+  }
+
+  export type contractAgreementScalarWhereWithAggregatesInput = {
+    AND?: contractAgreementScalarWhereWithAggregatesInput | contractAgreementScalarWhereWithAggregatesInput[]
+    OR?: contractAgreementScalarWhereWithAggregatesInput[]
+    NOT?: contractAgreementScalarWhereWithAggregatesInput | contractAgreementScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"contractAgreement"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"contractAgreement"> | Date | string
+    number?: StringWithAggregatesFilter<"contractAgreement"> | string
+    signatureDate?: DateTimeWithAggregatesFilter<"contractAgreement"> | Date | string
+    reason?: StringWithAggregatesFilter<"contractAgreement"> | string
+    changes?: StringWithAggregatesFilter<"contractAgreement"> | string
+    contractId?: StringWithAggregatesFilter<"contractAgreement"> | string
   }
 
   export type CustomerWhereInput = {
@@ -8908,6 +10117,7 @@ export namespace Prisma {
     code?: StringFilter<"Customer"> | string
     email?: StringFilter<"Customer"> | string
     phone?: StringFilter<"Customer"> | string
+    address?: StringNullableFilter<"Customer"> | string | null
     procurements?: ProcurementListRelationFilter
   }
 
@@ -8917,6 +10127,7 @@ export namespace Prisma {
     code?: SortOrder
     email?: SortOrder
     phone?: SortOrder
+    address?: SortOrderInput | SortOrder
     procurements?: ProcurementOrderByRelationAggregateInput
   }
 
@@ -8929,6 +10140,7 @@ export namespace Prisma {
     code?: StringFilter<"Customer"> | string
     email?: StringFilter<"Customer"> | string
     phone?: StringFilter<"Customer"> | string
+    address?: StringNullableFilter<"Customer"> | string | null
     procurements?: ProcurementListRelationFilter
   }, "id">
 
@@ -8938,6 +10150,7 @@ export namespace Prisma {
     code?: SortOrder
     email?: SortOrder
     phone?: SortOrder
+    address?: SortOrderInput | SortOrder
     _count?: CustomerCountOrderByAggregateInput
     _max?: CustomerMaxOrderByAggregateInput
     _min?: CustomerMinOrderByAggregateInput
@@ -8952,127 +10165,7 @@ export namespace Prisma {
     code?: StringWithAggregatesFilter<"Customer"> | string
     email?: StringWithAggregatesFilter<"Customer"> | string
     phone?: StringWithAggregatesFilter<"Customer"> | string
-  }
-
-  export type ProcurementWhereInput = {
-    AND?: ProcurementWhereInput | ProcurementWhereInput[]
-    OR?: ProcurementWhereInput[]
-    NOT?: ProcurementWhereInput | ProcurementWhereInput[]
-    id?: StringFilter<"Procurement"> | string
-    createdAt?: DateTimeFilter<"Procurement"> | Date | string
-    updatedAt?: DateTimeFilter<"Procurement"> | Date | string
-    expectedValue?: DecimalFilter<"Procurement"> | Decimal | DecimalJsLike | number | string
-    resultValue?: DecimalNullableFilter<"Procurement"> | Decimal | DecimalJsLike | number | string | null
-    announcedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
-    finishedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
-    prozorroId?: StringNullableFilter<"Procurement"> | string | null
-    prozorroLink?: StringNullableFilter<"Procurement"> | string | null
-    product?: StringFilter<"Procurement"> | string
-    unit?: StringFilter<"Procurement"> | string
-    scope?: StringFilter<"Procurement"> | string
-    status?: StringFilter<"Procurement"> | string
-    customerId?: StringFilter<"Procurement"> | string
-    userId?: StringFilter<"Procurement"> | string
-    jointProcurementid?: StringNullableFilter<"Procurement"> | string | null
-    customer?: XOR<CustomerRelationFilter, CustomerWhereInput>
-    manager?: XOR<UserRelationFilter, UserWhereInput>
-    jointProcurement?: XOR<JointProcurementNullableRelationFilter, JointProcurementWhereInput> | null
-    contracts?: ContractListRelationFilter
-  }
-
-  export type ProcurementOrderByWithRelationInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    expectedValue?: SortOrder
-    resultValue?: SortOrderInput | SortOrder
-    announcedAt?: SortOrderInput | SortOrder
-    finishedAt?: SortOrderInput | SortOrder
-    prozorroId?: SortOrderInput | SortOrder
-    prozorroLink?: SortOrderInput | SortOrder
-    product?: SortOrder
-    unit?: SortOrder
-    scope?: SortOrder
-    status?: SortOrder
-    customerId?: SortOrder
-    userId?: SortOrder
-    jointProcurementid?: SortOrderInput | SortOrder
-    customer?: CustomerOrderByWithRelationInput
-    manager?: UserOrderByWithRelationInput
-    jointProcurement?: JointProcurementOrderByWithRelationInput
-    contracts?: ContractOrderByRelationAggregateInput
-  }
-
-  export type ProcurementWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: ProcurementWhereInput | ProcurementWhereInput[]
-    OR?: ProcurementWhereInput[]
-    NOT?: ProcurementWhereInput | ProcurementWhereInput[]
-    createdAt?: DateTimeFilter<"Procurement"> | Date | string
-    updatedAt?: DateTimeFilter<"Procurement"> | Date | string
-    expectedValue?: DecimalFilter<"Procurement"> | Decimal | DecimalJsLike | number | string
-    resultValue?: DecimalNullableFilter<"Procurement"> | Decimal | DecimalJsLike | number | string | null
-    announcedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
-    finishedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
-    prozorroId?: StringNullableFilter<"Procurement"> | string | null
-    prozorroLink?: StringNullableFilter<"Procurement"> | string | null
-    product?: StringFilter<"Procurement"> | string
-    unit?: StringFilter<"Procurement"> | string
-    scope?: StringFilter<"Procurement"> | string
-    status?: StringFilter<"Procurement"> | string
-    customerId?: StringFilter<"Procurement"> | string
-    userId?: StringFilter<"Procurement"> | string
-    jointProcurementid?: StringNullableFilter<"Procurement"> | string | null
-    customer?: XOR<CustomerRelationFilter, CustomerWhereInput>
-    manager?: XOR<UserRelationFilter, UserWhereInput>
-    jointProcurement?: XOR<JointProcurementNullableRelationFilter, JointProcurementWhereInput> | null
-    contracts?: ContractListRelationFilter
-  }, "id">
-
-  export type ProcurementOrderByWithAggregationInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    expectedValue?: SortOrder
-    resultValue?: SortOrderInput | SortOrder
-    announcedAt?: SortOrderInput | SortOrder
-    finishedAt?: SortOrderInput | SortOrder
-    prozorroId?: SortOrderInput | SortOrder
-    prozorroLink?: SortOrderInput | SortOrder
-    product?: SortOrder
-    unit?: SortOrder
-    scope?: SortOrder
-    status?: SortOrder
-    customerId?: SortOrder
-    userId?: SortOrder
-    jointProcurementid?: SortOrderInput | SortOrder
-    _count?: ProcurementCountOrderByAggregateInput
-    _avg?: ProcurementAvgOrderByAggregateInput
-    _max?: ProcurementMaxOrderByAggregateInput
-    _min?: ProcurementMinOrderByAggregateInput
-    _sum?: ProcurementSumOrderByAggregateInput
-  }
-
-  export type ProcurementScalarWhereWithAggregatesInput = {
-    AND?: ProcurementScalarWhereWithAggregatesInput | ProcurementScalarWhereWithAggregatesInput[]
-    OR?: ProcurementScalarWhereWithAggregatesInput[]
-    NOT?: ProcurementScalarWhereWithAggregatesInput | ProcurementScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Procurement"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Procurement"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Procurement"> | Date | string
-    expectedValue?: DecimalWithAggregatesFilter<"Procurement"> | Decimal | DecimalJsLike | number | string
-    resultValue?: DecimalNullableWithAggregatesFilter<"Procurement"> | Decimal | DecimalJsLike | number | string | null
-    announcedAt?: DateTimeNullableWithAggregatesFilter<"Procurement"> | Date | string | null
-    finishedAt?: DateTimeNullableWithAggregatesFilter<"Procurement"> | Date | string | null
-    prozorroId?: StringNullableWithAggregatesFilter<"Procurement"> | string | null
-    prozorroLink?: StringNullableWithAggregatesFilter<"Procurement"> | string | null
-    product?: StringWithAggregatesFilter<"Procurement"> | string
-    unit?: StringWithAggregatesFilter<"Procurement"> | string
-    scope?: StringWithAggregatesFilter<"Procurement"> | string
-    status?: StringWithAggregatesFilter<"Procurement"> | string
-    customerId?: StringWithAggregatesFilter<"Procurement"> | string
-    userId?: StringWithAggregatesFilter<"Procurement"> | string
-    jointProcurementid?: StringNullableWithAggregatesFilter<"Procurement"> | string | null
+    address?: StringNullableWithAggregatesFilter<"Customer"> | string | null
   }
 
   export type JointProcurementWhereInput = {
@@ -9172,169 +10265,125 @@ export namespace Prisma {
     status?: StringWithAggregatesFilter<"JointProcurement"> | string
   }
 
-  export type ContractWhereInput = {
-    AND?: ContractWhereInput | ContractWhereInput[]
-    OR?: ContractWhereInput[]
-    NOT?: ContractWhereInput | ContractWhereInput[]
-    id?: StringFilter<"Contract"> | string
-    createdAt?: DateTimeFilter<"Contract"> | Date | string
-    updatedAt?: DateTimeFilter<"Contract"> | Date | string
-    number?: StringFilter<"Contract"> | string
-    prozorroLink?: StringNullableFilter<"Contract"> | string | null
-    startValue?: DecimalFilter<"Contract"> | Decimal | DecimalJsLike | number | string
-    currentValue?: DecimalNullableFilter<"Contract"> | Decimal | DecimalJsLike | number | string | null
-    signatureDate?: DateTimeFilter<"Contract"> | Date | string
-    terminationDate?: DateTimeFilter<"Contract"> | Date | string
-    product?: StringFilter<"Contract"> | string
-    unit?: StringFilter<"Contract"> | string
-    scope?: StringFilter<"Contract"> | string
-    procurementId?: StringFilter<"Contract"> | string
-    procurement?: XOR<ProcurementRelationFilter, ProcurementWhereInput>
-    agreements?: ContractAgreementListRelationFilter
+  export type ProcurementWhereInput = {
+    AND?: ProcurementWhereInput | ProcurementWhereInput[]
+    OR?: ProcurementWhereInput[]
+    NOT?: ProcurementWhereInput | ProcurementWhereInput[]
+    id?: StringFilter<"Procurement"> | string
+    createdAt?: DateTimeFilter<"Procurement"> | Date | string
+    updatedAt?: DateTimeFilter<"Procurement"> | Date | string
+    expectedValue?: DecimalFilter<"Procurement"> | Decimal | DecimalJsLike | number | string
+    resultValue?: DecimalNullableFilter<"Procurement"> | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
+    finishedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
+    prozorroId?: StringNullableFilter<"Procurement"> | string | null
+    prozorroLink?: StringNullableFilter<"Procurement"> | string | null
+    product?: StringFilter<"Procurement"> | string
+    unit?: StringFilter<"Procurement"> | string
+    scope?: StringFilter<"Procurement"> | string
+    status?: StringFilter<"Procurement"> | string
+    customerId?: StringFilter<"Procurement"> | string
+    userId?: StringFilter<"Procurement"> | string
+    jointProcurementid?: StringNullableFilter<"Procurement"> | string | null
+    customer?: XOR<CustomerScalarRelationFilter, CustomerWhereInput>
+    manager?: XOR<UserScalarRelationFilter, UserWhereInput>
+    jointProcurement?: XOR<JointProcurementNullableScalarRelationFilter, JointProcurementWhereInput> | null
+    contracts?: ContractListRelationFilter
   }
 
-  export type ContractOrderByWithRelationInput = {
+  export type ProcurementOrderByWithRelationInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    number?: SortOrder
+    expectedValue?: SortOrder
+    resultValue?: SortOrderInput | SortOrder
+    announcedAt?: SortOrderInput | SortOrder
+    finishedAt?: SortOrderInput | SortOrder
+    prozorroId?: SortOrderInput | SortOrder
     prozorroLink?: SortOrderInput | SortOrder
-    startValue?: SortOrder
-    currentValue?: SortOrderInput | SortOrder
-    signatureDate?: SortOrder
-    terminationDate?: SortOrder
     product?: SortOrder
     unit?: SortOrder
     scope?: SortOrder
-    procurementId?: SortOrder
-    procurement?: ProcurementOrderByWithRelationInput
-    agreements?: contractAgreementOrderByRelationAggregateInput
+    status?: SortOrder
+    customerId?: SortOrder
+    userId?: SortOrder
+    jointProcurementid?: SortOrderInput | SortOrder
+    customer?: CustomerOrderByWithRelationInput
+    manager?: UserOrderByWithRelationInput
+    jointProcurement?: JointProcurementOrderByWithRelationInput
+    contracts?: ContractOrderByRelationAggregateInput
   }
 
-  export type ContractWhereUniqueInput = Prisma.AtLeast<{
+  export type ProcurementWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: ContractWhereInput | ContractWhereInput[]
-    OR?: ContractWhereInput[]
-    NOT?: ContractWhereInput | ContractWhereInput[]
-    createdAt?: DateTimeFilter<"Contract"> | Date | string
-    updatedAt?: DateTimeFilter<"Contract"> | Date | string
-    number?: StringFilter<"Contract"> | string
-    prozorroLink?: StringNullableFilter<"Contract"> | string | null
-    startValue?: DecimalFilter<"Contract"> | Decimal | DecimalJsLike | number | string
-    currentValue?: DecimalNullableFilter<"Contract"> | Decimal | DecimalJsLike | number | string | null
-    signatureDate?: DateTimeFilter<"Contract"> | Date | string
-    terminationDate?: DateTimeFilter<"Contract"> | Date | string
-    product?: StringFilter<"Contract"> | string
-    unit?: StringFilter<"Contract"> | string
-    scope?: StringFilter<"Contract"> | string
-    procurementId?: StringFilter<"Contract"> | string
-    procurement?: XOR<ProcurementRelationFilter, ProcurementWhereInput>
-    agreements?: ContractAgreementListRelationFilter
+    AND?: ProcurementWhereInput | ProcurementWhereInput[]
+    OR?: ProcurementWhereInput[]
+    NOT?: ProcurementWhereInput | ProcurementWhereInput[]
+    createdAt?: DateTimeFilter<"Procurement"> | Date | string
+    updatedAt?: DateTimeFilter<"Procurement"> | Date | string
+    expectedValue?: DecimalFilter<"Procurement"> | Decimal | DecimalJsLike | number | string
+    resultValue?: DecimalNullableFilter<"Procurement"> | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
+    finishedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
+    prozorroId?: StringNullableFilter<"Procurement"> | string | null
+    prozorroLink?: StringNullableFilter<"Procurement"> | string | null
+    product?: StringFilter<"Procurement"> | string
+    unit?: StringFilter<"Procurement"> | string
+    scope?: StringFilter<"Procurement"> | string
+    status?: StringFilter<"Procurement"> | string
+    customerId?: StringFilter<"Procurement"> | string
+    userId?: StringFilter<"Procurement"> | string
+    jointProcurementid?: StringNullableFilter<"Procurement"> | string | null
+    customer?: XOR<CustomerScalarRelationFilter, CustomerWhereInput>
+    manager?: XOR<UserScalarRelationFilter, UserWhereInput>
+    jointProcurement?: XOR<JointProcurementNullableScalarRelationFilter, JointProcurementWhereInput> | null
+    contracts?: ContractListRelationFilter
   }, "id">
 
-  export type ContractOrderByWithAggregationInput = {
+  export type ProcurementOrderByWithAggregationInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    number?: SortOrder
+    expectedValue?: SortOrder
+    resultValue?: SortOrderInput | SortOrder
+    announcedAt?: SortOrderInput | SortOrder
+    finishedAt?: SortOrderInput | SortOrder
+    prozorroId?: SortOrderInput | SortOrder
     prozorroLink?: SortOrderInput | SortOrder
-    startValue?: SortOrder
-    currentValue?: SortOrderInput | SortOrder
-    signatureDate?: SortOrder
-    terminationDate?: SortOrder
     product?: SortOrder
     unit?: SortOrder
     scope?: SortOrder
-    procurementId?: SortOrder
-    _count?: ContractCountOrderByAggregateInput
-    _avg?: ContractAvgOrderByAggregateInput
-    _max?: ContractMaxOrderByAggregateInput
-    _min?: ContractMinOrderByAggregateInput
-    _sum?: ContractSumOrderByAggregateInput
+    status?: SortOrder
+    customerId?: SortOrder
+    userId?: SortOrder
+    jointProcurementid?: SortOrderInput | SortOrder
+    _count?: ProcurementCountOrderByAggregateInput
+    _avg?: ProcurementAvgOrderByAggregateInput
+    _max?: ProcurementMaxOrderByAggregateInput
+    _min?: ProcurementMinOrderByAggregateInput
+    _sum?: ProcurementSumOrderByAggregateInput
   }
 
-  export type ContractScalarWhereWithAggregatesInput = {
-    AND?: ContractScalarWhereWithAggregatesInput | ContractScalarWhereWithAggregatesInput[]
-    OR?: ContractScalarWhereWithAggregatesInput[]
-    NOT?: ContractScalarWhereWithAggregatesInput | ContractScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Contract"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Contract"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Contract"> | Date | string
-    number?: StringWithAggregatesFilter<"Contract"> | string
-    prozorroLink?: StringNullableWithAggregatesFilter<"Contract"> | string | null
-    startValue?: DecimalWithAggregatesFilter<"Contract"> | Decimal | DecimalJsLike | number | string
-    currentValue?: DecimalNullableWithAggregatesFilter<"Contract"> | Decimal | DecimalJsLike | number | string | null
-    signatureDate?: DateTimeWithAggregatesFilter<"Contract"> | Date | string
-    terminationDate?: DateTimeWithAggregatesFilter<"Contract"> | Date | string
-    product?: StringWithAggregatesFilter<"Contract"> | string
-    unit?: StringWithAggregatesFilter<"Contract"> | string
-    scope?: StringWithAggregatesFilter<"Contract"> | string
-    procurementId?: StringWithAggregatesFilter<"Contract"> | string
-  }
-
-  export type contractAgreementWhereInput = {
-    AND?: contractAgreementWhereInput | contractAgreementWhereInput[]
-    OR?: contractAgreementWhereInput[]
-    NOT?: contractAgreementWhereInput | contractAgreementWhereInput[]
-    id?: StringFilter<"contractAgreement"> | string
-    createdAt?: DateTimeFilter<"contractAgreement"> | Date | string
-    number?: StringFilter<"contractAgreement"> | string
-    signatureDate?: DateTimeFilter<"contractAgreement"> | Date | string
-    reason?: StringFilter<"contractAgreement"> | string
-    changes?: StringFilter<"contractAgreement"> | string
-    contractId?: StringFilter<"contractAgreement"> | string
-    contract?: XOR<ContractRelationFilter, ContractWhereInput>
-  }
-
-  export type contractAgreementOrderByWithRelationInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    number?: SortOrder
-    signatureDate?: SortOrder
-    reason?: SortOrder
-    changes?: SortOrder
-    contractId?: SortOrder
-    contract?: ContractOrderByWithRelationInput
-  }
-
-  export type contractAgreementWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: contractAgreementWhereInput | contractAgreementWhereInput[]
-    OR?: contractAgreementWhereInput[]
-    NOT?: contractAgreementWhereInput | contractAgreementWhereInput[]
-    createdAt?: DateTimeFilter<"contractAgreement"> | Date | string
-    number?: StringFilter<"contractAgreement"> | string
-    signatureDate?: DateTimeFilter<"contractAgreement"> | Date | string
-    reason?: StringFilter<"contractAgreement"> | string
-    changes?: StringFilter<"contractAgreement"> | string
-    contractId?: StringFilter<"contractAgreement"> | string
-    contract?: XOR<ContractRelationFilter, ContractWhereInput>
-  }, "id">
-
-  export type contractAgreementOrderByWithAggregationInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    number?: SortOrder
-    signatureDate?: SortOrder
-    reason?: SortOrder
-    changes?: SortOrder
-    contractId?: SortOrder
-    _count?: contractAgreementCountOrderByAggregateInput
-    _max?: contractAgreementMaxOrderByAggregateInput
-    _min?: contractAgreementMinOrderByAggregateInput
-  }
-
-  export type contractAgreementScalarWhereWithAggregatesInput = {
-    AND?: contractAgreementScalarWhereWithAggregatesInput | contractAgreementScalarWhereWithAggregatesInput[]
-    OR?: contractAgreementScalarWhereWithAggregatesInput[]
-    NOT?: contractAgreementScalarWhereWithAggregatesInput | contractAgreementScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"contractAgreement"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"contractAgreement"> | Date | string
-    number?: StringWithAggregatesFilter<"contractAgreement"> | string
-    signatureDate?: DateTimeWithAggregatesFilter<"contractAgreement"> | Date | string
-    reason?: StringWithAggregatesFilter<"contractAgreement"> | string
-    changes?: StringWithAggregatesFilter<"contractAgreement"> | string
-    contractId?: StringWithAggregatesFilter<"contractAgreement"> | string
+  export type ProcurementScalarWhereWithAggregatesInput = {
+    AND?: ProcurementScalarWhereWithAggregatesInput | ProcurementScalarWhereWithAggregatesInput[]
+    OR?: ProcurementScalarWhereWithAggregatesInput[]
+    NOT?: ProcurementScalarWhereWithAggregatesInput | ProcurementScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Procurement"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Procurement"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Procurement"> | Date | string
+    expectedValue?: DecimalWithAggregatesFilter<"Procurement"> | Decimal | DecimalJsLike | number | string
+    resultValue?: DecimalNullableWithAggregatesFilter<"Procurement"> | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: DateTimeNullableWithAggregatesFilter<"Procurement"> | Date | string | null
+    finishedAt?: DateTimeNullableWithAggregatesFilter<"Procurement"> | Date | string | null
+    prozorroId?: StringNullableWithAggregatesFilter<"Procurement"> | string | null
+    prozorroLink?: StringNullableWithAggregatesFilter<"Procurement"> | string | null
+    product?: StringWithAggregatesFilter<"Procurement"> | string
+    unit?: StringWithAggregatesFilter<"Procurement"> | string
+    scope?: StringWithAggregatesFilter<"Procurement"> | string
+    status?: StringWithAggregatesFilter<"Procurement"> | string
+    customerId?: StringWithAggregatesFilter<"Procurement"> | string
+    userId?: StringWithAggregatesFilter<"Procurement"> | string
+    jointProcurementid?: StringNullableWithAggregatesFilter<"Procurement"> | string | null
   }
 
   export type TaskWhereInput = {
@@ -9350,8 +10399,9 @@ export namespace Prisma {
     terminationDate?: DateTimeFilter<"Task"> | Date | string
     isCompleted?: BoolFilter<"Task"> | boolean
     notes?: StringNullableFilter<"Task"> | string | null
+    managerId?: StringNullableFilter<"Task"> | string | null
     userId?: StringFilter<"Task"> | string
-    user?: XOR<UserRelationFilter, UserWhereInput>
+    createdByUser?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type TaskOrderByWithRelationInput = {
@@ -9364,8 +10414,9 @@ export namespace Prisma {
     terminationDate?: SortOrder
     isCompleted?: SortOrder
     notes?: SortOrderInput | SortOrder
+    managerId?: SortOrderInput | SortOrder
     userId?: SortOrder
-    user?: UserOrderByWithRelationInput
+    createdByUser?: UserOrderByWithRelationInput
   }
 
   export type TaskWhereUniqueInput = Prisma.AtLeast<{
@@ -9381,8 +10432,9 @@ export namespace Prisma {
     terminationDate?: DateTimeFilter<"Task"> | Date | string
     isCompleted?: BoolFilter<"Task"> | boolean
     notes?: StringNullableFilter<"Task"> | string | null
+    managerId?: StringNullableFilter<"Task"> | string | null
     userId?: StringFilter<"Task"> | string
-    user?: XOR<UserRelationFilter, UserWhereInput>
+    createdByUser?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type TaskOrderByWithAggregationInput = {
@@ -9395,6 +10447,7 @@ export namespace Prisma {
     terminationDate?: SortOrder
     isCompleted?: SortOrder
     notes?: SortOrderInput | SortOrder
+    managerId?: SortOrderInput | SortOrder
     userId?: SortOrder
     _count?: TaskCountOrderByAggregateInput
     _max?: TaskMaxOrderByAggregateInput
@@ -9414,99 +10467,268 @@ export namespace Prisma {
     terminationDate?: DateTimeWithAggregatesFilter<"Task"> | Date | string
     isCompleted?: BoolWithAggregatesFilter<"Task"> | boolean
     notes?: StringNullableWithAggregatesFilter<"Task"> | string | null
+    managerId?: StringNullableWithAggregatesFilter<"Task"> | string | null
     userId?: StringWithAggregatesFilter<"Task"> | string
   }
 
-  export type UserCreateInput = {
+  export type UserWhereInput = {
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    id?: StringFilter<"User"> | string
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    email?: StringFilter<"User"> | string
+    name?: StringFilter<"User"> | string
+    surname?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    isAdmin?: BoolFilter<"User"> | boolean
+    isManager?: BoolFilter<"User"> | boolean
+    isGuest?: BoolFilter<"User"> | boolean
+    tasks?: TaskListRelationFilter
+    procurements?: ProcurementListRelationFilter
+  }
+
+  export type UserOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    email?: SortOrder
+    name?: SortOrder
+    surname?: SortOrder
+    password?: SortOrder
+    isAdmin?: SortOrder
+    isManager?: SortOrder
+    isGuest?: SortOrder
+    tasks?: TaskOrderByRelationAggregateInput
+    procurements?: ProcurementOrderByRelationAggregateInput
+  }
+
+  export type UserWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    email?: string
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    name?: StringFilter<"User"> | string
+    surname?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    isAdmin?: BoolFilter<"User"> | boolean
+    isManager?: BoolFilter<"User"> | boolean
+    isGuest?: BoolFilter<"User"> | boolean
+    tasks?: TaskListRelationFilter
+    procurements?: ProcurementListRelationFilter
+  }, "id" | "email">
+
+  export type UserOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    email?: SortOrder
+    name?: SortOrder
+    surname?: SortOrder
+    password?: SortOrder
+    isAdmin?: SortOrder
+    isManager?: SortOrder
+    isGuest?: SortOrder
+    _count?: UserCountOrderByAggregateInput
+    _max?: UserMaxOrderByAggregateInput
+    _min?: UserMinOrderByAggregateInput
+  }
+
+  export type UserScalarWhereWithAggregatesInput = {
+    AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    OR?: UserScalarWhereWithAggregatesInput[]
+    NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"User"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    email?: StringWithAggregatesFilter<"User"> | string
+    name?: StringWithAggregatesFilter<"User"> | string
+    surname?: StringWithAggregatesFilter<"User"> | string
+    password?: StringWithAggregatesFilter<"User"> | string
+    isAdmin?: BoolWithAggregatesFilter<"User"> | boolean
+    isManager?: BoolWithAggregatesFilter<"User"> | boolean
+    isGuest?: BoolWithAggregatesFilter<"User"> | boolean
+  }
+
+  export type ContractCreateInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    email: string
-    name?: string | null
-    surname?: string | null
-    password: string
-    position?: string | null
-    role?: string
-    tasks?: TaskCreateNestedManyWithoutUserInput
-    procurements?: ProcurementCreateNestedManyWithoutManagerInput
+    number: string
+    startValue: Decimal | DecimalJsLike | number | string
+    currentValue?: Decimal | DecimalJsLike | number | string | null
+    signatureDate: Date | string
+    terminationDate: Date | string
+    product: string
+    unit: string
+    scope: string
+    procurement: ProcurementCreateNestedOneWithoutContractsInput
+    agreements?: contractAgreementCreateNestedManyWithoutContractInput
   }
 
-  export type UserUncheckedCreateInput = {
+  export type ContractUncheckedCreateInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    email: string
-    name?: string | null
-    surname?: string | null
-    password: string
-    position?: string | null
-    role?: string
-    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
-    procurements?: ProcurementUncheckedCreateNestedManyWithoutManagerInput
+    number: string
+    startValue: Decimal | DecimalJsLike | number | string
+    currentValue?: Decimal | DecimalJsLike | number | string | null
+    signatureDate: Date | string
+    terminationDate: Date | string
+    product: string
+    unit: string
+    scope: string
+    procurementId: string
+    agreements?: contractAgreementUncheckedCreateNestedManyWithoutContractInput
   }
 
-  export type UserUpdateInput = {
+  export type ContractUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    surname?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
-    position?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
-    tasks?: TaskUpdateManyWithoutUserNestedInput
-    procurements?: ProcurementUpdateManyWithoutManagerNestedInput
+    number?: StringFieldUpdateOperationsInput | string
+    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    product?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    procurement?: ProcurementUpdateOneRequiredWithoutContractsNestedInput
+    agreements?: contractAgreementUpdateManyWithoutContractNestedInput
   }
 
-  export type UserUncheckedUpdateInput = {
+  export type ContractUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    surname?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
-    position?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
-    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
-    procurements?: ProcurementUncheckedUpdateManyWithoutManagerNestedInput
+    number?: StringFieldUpdateOperationsInput | string
+    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    product?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    procurementId?: StringFieldUpdateOperationsInput | string
+    agreements?: contractAgreementUncheckedUpdateManyWithoutContractNestedInput
   }
 
-  export type UserCreateManyInput = {
+  export type ContractCreateManyInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    email: string
-    name?: string | null
-    surname?: string | null
-    password: string
-    position?: string | null
-    role?: string
+    number: string
+    startValue: Decimal | DecimalJsLike | number | string
+    currentValue?: Decimal | DecimalJsLike | number | string | null
+    signatureDate: Date | string
+    terminationDate: Date | string
+    product: string
+    unit: string
+    scope: string
+    procurementId: string
   }
 
-  export type UserUpdateManyMutationInput = {
+  export type ContractUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    surname?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
-    position?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    product?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
   }
 
-  export type UserUncheckedUpdateManyInput = {
+  export type ContractUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    surname?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
-    position?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    product?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    procurementId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type contractAgreementCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    number: string
+    signatureDate: Date | string
+    reason: string
+    changes: string
+    contract: ContractCreateNestedOneWithoutAgreementsInput
+  }
+
+  export type contractAgreementUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    number: string
+    signatureDate: Date | string
+    reason: string
+    changes: string
+    contractId: string
+  }
+
+  export type contractAgreementUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    number?: StringFieldUpdateOperationsInput | string
+    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    changes?: StringFieldUpdateOperationsInput | string
+    contract?: ContractUpdateOneRequiredWithoutAgreementsNestedInput
+  }
+
+  export type contractAgreementUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    number?: StringFieldUpdateOperationsInput | string
+    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    changes?: StringFieldUpdateOperationsInput | string
+    contractId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type contractAgreementCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    number: string
+    signatureDate: Date | string
+    reason: string
+    changes: string
+    contractId: string
+  }
+
+  export type contractAgreementUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    number?: StringFieldUpdateOperationsInput | string
+    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    changes?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type contractAgreementUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    number?: StringFieldUpdateOperationsInput | string
+    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    changes?: StringFieldUpdateOperationsInput | string
+    contractId?: StringFieldUpdateOperationsInput | string
   }
 
   export type CustomerCreateInput = {
@@ -9515,6 +10737,7 @@ export namespace Prisma {
     code: string
     email: string
     phone: string
+    address?: string | null
     procurements?: ProcurementCreateNestedManyWithoutCustomerInput
   }
 
@@ -9524,6 +10747,7 @@ export namespace Prisma {
     code: string
     email: string
     phone: string
+    address?: string | null
     procurements?: ProcurementUncheckedCreateNestedManyWithoutCustomerInput
   }
 
@@ -9533,6 +10757,7 @@ export namespace Prisma {
     code?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     procurements?: ProcurementUpdateManyWithoutCustomerNestedInput
   }
 
@@ -9542,6 +10767,7 @@ export namespace Prisma {
     code?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     procurements?: ProcurementUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
@@ -9551,6 +10777,7 @@ export namespace Prisma {
     code: string
     email: string
     phone: string
+    address?: string | null
   }
 
   export type CustomerUpdateManyMutationInput = {
@@ -9559,6 +10786,7 @@ export namespace Prisma {
     code?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CustomerUncheckedUpdateManyInput = {
@@ -9567,6 +10795,123 @@ export namespace Prisma {
     code?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type JointProcurementCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
+    product: string
+    unit: string
+    scope: string
+    status?: string
+    procurements?: ProcurementCreateNestedManyWithoutJointProcurementInput
+  }
+
+  export type JointProcurementUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
+    product: string
+    unit: string
+    scope: string
+    status?: string
+    procurements?: ProcurementUncheckedCreateNestedManyWithoutJointProcurementInput
+  }
+
+  export type JointProcurementUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    product?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    procurements?: ProcurementUpdateManyWithoutJointProcurementNestedInput
+  }
+
+  export type JointProcurementUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    product?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    procurements?: ProcurementUncheckedUpdateManyWithoutJointProcurementNestedInput
+  }
+
+  export type JointProcurementCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
+    product: string
+    unit: string
+    scope: string
+    status?: string
+  }
+
+  export type JointProcurementUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    product?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type JointProcurementUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    product?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProcurementCreateInput = {
@@ -9703,306 +11048,6 @@ export namespace Prisma {
     jointProcurementid?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type JointProcurementCreateInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    expectedValue: Decimal | DecimalJsLike | number | string
-    resultValue?: Decimal | DecimalJsLike | number | string | null
-    announcedAt?: Date | string | null
-    finishedAt?: Date | string | null
-    prozorroId?: string | null
-    prozorroLink?: string | null
-    product: string
-    unit: string
-    scope: string
-    status?: string
-    procurements?: ProcurementCreateNestedManyWithoutJointProcurementInput
-  }
-
-  export type JointProcurementUncheckedCreateInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    expectedValue: Decimal | DecimalJsLike | number | string
-    resultValue?: Decimal | DecimalJsLike | number | string | null
-    announcedAt?: Date | string | null
-    finishedAt?: Date | string | null
-    prozorroId?: string | null
-    prozorroLink?: string | null
-    product: string
-    unit: string
-    scope: string
-    status?: string
-    procurements?: ProcurementUncheckedCreateNestedManyWithoutJointProcurementInput
-  }
-
-  export type JointProcurementUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
-    product?: StringFieldUpdateOperationsInput | string
-    unit?: StringFieldUpdateOperationsInput | string
-    scope?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    procurements?: ProcurementUpdateManyWithoutJointProcurementNestedInput
-  }
-
-  export type JointProcurementUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
-    product?: StringFieldUpdateOperationsInput | string
-    unit?: StringFieldUpdateOperationsInput | string
-    scope?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    procurements?: ProcurementUncheckedUpdateManyWithoutJointProcurementNestedInput
-  }
-
-  export type JointProcurementCreateManyInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    expectedValue: Decimal | DecimalJsLike | number | string
-    resultValue?: Decimal | DecimalJsLike | number | string | null
-    announcedAt?: Date | string | null
-    finishedAt?: Date | string | null
-    prozorroId?: string | null
-    prozorroLink?: string | null
-    product: string
-    unit: string
-    scope: string
-    status?: string
-  }
-
-  export type JointProcurementUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
-    product?: StringFieldUpdateOperationsInput | string
-    unit?: StringFieldUpdateOperationsInput | string
-    scope?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type JointProcurementUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
-    product?: StringFieldUpdateOperationsInput | string
-    unit?: StringFieldUpdateOperationsInput | string
-    scope?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type ContractCreateInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    number: string
-    prozorroLink?: string | null
-    startValue: Decimal | DecimalJsLike | number | string
-    currentValue?: Decimal | DecimalJsLike | number | string | null
-    signatureDate: Date | string
-    terminationDate: Date | string
-    product: string
-    unit: string
-    scope: string
-    procurement: ProcurementCreateNestedOneWithoutContractsInput
-    agreements?: contractAgreementCreateNestedManyWithoutContractInput
-  }
-
-  export type ContractUncheckedCreateInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    number: string
-    prozorroLink?: string | null
-    startValue: Decimal | DecimalJsLike | number | string
-    currentValue?: Decimal | DecimalJsLike | number | string | null
-    signatureDate: Date | string
-    terminationDate: Date | string
-    product: string
-    unit: string
-    scope: string
-    procurementId: string
-    agreements?: contractAgreementUncheckedCreateNestedManyWithoutContractInput
-  }
-
-  export type ContractUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    number?: StringFieldUpdateOperationsInput | string
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
-    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    product?: StringFieldUpdateOperationsInput | string
-    unit?: StringFieldUpdateOperationsInput | string
-    scope?: StringFieldUpdateOperationsInput | string
-    procurement?: ProcurementUpdateOneRequiredWithoutContractsNestedInput
-    agreements?: contractAgreementUpdateManyWithoutContractNestedInput
-  }
-
-  export type ContractUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    number?: StringFieldUpdateOperationsInput | string
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
-    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    product?: StringFieldUpdateOperationsInput | string
-    unit?: StringFieldUpdateOperationsInput | string
-    scope?: StringFieldUpdateOperationsInput | string
-    procurementId?: StringFieldUpdateOperationsInput | string
-    agreements?: contractAgreementUncheckedUpdateManyWithoutContractNestedInput
-  }
-
-  export type ContractCreateManyInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    number: string
-    prozorroLink?: string | null
-    startValue: Decimal | DecimalJsLike | number | string
-    currentValue?: Decimal | DecimalJsLike | number | string | null
-    signatureDate: Date | string
-    terminationDate: Date | string
-    product: string
-    unit: string
-    scope: string
-    procurementId: string
-  }
-
-  export type ContractUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    number?: StringFieldUpdateOperationsInput | string
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
-    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    product?: StringFieldUpdateOperationsInput | string
-    unit?: StringFieldUpdateOperationsInput | string
-    scope?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type ContractUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    number?: StringFieldUpdateOperationsInput | string
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
-    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    product?: StringFieldUpdateOperationsInput | string
-    unit?: StringFieldUpdateOperationsInput | string
-    scope?: StringFieldUpdateOperationsInput | string
-    procurementId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type contractAgreementCreateInput = {
-    id?: string
-    createdAt?: Date | string
-    number: string
-    signatureDate: Date | string
-    reason: string
-    changes: string
-    contract: ContractCreateNestedOneWithoutAgreementsInput
-  }
-
-  export type contractAgreementUncheckedCreateInput = {
-    id?: string
-    createdAt?: Date | string
-    number: string
-    signatureDate: Date | string
-    reason: string
-    changes: string
-    contractId: string
-  }
-
-  export type contractAgreementUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    number?: StringFieldUpdateOperationsInput | string
-    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    reason?: StringFieldUpdateOperationsInput | string
-    changes?: StringFieldUpdateOperationsInput | string
-    contract?: ContractUpdateOneRequiredWithoutAgreementsNestedInput
-  }
-
-  export type contractAgreementUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    number?: StringFieldUpdateOperationsInput | string
-    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    reason?: StringFieldUpdateOperationsInput | string
-    changes?: StringFieldUpdateOperationsInput | string
-    contractId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type contractAgreementCreateManyInput = {
-    id?: string
-    createdAt?: Date | string
-    number: string
-    signatureDate: Date | string
-    reason: string
-    changes: string
-    contractId: string
-  }
-
-  export type contractAgreementUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    number?: StringFieldUpdateOperationsInput | string
-    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    reason?: StringFieldUpdateOperationsInput | string
-    changes?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type contractAgreementUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    number?: StringFieldUpdateOperationsInput | string
-    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    reason?: StringFieldUpdateOperationsInput | string
-    changes?: StringFieldUpdateOperationsInput | string
-    contractId?: StringFieldUpdateOperationsInput | string
-  }
-
   export type TaskCreateInput = {
     id?: string
     createdAt?: Date | string
@@ -10013,7 +11058,8 @@ export namespace Prisma {
     terminationDate: Date | string
     isCompleted?: boolean
     notes?: string | null
-    user: UserCreateNestedOneWithoutTasksInput
+    managerId?: string | null
+    createdByUser: UserCreateNestedOneWithoutTasksInput
   }
 
   export type TaskUncheckedCreateInput = {
@@ -10026,6 +11072,7 @@ export namespace Prisma {
     terminationDate: Date | string
     isCompleted?: boolean
     notes?: string | null
+    managerId?: string | null
     userId: string
   }
 
@@ -10039,7 +11086,8 @@ export namespace Prisma {
     terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isCompleted?: BoolFieldUpdateOperationsInput | boolean
     notes?: NullableStringFieldUpdateOperationsInput | string | null
-    user?: UserUpdateOneRequiredWithoutTasksNestedInput
+    managerId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdByUser?: UserUpdateOneRequiredWithoutTasksNestedInput
   }
 
   export type TaskUncheckedUpdateInput = {
@@ -10052,6 +11100,7 @@ export namespace Prisma {
     terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isCompleted?: BoolFieldUpdateOperationsInput | boolean
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    managerId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -10065,6 +11114,7 @@ export namespace Prisma {
     terminationDate: Date | string
     isCompleted?: boolean
     notes?: string | null
+    managerId?: string | null
     userId: string
   }
 
@@ -10078,6 +11128,7 @@ export namespace Prisma {
     terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isCompleted?: BoolFieldUpdateOperationsInput | boolean
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    managerId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TaskUncheckedUpdateManyInput = {
@@ -10090,7 +11141,107 @@ export namespace Prisma {
     terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isCompleted?: BoolFieldUpdateOperationsInput | boolean
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    managerId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    email: string
+    name: string
+    surname: string
+    password: string
+    isAdmin?: boolean
+    isManager?: boolean
+    isGuest?: boolean
+    tasks?: TaskCreateNestedManyWithoutCreatedByUserInput
+    procurements?: ProcurementCreateNestedManyWithoutManagerInput
+  }
+
+  export type UserUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    email: string
+    name: string
+    surname: string
+    password: string
+    isAdmin?: boolean
+    isManager?: boolean
+    isGuest?: boolean
+    tasks?: TaskUncheckedCreateNestedManyWithoutCreatedByUserInput
+    procurements?: ProcurementUncheckedCreateNestedManyWithoutManagerInput
+  }
+
+  export type UserUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    surname?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    isManager?: BoolFieldUpdateOperationsInput | boolean
+    isGuest?: BoolFieldUpdateOperationsInput | boolean
+    tasks?: TaskUpdateManyWithoutCreatedByUserNestedInput
+    procurements?: ProcurementUpdateManyWithoutManagerNestedInput
+  }
+
+  export type UserUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    surname?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    isManager?: BoolFieldUpdateOperationsInput | boolean
+    isGuest?: BoolFieldUpdateOperationsInput | boolean
+    tasks?: TaskUncheckedUpdateManyWithoutCreatedByUserNestedInput
+    procurements?: ProcurementUncheckedUpdateManyWithoutManagerNestedInput
+  }
+
+  export type UserCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    email: string
+    name: string
+    surname: string
+    password: string
+    isAdmin?: boolean
+    isManager?: boolean
+    isGuest?: boolean
+  }
+
+  export type UserUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    surname?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    isManager?: BoolFieldUpdateOperationsInput | boolean
+    isGuest?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type UserUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    surname?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    isManager?: BoolFieldUpdateOperationsInput | boolean
+    isGuest?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -10119,31 +11270,37 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  export type DecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
-  export type TaskListRelationFilter = {
-    every?: TaskWhereInput
-    some?: TaskWhereInput
-    none?: TaskWhereInput
+  export type DecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
   }
 
-  export type ProcurementListRelationFilter = {
-    every?: ProcurementWhereInput
-    some?: ProcurementWhereInput
-    none?: ProcurementWhereInput
+  export type ProcurementScalarRelationFilter = {
+    is?: ProcurementWhereInput
+    isNot?: ProcurementWhereInput
+  }
+
+  export type ContractAgreementListRelationFilter = {
+    every?: contractAgreementWhereInput
+    some?: contractAgreementWhereInput
+    none?: contractAgreementWhereInput
   }
 
   export type SortOrderInput = {
@@ -10151,48 +11308,63 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type TaskOrderByRelationAggregateInput = {
+  export type contractAgreementOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type ProcurementOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type UserCountOrderByAggregateInput = {
+  export type ContractCountOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    email?: SortOrder
-    name?: SortOrder
-    surname?: SortOrder
-    password?: SortOrder
-    position?: SortOrder
-    role?: SortOrder
+    number?: SortOrder
+    startValue?: SortOrder
+    currentValue?: SortOrder
+    signatureDate?: SortOrder
+    terminationDate?: SortOrder
+    product?: SortOrder
+    unit?: SortOrder
+    scope?: SortOrder
+    procurementId?: SortOrder
   }
 
-  export type UserMaxOrderByAggregateInput = {
+  export type ContractAvgOrderByAggregateInput = {
+    startValue?: SortOrder
+    currentValue?: SortOrder
+  }
+
+  export type ContractMaxOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    email?: SortOrder
-    name?: SortOrder
-    surname?: SortOrder
-    password?: SortOrder
-    position?: SortOrder
-    role?: SortOrder
+    number?: SortOrder
+    startValue?: SortOrder
+    currentValue?: SortOrder
+    signatureDate?: SortOrder
+    terminationDate?: SortOrder
+    product?: SortOrder
+    unit?: SortOrder
+    scope?: SortOrder
+    procurementId?: SortOrder
   }
 
-  export type UserMinOrderByAggregateInput = {
+  export type ContractMinOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    email?: SortOrder
-    name?: SortOrder
-    surname?: SortOrder
-    password?: SortOrder
-    position?: SortOrder
-    role?: SortOrder
+    number?: SortOrder
+    startValue?: SortOrder
+    currentValue?: SortOrder
+    signatureDate?: SortOrder
+    terminationDate?: SortOrder
+    product?: SortOrder
+    unit?: SortOrder
+    scope?: SortOrder
+    procurementId?: SortOrder
+  }
+
+  export type ContractSumOrderByAggregateInput = {
+    startValue?: SortOrder
+    currentValue?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -10227,6 +11399,125 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+
+  export type ContractScalarRelationFilter = {
+    is?: ContractWhereInput
+    isNot?: ContractWhereInput
+  }
+
+  export type contractAgreementCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    number?: SortOrder
+    signatureDate?: SortOrder
+    reason?: SortOrder
+    changes?: SortOrder
+    contractId?: SortOrder
+  }
+
+  export type contractAgreementMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    number?: SortOrder
+    signatureDate?: SortOrder
+    reason?: SortOrder
+    changes?: SortOrder
+    contractId?: SortOrder
+  }
+
+  export type contractAgreementMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    number?: SortOrder
+    signatureDate?: SortOrder
+    reason?: SortOrder
+    changes?: SortOrder
+    contractId?: SortOrder
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type ProcurementListRelationFilter = {
+    every?: ProcurementWhereInput
+    some?: ProcurementWhereInput
+    none?: ProcurementWhereInput
+  }
+
+  export type ProcurementOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CustomerCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    code?: SortOrder
+    email?: SortOrder
+    phone?: SortOrder
+    address?: SortOrder
+  }
+
+  export type CustomerMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    code?: SortOrder
+    email?: SortOrder
+    phone?: SortOrder
+    address?: SortOrder
+  }
+
+  export type CustomerMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    code?: SortOrder
+    email?: SortOrder
+    phone?: SortOrder
+    address?: SortOrder
+  }
+
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -10245,52 +11536,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type CustomerCountOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    code?: SortOrder
-    email?: SortOrder
-    phone?: SortOrder
-  }
-
-  export type CustomerMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    code?: SortOrder
-    email?: SortOrder
-    phone?: SortOrder
-  }
-
-  export type CustomerMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    code?: SortOrder
-    email?: SortOrder
-    phone?: SortOrder
-  }
-
-  export type DecimalFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-  }
-
-  export type DecimalNullableFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
-  }
-
   export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -10302,17 +11547,89 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type CustomerRelationFilter = {
+  export type JointProcurementCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    expectedValue?: SortOrder
+    resultValue?: SortOrder
+    announcedAt?: SortOrder
+    finishedAt?: SortOrder
+    prozorroId?: SortOrder
+    prozorroLink?: SortOrder
+    product?: SortOrder
+    unit?: SortOrder
+    scope?: SortOrder
+    status?: SortOrder
+  }
+
+  export type JointProcurementAvgOrderByAggregateInput = {
+    expectedValue?: SortOrder
+    resultValue?: SortOrder
+  }
+
+  export type JointProcurementMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    expectedValue?: SortOrder
+    resultValue?: SortOrder
+    announcedAt?: SortOrder
+    finishedAt?: SortOrder
+    prozorroId?: SortOrder
+    prozorroLink?: SortOrder
+    product?: SortOrder
+    unit?: SortOrder
+    scope?: SortOrder
+    status?: SortOrder
+  }
+
+  export type JointProcurementMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    expectedValue?: SortOrder
+    resultValue?: SortOrder
+    announcedAt?: SortOrder
+    finishedAt?: SortOrder
+    prozorroId?: SortOrder
+    prozorroLink?: SortOrder
+    product?: SortOrder
+    unit?: SortOrder
+    scope?: SortOrder
+    status?: SortOrder
+  }
+
+  export type JointProcurementSumOrderByAggregateInput = {
+    expectedValue?: SortOrder
+    resultValue?: SortOrder
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type CustomerScalarRelationFilter = {
     is?: CustomerWhereInput
     isNot?: CustomerWhereInput
   }
 
-  export type UserRelationFilter = {
+  export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
   }
 
-  export type JointProcurementNullableRelationFilter = {
+  export type JointProcurementNullableScalarRelationFilter = {
     is?: JointProcurementWhereInput | null
     isNot?: JointProcurementWhereInput | null
   }
@@ -10394,218 +11711,6 @@ export namespace Prisma {
     resultValue?: SortOrder
   }
 
-  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedDecimalFilter<$PrismaModel>
-    _sum?: NestedDecimalFilter<$PrismaModel>
-    _min?: NestedDecimalFilter<$PrismaModel>
-    _max?: NestedDecimalFilter<$PrismaModel>
-  }
-
-  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedDecimalNullableFilter<$PrismaModel>
-    _sum?: NestedDecimalNullableFilter<$PrismaModel>
-    _min?: NestedDecimalNullableFilter<$PrismaModel>
-    _max?: NestedDecimalNullableFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type JointProcurementCountOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    expectedValue?: SortOrder
-    resultValue?: SortOrder
-    announcedAt?: SortOrder
-    finishedAt?: SortOrder
-    prozorroId?: SortOrder
-    prozorroLink?: SortOrder
-    product?: SortOrder
-    unit?: SortOrder
-    scope?: SortOrder
-    status?: SortOrder
-  }
-
-  export type JointProcurementAvgOrderByAggregateInput = {
-    expectedValue?: SortOrder
-    resultValue?: SortOrder
-  }
-
-  export type JointProcurementMaxOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    expectedValue?: SortOrder
-    resultValue?: SortOrder
-    announcedAt?: SortOrder
-    finishedAt?: SortOrder
-    prozorroId?: SortOrder
-    prozorroLink?: SortOrder
-    product?: SortOrder
-    unit?: SortOrder
-    scope?: SortOrder
-    status?: SortOrder
-  }
-
-  export type JointProcurementMinOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    expectedValue?: SortOrder
-    resultValue?: SortOrder
-    announcedAt?: SortOrder
-    finishedAt?: SortOrder
-    prozorroId?: SortOrder
-    prozorroLink?: SortOrder
-    product?: SortOrder
-    unit?: SortOrder
-    scope?: SortOrder
-    status?: SortOrder
-  }
-
-  export type JointProcurementSumOrderByAggregateInput = {
-    expectedValue?: SortOrder
-    resultValue?: SortOrder
-  }
-
-  export type ProcurementRelationFilter = {
-    is?: ProcurementWhereInput
-    isNot?: ProcurementWhereInput
-  }
-
-  export type ContractAgreementListRelationFilter = {
-    every?: contractAgreementWhereInput
-    some?: contractAgreementWhereInput
-    none?: contractAgreementWhereInput
-  }
-
-  export type contractAgreementOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type ContractCountOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    number?: SortOrder
-    prozorroLink?: SortOrder
-    startValue?: SortOrder
-    currentValue?: SortOrder
-    signatureDate?: SortOrder
-    terminationDate?: SortOrder
-    product?: SortOrder
-    unit?: SortOrder
-    scope?: SortOrder
-    procurementId?: SortOrder
-  }
-
-  export type ContractAvgOrderByAggregateInput = {
-    startValue?: SortOrder
-    currentValue?: SortOrder
-  }
-
-  export type ContractMaxOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    number?: SortOrder
-    prozorroLink?: SortOrder
-    startValue?: SortOrder
-    currentValue?: SortOrder
-    signatureDate?: SortOrder
-    terminationDate?: SortOrder
-    product?: SortOrder
-    unit?: SortOrder
-    scope?: SortOrder
-    procurementId?: SortOrder
-  }
-
-  export type ContractMinOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    number?: SortOrder
-    prozorroLink?: SortOrder
-    startValue?: SortOrder
-    currentValue?: SortOrder
-    signatureDate?: SortOrder
-    terminationDate?: SortOrder
-    product?: SortOrder
-    unit?: SortOrder
-    scope?: SortOrder
-    procurementId?: SortOrder
-  }
-
-  export type ContractSumOrderByAggregateInput = {
-    startValue?: SortOrder
-    currentValue?: SortOrder
-  }
-
-  export type ContractRelationFilter = {
-    is?: ContractWhereInput
-    isNot?: ContractWhereInput
-  }
-
-  export type contractAgreementCountOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    number?: SortOrder
-    signatureDate?: SortOrder
-    reason?: SortOrder
-    changes?: SortOrder
-    contractId?: SortOrder
-  }
-
-  export type contractAgreementMaxOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    number?: SortOrder
-    signatureDate?: SortOrder
-    reason?: SortOrder
-    changes?: SortOrder
-    contractId?: SortOrder
-  }
-
-  export type contractAgreementMinOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    number?: SortOrder
-    signatureDate?: SortOrder
-    reason?: SortOrder
-    changes?: SortOrder
-    contractId?: SortOrder
-  }
-
   export type EnumPriorityNullableFilter<$PrismaModel = never> = {
     equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel> | null
     in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel> | null
@@ -10628,6 +11733,7 @@ export namespace Prisma {
     terminationDate?: SortOrder
     isCompleted?: SortOrder
     notes?: SortOrder
+    managerId?: SortOrder
     userId?: SortOrder
   }
 
@@ -10641,6 +11747,7 @@ export namespace Prisma {
     terminationDate?: SortOrder
     isCompleted?: SortOrder
     notes?: SortOrder
+    managerId?: SortOrder
     userId?: SortOrder
   }
 
@@ -10654,6 +11761,7 @@ export namespace Prisma {
     terminationDate?: SortOrder
     isCompleted?: SortOrder
     notes?: SortOrder
+    managerId?: SortOrder
     userId?: SortOrder
   }
 
@@ -10675,32 +11783,73 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type TaskCreateNestedManyWithoutUserInput = {
-    create?: XOR<TaskCreateWithoutUserInput, TaskUncheckedCreateWithoutUserInput> | TaskCreateWithoutUserInput[] | TaskUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutUserInput | TaskCreateOrConnectWithoutUserInput[]
-    createMany?: TaskCreateManyUserInputEnvelope
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  export type TaskListRelationFilter = {
+    every?: TaskWhereInput
+    some?: TaskWhereInput
+    none?: TaskWhereInput
   }
 
-  export type ProcurementCreateNestedManyWithoutManagerInput = {
-    create?: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput> | ProcurementCreateWithoutManagerInput[] | ProcurementUncheckedCreateWithoutManagerInput[]
-    connectOrCreate?: ProcurementCreateOrConnectWithoutManagerInput | ProcurementCreateOrConnectWithoutManagerInput[]
-    createMany?: ProcurementCreateManyManagerInputEnvelope
-    connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+  export type TaskOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
-  export type TaskUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<TaskCreateWithoutUserInput, TaskUncheckedCreateWithoutUserInput> | TaskCreateWithoutUserInput[] | TaskUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutUserInput | TaskCreateOrConnectWithoutUserInput[]
-    createMany?: TaskCreateManyUserInputEnvelope
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  export type UserCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    email?: SortOrder
+    name?: SortOrder
+    surname?: SortOrder
+    password?: SortOrder
+    isAdmin?: SortOrder
+    isManager?: SortOrder
+    isGuest?: SortOrder
   }
 
-  export type ProcurementUncheckedCreateNestedManyWithoutManagerInput = {
-    create?: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput> | ProcurementCreateWithoutManagerInput[] | ProcurementUncheckedCreateWithoutManagerInput[]
-    connectOrCreate?: ProcurementCreateOrConnectWithoutManagerInput | ProcurementCreateOrConnectWithoutManagerInput[]
-    createMany?: ProcurementCreateManyManagerInputEnvelope
-    connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+  export type UserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    email?: SortOrder
+    name?: SortOrder
+    surname?: SortOrder
+    password?: SortOrder
+    isAdmin?: SortOrder
+    isManager?: SortOrder
+    isGuest?: SortOrder
+  }
+
+  export type UserMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    email?: SortOrder
+    name?: SortOrder
+    surname?: SortOrder
+    password?: SortOrder
+    isAdmin?: SortOrder
+    isManager?: SortOrder
+    isGuest?: SortOrder
+  }
+
+  export type ProcurementCreateNestedOneWithoutContractsInput = {
+    create?: XOR<ProcurementCreateWithoutContractsInput, ProcurementUncheckedCreateWithoutContractsInput>
+    connectOrCreate?: ProcurementCreateOrConnectWithoutContractsInput
+    connect?: ProcurementWhereUniqueInput
+  }
+
+  export type contractAgreementCreateNestedManyWithoutContractInput = {
+    create?: XOR<contractAgreementCreateWithoutContractInput, contractAgreementUncheckedCreateWithoutContractInput> | contractAgreementCreateWithoutContractInput[] | contractAgreementUncheckedCreateWithoutContractInput[]
+    connectOrCreate?: contractAgreementCreateOrConnectWithoutContractInput | contractAgreementCreateOrConnectWithoutContractInput[]
+    createMany?: contractAgreementCreateManyContractInputEnvelope
+    connect?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
+  }
+
+  export type contractAgreementUncheckedCreateNestedManyWithoutContractInput = {
+    create?: XOR<contractAgreementCreateWithoutContractInput, contractAgreementUncheckedCreateWithoutContractInput> | contractAgreementCreateWithoutContractInput[] | contractAgreementUncheckedCreateWithoutContractInput[]
+    connectOrCreate?: contractAgreementCreateOrConnectWithoutContractInput | contractAgreementCreateOrConnectWithoutContractInput[]
+    createMany?: contractAgreementCreateManyContractInputEnvelope
+    connect?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -10711,64 +11860,70 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
+  export type DecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
   }
 
-  export type TaskUpdateManyWithoutUserNestedInput = {
-    create?: XOR<TaskCreateWithoutUserInput, TaskUncheckedCreateWithoutUserInput> | TaskCreateWithoutUserInput[] | TaskUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutUserInput | TaskCreateOrConnectWithoutUserInput[]
-    upsert?: TaskUpsertWithWhereUniqueWithoutUserInput | TaskUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: TaskCreateManyUserInputEnvelope
-    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    update?: TaskUpdateWithWhereUniqueWithoutUserInput | TaskUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: TaskUpdateManyWithWhereWithoutUserInput | TaskUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
+  export type NullableDecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string | null
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
   }
 
-  export type ProcurementUpdateManyWithoutManagerNestedInput = {
-    create?: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput> | ProcurementCreateWithoutManagerInput[] | ProcurementUncheckedCreateWithoutManagerInput[]
-    connectOrCreate?: ProcurementCreateOrConnectWithoutManagerInput | ProcurementCreateOrConnectWithoutManagerInput[]
-    upsert?: ProcurementUpsertWithWhereUniqueWithoutManagerInput | ProcurementUpsertWithWhereUniqueWithoutManagerInput[]
-    createMany?: ProcurementCreateManyManagerInputEnvelope
-    set?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    disconnect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    delete?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    update?: ProcurementUpdateWithWhereUniqueWithoutManagerInput | ProcurementUpdateWithWhereUniqueWithoutManagerInput[]
-    updateMany?: ProcurementUpdateManyWithWhereWithoutManagerInput | ProcurementUpdateManyWithWhereWithoutManagerInput[]
-    deleteMany?: ProcurementScalarWhereInput | ProcurementScalarWhereInput[]
+  export type ProcurementUpdateOneRequiredWithoutContractsNestedInput = {
+    create?: XOR<ProcurementCreateWithoutContractsInput, ProcurementUncheckedCreateWithoutContractsInput>
+    connectOrCreate?: ProcurementCreateOrConnectWithoutContractsInput
+    upsert?: ProcurementUpsertWithoutContractsInput
+    connect?: ProcurementWhereUniqueInput
+    update?: XOR<XOR<ProcurementUpdateToOneWithWhereWithoutContractsInput, ProcurementUpdateWithoutContractsInput>, ProcurementUncheckedUpdateWithoutContractsInput>
   }
 
-  export type TaskUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<TaskCreateWithoutUserInput, TaskUncheckedCreateWithoutUserInput> | TaskCreateWithoutUserInput[] | TaskUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutUserInput | TaskCreateOrConnectWithoutUserInput[]
-    upsert?: TaskUpsertWithWhereUniqueWithoutUserInput | TaskUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: TaskCreateManyUserInputEnvelope
-    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    update?: TaskUpdateWithWhereUniqueWithoutUserInput | TaskUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: TaskUpdateManyWithWhereWithoutUserInput | TaskUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
+  export type contractAgreementUpdateManyWithoutContractNestedInput = {
+    create?: XOR<contractAgreementCreateWithoutContractInput, contractAgreementUncheckedCreateWithoutContractInput> | contractAgreementCreateWithoutContractInput[] | contractAgreementUncheckedCreateWithoutContractInput[]
+    connectOrCreate?: contractAgreementCreateOrConnectWithoutContractInput | contractAgreementCreateOrConnectWithoutContractInput[]
+    upsert?: contractAgreementUpsertWithWhereUniqueWithoutContractInput | contractAgreementUpsertWithWhereUniqueWithoutContractInput[]
+    createMany?: contractAgreementCreateManyContractInputEnvelope
+    set?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
+    disconnect?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
+    delete?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
+    connect?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
+    update?: contractAgreementUpdateWithWhereUniqueWithoutContractInput | contractAgreementUpdateWithWhereUniqueWithoutContractInput[]
+    updateMany?: contractAgreementUpdateManyWithWhereWithoutContractInput | contractAgreementUpdateManyWithWhereWithoutContractInput[]
+    deleteMany?: contractAgreementScalarWhereInput | contractAgreementScalarWhereInput[]
   }
 
-  export type ProcurementUncheckedUpdateManyWithoutManagerNestedInput = {
-    create?: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput> | ProcurementCreateWithoutManagerInput[] | ProcurementUncheckedCreateWithoutManagerInput[]
-    connectOrCreate?: ProcurementCreateOrConnectWithoutManagerInput | ProcurementCreateOrConnectWithoutManagerInput[]
-    upsert?: ProcurementUpsertWithWhereUniqueWithoutManagerInput | ProcurementUpsertWithWhereUniqueWithoutManagerInput[]
-    createMany?: ProcurementCreateManyManagerInputEnvelope
-    set?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    disconnect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    delete?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    update?: ProcurementUpdateWithWhereUniqueWithoutManagerInput | ProcurementUpdateWithWhereUniqueWithoutManagerInput[]
-    updateMany?: ProcurementUpdateManyWithWhereWithoutManagerInput | ProcurementUpdateManyWithWhereWithoutManagerInput[]
-    deleteMany?: ProcurementScalarWhereInput | ProcurementScalarWhereInput[]
+  export type contractAgreementUncheckedUpdateManyWithoutContractNestedInput = {
+    create?: XOR<contractAgreementCreateWithoutContractInput, contractAgreementUncheckedCreateWithoutContractInput> | contractAgreementCreateWithoutContractInput[] | contractAgreementUncheckedCreateWithoutContractInput[]
+    connectOrCreate?: contractAgreementCreateOrConnectWithoutContractInput | contractAgreementCreateOrConnectWithoutContractInput[]
+    upsert?: contractAgreementUpsertWithWhereUniqueWithoutContractInput | contractAgreementUpsertWithWhereUniqueWithoutContractInput[]
+    createMany?: contractAgreementCreateManyContractInputEnvelope
+    set?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
+    disconnect?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
+    delete?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
+    connect?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
+    update?: contractAgreementUpdateWithWhereUniqueWithoutContractInput | contractAgreementUpdateWithWhereUniqueWithoutContractInput[]
+    updateMany?: contractAgreementUpdateManyWithWhereWithoutContractInput | contractAgreementUpdateManyWithWhereWithoutContractInput[]
+    deleteMany?: contractAgreementScalarWhereInput | contractAgreementScalarWhereInput[]
+  }
+
+  export type ContractCreateNestedOneWithoutAgreementsInput = {
+    create?: XOR<ContractCreateWithoutAgreementsInput, ContractUncheckedCreateWithoutAgreementsInput>
+    connectOrCreate?: ContractCreateOrConnectWithoutAgreementsInput
+    connect?: ContractWhereUniqueInput
+  }
+
+  export type ContractUpdateOneRequiredWithoutAgreementsNestedInput = {
+    create?: XOR<ContractCreateWithoutAgreementsInput, ContractUncheckedCreateWithoutAgreementsInput>
+    connectOrCreate?: ContractCreateOrConnectWithoutAgreementsInput
+    upsert?: ContractUpsertWithoutAgreementsInput
+    connect?: ContractWhereUniqueInput
+    update?: XOR<XOR<ContractUpdateToOneWithWhereWithoutAgreementsInput, ContractUpdateWithoutAgreementsInput>, ContractUncheckedUpdateWithoutAgreementsInput>
   }
 
   export type ProcurementCreateNestedManyWithoutCustomerInput = {
@@ -10783,6 +11938,10 @@ export namespace Prisma {
     connectOrCreate?: ProcurementCreateOrConnectWithoutCustomerInput | ProcurementCreateOrConnectWithoutCustomerInput[]
     createMany?: ProcurementCreateManyCustomerInputEnvelope
     connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type ProcurementUpdateManyWithoutCustomerNestedInput = {
@@ -10810,6 +11969,52 @@ export namespace Prisma {
     connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
     update?: ProcurementUpdateWithWhereUniqueWithoutCustomerInput | ProcurementUpdateWithWhereUniqueWithoutCustomerInput[]
     updateMany?: ProcurementUpdateManyWithWhereWithoutCustomerInput | ProcurementUpdateManyWithWhereWithoutCustomerInput[]
+    deleteMany?: ProcurementScalarWhereInput | ProcurementScalarWhereInput[]
+  }
+
+  export type ProcurementCreateNestedManyWithoutJointProcurementInput = {
+    create?: XOR<ProcurementCreateWithoutJointProcurementInput, ProcurementUncheckedCreateWithoutJointProcurementInput> | ProcurementCreateWithoutJointProcurementInput[] | ProcurementUncheckedCreateWithoutJointProcurementInput[]
+    connectOrCreate?: ProcurementCreateOrConnectWithoutJointProcurementInput | ProcurementCreateOrConnectWithoutJointProcurementInput[]
+    createMany?: ProcurementCreateManyJointProcurementInputEnvelope
+    connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+  }
+
+  export type ProcurementUncheckedCreateNestedManyWithoutJointProcurementInput = {
+    create?: XOR<ProcurementCreateWithoutJointProcurementInput, ProcurementUncheckedCreateWithoutJointProcurementInput> | ProcurementCreateWithoutJointProcurementInput[] | ProcurementUncheckedCreateWithoutJointProcurementInput[]
+    connectOrCreate?: ProcurementCreateOrConnectWithoutJointProcurementInput | ProcurementCreateOrConnectWithoutJointProcurementInput[]
+    createMany?: ProcurementCreateManyJointProcurementInputEnvelope
+    connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type ProcurementUpdateManyWithoutJointProcurementNestedInput = {
+    create?: XOR<ProcurementCreateWithoutJointProcurementInput, ProcurementUncheckedCreateWithoutJointProcurementInput> | ProcurementCreateWithoutJointProcurementInput[] | ProcurementUncheckedCreateWithoutJointProcurementInput[]
+    connectOrCreate?: ProcurementCreateOrConnectWithoutJointProcurementInput | ProcurementCreateOrConnectWithoutJointProcurementInput[]
+    upsert?: ProcurementUpsertWithWhereUniqueWithoutJointProcurementInput | ProcurementUpsertWithWhereUniqueWithoutJointProcurementInput[]
+    createMany?: ProcurementCreateManyJointProcurementInputEnvelope
+    set?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+    disconnect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+    delete?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+    connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+    update?: ProcurementUpdateWithWhereUniqueWithoutJointProcurementInput | ProcurementUpdateWithWhereUniqueWithoutJointProcurementInput[]
+    updateMany?: ProcurementUpdateManyWithWhereWithoutJointProcurementInput | ProcurementUpdateManyWithWhereWithoutJointProcurementInput[]
+    deleteMany?: ProcurementScalarWhereInput | ProcurementScalarWhereInput[]
+  }
+
+  export type ProcurementUncheckedUpdateManyWithoutJointProcurementNestedInput = {
+    create?: XOR<ProcurementCreateWithoutJointProcurementInput, ProcurementUncheckedCreateWithoutJointProcurementInput> | ProcurementCreateWithoutJointProcurementInput[] | ProcurementUncheckedCreateWithoutJointProcurementInput[]
+    connectOrCreate?: ProcurementCreateOrConnectWithoutJointProcurementInput | ProcurementCreateOrConnectWithoutJointProcurementInput[]
+    upsert?: ProcurementUpsertWithWhereUniqueWithoutJointProcurementInput | ProcurementUpsertWithWhereUniqueWithoutJointProcurementInput[]
+    createMany?: ProcurementCreateManyJointProcurementInputEnvelope
+    set?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+    disconnect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+    delete?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+    connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+    update?: ProcurementUpdateWithWhereUniqueWithoutJointProcurementInput | ProcurementUpdateWithWhereUniqueWithoutJointProcurementInput[]
+    updateMany?: ProcurementUpdateManyWithWhereWithoutJointProcurementInput | ProcurementUpdateManyWithWhereWithoutJointProcurementInput[]
     deleteMany?: ProcurementScalarWhereInput | ProcurementScalarWhereInput[]
   }
 
@@ -10843,26 +12048,6 @@ export namespace Prisma {
     connectOrCreate?: ContractCreateOrConnectWithoutProcurementInput | ContractCreateOrConnectWithoutProcurementInput[]
     createMany?: ContractCreateManyProcurementInputEnvelope
     connect?: ContractWhereUniqueInput | ContractWhereUniqueInput[]
-  }
-
-  export type DecimalFieldUpdateOperationsInput = {
-    set?: Decimal | DecimalJsLike | number | string
-    increment?: Decimal | DecimalJsLike | number | string
-    decrement?: Decimal | DecimalJsLike | number | string
-    multiply?: Decimal | DecimalJsLike | number | string
-    divide?: Decimal | DecimalJsLike | number | string
-  }
-
-  export type NullableDecimalFieldUpdateOperationsInput = {
-    set?: Decimal | DecimalJsLike | number | string | null
-    increment?: Decimal | DecimalJsLike | number | string
-    decrement?: Decimal | DecimalJsLike | number | string
-    multiply?: Decimal | DecimalJsLike | number | string
-    divide?: Decimal | DecimalJsLike | number | string
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type CustomerUpdateOneRequiredWithoutProcurementsNestedInput = {
@@ -10919,118 +12104,6 @@ export namespace Prisma {
     deleteMany?: ContractScalarWhereInput | ContractScalarWhereInput[]
   }
 
-  export type ProcurementCreateNestedManyWithoutJointProcurementInput = {
-    create?: XOR<ProcurementCreateWithoutJointProcurementInput, ProcurementUncheckedCreateWithoutJointProcurementInput> | ProcurementCreateWithoutJointProcurementInput[] | ProcurementUncheckedCreateWithoutJointProcurementInput[]
-    connectOrCreate?: ProcurementCreateOrConnectWithoutJointProcurementInput | ProcurementCreateOrConnectWithoutJointProcurementInput[]
-    createMany?: ProcurementCreateManyJointProcurementInputEnvelope
-    connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-  }
-
-  export type ProcurementUncheckedCreateNestedManyWithoutJointProcurementInput = {
-    create?: XOR<ProcurementCreateWithoutJointProcurementInput, ProcurementUncheckedCreateWithoutJointProcurementInput> | ProcurementCreateWithoutJointProcurementInput[] | ProcurementUncheckedCreateWithoutJointProcurementInput[]
-    connectOrCreate?: ProcurementCreateOrConnectWithoutJointProcurementInput | ProcurementCreateOrConnectWithoutJointProcurementInput[]
-    createMany?: ProcurementCreateManyJointProcurementInputEnvelope
-    connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-  }
-
-  export type ProcurementUpdateManyWithoutJointProcurementNestedInput = {
-    create?: XOR<ProcurementCreateWithoutJointProcurementInput, ProcurementUncheckedCreateWithoutJointProcurementInput> | ProcurementCreateWithoutJointProcurementInput[] | ProcurementUncheckedCreateWithoutJointProcurementInput[]
-    connectOrCreate?: ProcurementCreateOrConnectWithoutJointProcurementInput | ProcurementCreateOrConnectWithoutJointProcurementInput[]
-    upsert?: ProcurementUpsertWithWhereUniqueWithoutJointProcurementInput | ProcurementUpsertWithWhereUniqueWithoutJointProcurementInput[]
-    createMany?: ProcurementCreateManyJointProcurementInputEnvelope
-    set?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    disconnect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    delete?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    update?: ProcurementUpdateWithWhereUniqueWithoutJointProcurementInput | ProcurementUpdateWithWhereUniqueWithoutJointProcurementInput[]
-    updateMany?: ProcurementUpdateManyWithWhereWithoutJointProcurementInput | ProcurementUpdateManyWithWhereWithoutJointProcurementInput[]
-    deleteMany?: ProcurementScalarWhereInput | ProcurementScalarWhereInput[]
-  }
-
-  export type ProcurementUncheckedUpdateManyWithoutJointProcurementNestedInput = {
-    create?: XOR<ProcurementCreateWithoutJointProcurementInput, ProcurementUncheckedCreateWithoutJointProcurementInput> | ProcurementCreateWithoutJointProcurementInput[] | ProcurementUncheckedCreateWithoutJointProcurementInput[]
-    connectOrCreate?: ProcurementCreateOrConnectWithoutJointProcurementInput | ProcurementCreateOrConnectWithoutJointProcurementInput[]
-    upsert?: ProcurementUpsertWithWhereUniqueWithoutJointProcurementInput | ProcurementUpsertWithWhereUniqueWithoutJointProcurementInput[]
-    createMany?: ProcurementCreateManyJointProcurementInputEnvelope
-    set?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    disconnect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    delete?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
-    update?: ProcurementUpdateWithWhereUniqueWithoutJointProcurementInput | ProcurementUpdateWithWhereUniqueWithoutJointProcurementInput[]
-    updateMany?: ProcurementUpdateManyWithWhereWithoutJointProcurementInput | ProcurementUpdateManyWithWhereWithoutJointProcurementInput[]
-    deleteMany?: ProcurementScalarWhereInput | ProcurementScalarWhereInput[]
-  }
-
-  export type ProcurementCreateNestedOneWithoutContractsInput = {
-    create?: XOR<ProcurementCreateWithoutContractsInput, ProcurementUncheckedCreateWithoutContractsInput>
-    connectOrCreate?: ProcurementCreateOrConnectWithoutContractsInput
-    connect?: ProcurementWhereUniqueInput
-  }
-
-  export type contractAgreementCreateNestedManyWithoutContractInput = {
-    create?: XOR<contractAgreementCreateWithoutContractInput, contractAgreementUncheckedCreateWithoutContractInput> | contractAgreementCreateWithoutContractInput[] | contractAgreementUncheckedCreateWithoutContractInput[]
-    connectOrCreate?: contractAgreementCreateOrConnectWithoutContractInput | contractAgreementCreateOrConnectWithoutContractInput[]
-    createMany?: contractAgreementCreateManyContractInputEnvelope
-    connect?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
-  }
-
-  export type contractAgreementUncheckedCreateNestedManyWithoutContractInput = {
-    create?: XOR<contractAgreementCreateWithoutContractInput, contractAgreementUncheckedCreateWithoutContractInput> | contractAgreementCreateWithoutContractInput[] | contractAgreementUncheckedCreateWithoutContractInput[]
-    connectOrCreate?: contractAgreementCreateOrConnectWithoutContractInput | contractAgreementCreateOrConnectWithoutContractInput[]
-    createMany?: contractAgreementCreateManyContractInputEnvelope
-    connect?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
-  }
-
-  export type ProcurementUpdateOneRequiredWithoutContractsNestedInput = {
-    create?: XOR<ProcurementCreateWithoutContractsInput, ProcurementUncheckedCreateWithoutContractsInput>
-    connectOrCreate?: ProcurementCreateOrConnectWithoutContractsInput
-    upsert?: ProcurementUpsertWithoutContractsInput
-    connect?: ProcurementWhereUniqueInput
-    update?: XOR<XOR<ProcurementUpdateToOneWithWhereWithoutContractsInput, ProcurementUpdateWithoutContractsInput>, ProcurementUncheckedUpdateWithoutContractsInput>
-  }
-
-  export type contractAgreementUpdateManyWithoutContractNestedInput = {
-    create?: XOR<contractAgreementCreateWithoutContractInput, contractAgreementUncheckedCreateWithoutContractInput> | contractAgreementCreateWithoutContractInput[] | contractAgreementUncheckedCreateWithoutContractInput[]
-    connectOrCreate?: contractAgreementCreateOrConnectWithoutContractInput | contractAgreementCreateOrConnectWithoutContractInput[]
-    upsert?: contractAgreementUpsertWithWhereUniqueWithoutContractInput | contractAgreementUpsertWithWhereUniqueWithoutContractInput[]
-    createMany?: contractAgreementCreateManyContractInputEnvelope
-    set?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
-    disconnect?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
-    delete?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
-    connect?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
-    update?: contractAgreementUpdateWithWhereUniqueWithoutContractInput | contractAgreementUpdateWithWhereUniqueWithoutContractInput[]
-    updateMany?: contractAgreementUpdateManyWithWhereWithoutContractInput | contractAgreementUpdateManyWithWhereWithoutContractInput[]
-    deleteMany?: contractAgreementScalarWhereInput | contractAgreementScalarWhereInput[]
-  }
-
-  export type contractAgreementUncheckedUpdateManyWithoutContractNestedInput = {
-    create?: XOR<contractAgreementCreateWithoutContractInput, contractAgreementUncheckedCreateWithoutContractInput> | contractAgreementCreateWithoutContractInput[] | contractAgreementUncheckedCreateWithoutContractInput[]
-    connectOrCreate?: contractAgreementCreateOrConnectWithoutContractInput | contractAgreementCreateOrConnectWithoutContractInput[]
-    upsert?: contractAgreementUpsertWithWhereUniqueWithoutContractInput | contractAgreementUpsertWithWhereUniqueWithoutContractInput[]
-    createMany?: contractAgreementCreateManyContractInputEnvelope
-    set?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
-    disconnect?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
-    delete?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
-    connect?: contractAgreementWhereUniqueInput | contractAgreementWhereUniqueInput[]
-    update?: contractAgreementUpdateWithWhereUniqueWithoutContractInput | contractAgreementUpdateWithWhereUniqueWithoutContractInput[]
-    updateMany?: contractAgreementUpdateManyWithWhereWithoutContractInput | contractAgreementUpdateManyWithWhereWithoutContractInput[]
-    deleteMany?: contractAgreementScalarWhereInput | contractAgreementScalarWhereInput[]
-  }
-
-  export type ContractCreateNestedOneWithoutAgreementsInput = {
-    create?: XOR<ContractCreateWithoutAgreementsInput, ContractUncheckedCreateWithoutAgreementsInput>
-    connectOrCreate?: ContractCreateOrConnectWithoutAgreementsInput
-    connect?: ContractWhereUniqueInput
-  }
-
-  export type ContractUpdateOneRequiredWithoutAgreementsNestedInput = {
-    create?: XOR<ContractCreateWithoutAgreementsInput, ContractUncheckedCreateWithoutAgreementsInput>
-    connectOrCreate?: ContractCreateOrConnectWithoutAgreementsInput
-    upsert?: ContractUpsertWithoutAgreementsInput
-    connect?: ContractWhereUniqueInput
-    update?: XOR<XOR<ContractUpdateToOneWithWhereWithoutAgreementsInput, ContractUpdateWithoutAgreementsInput>, ContractUncheckedUpdateWithoutAgreementsInput>
-  }
-
   export type UserCreateNestedOneWithoutTasksInput = {
     create?: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
     connectOrCreate?: UserCreateOrConnectWithoutTasksInput
@@ -11051,6 +12124,90 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutTasksInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTasksInput, UserUpdateWithoutTasksInput>, UserUncheckedUpdateWithoutTasksInput>
+  }
+
+  export type TaskCreateNestedManyWithoutCreatedByUserInput = {
+    create?: XOR<TaskCreateWithoutCreatedByUserInput, TaskUncheckedCreateWithoutCreatedByUserInput> | TaskCreateWithoutCreatedByUserInput[] | TaskUncheckedCreateWithoutCreatedByUserInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutCreatedByUserInput | TaskCreateOrConnectWithoutCreatedByUserInput[]
+    createMany?: TaskCreateManyCreatedByUserInputEnvelope
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  }
+
+  export type ProcurementCreateNestedManyWithoutManagerInput = {
+    create?: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput> | ProcurementCreateWithoutManagerInput[] | ProcurementUncheckedCreateWithoutManagerInput[]
+    connectOrCreate?: ProcurementCreateOrConnectWithoutManagerInput | ProcurementCreateOrConnectWithoutManagerInput[]
+    createMany?: ProcurementCreateManyManagerInputEnvelope
+    connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+  }
+
+  export type TaskUncheckedCreateNestedManyWithoutCreatedByUserInput = {
+    create?: XOR<TaskCreateWithoutCreatedByUserInput, TaskUncheckedCreateWithoutCreatedByUserInput> | TaskCreateWithoutCreatedByUserInput[] | TaskUncheckedCreateWithoutCreatedByUserInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutCreatedByUserInput | TaskCreateOrConnectWithoutCreatedByUserInput[]
+    createMany?: TaskCreateManyCreatedByUserInputEnvelope
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  }
+
+  export type ProcurementUncheckedCreateNestedManyWithoutManagerInput = {
+    create?: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput> | ProcurementCreateWithoutManagerInput[] | ProcurementUncheckedCreateWithoutManagerInput[]
+    connectOrCreate?: ProcurementCreateOrConnectWithoutManagerInput | ProcurementCreateOrConnectWithoutManagerInput[]
+    createMany?: ProcurementCreateManyManagerInputEnvelope
+    connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+  }
+
+  export type TaskUpdateManyWithoutCreatedByUserNestedInput = {
+    create?: XOR<TaskCreateWithoutCreatedByUserInput, TaskUncheckedCreateWithoutCreatedByUserInput> | TaskCreateWithoutCreatedByUserInput[] | TaskUncheckedCreateWithoutCreatedByUserInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutCreatedByUserInput | TaskCreateOrConnectWithoutCreatedByUserInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutCreatedByUserInput | TaskUpsertWithWhereUniqueWithoutCreatedByUserInput[]
+    createMany?: TaskCreateManyCreatedByUserInputEnvelope
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutCreatedByUserInput | TaskUpdateWithWhereUniqueWithoutCreatedByUserInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutCreatedByUserInput | TaskUpdateManyWithWhereWithoutCreatedByUserInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
+  }
+
+  export type ProcurementUpdateManyWithoutManagerNestedInput = {
+    create?: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput> | ProcurementCreateWithoutManagerInput[] | ProcurementUncheckedCreateWithoutManagerInput[]
+    connectOrCreate?: ProcurementCreateOrConnectWithoutManagerInput | ProcurementCreateOrConnectWithoutManagerInput[]
+    upsert?: ProcurementUpsertWithWhereUniqueWithoutManagerInput | ProcurementUpsertWithWhereUniqueWithoutManagerInput[]
+    createMany?: ProcurementCreateManyManagerInputEnvelope
+    set?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+    disconnect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+    delete?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+    connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+    update?: ProcurementUpdateWithWhereUniqueWithoutManagerInput | ProcurementUpdateWithWhereUniqueWithoutManagerInput[]
+    updateMany?: ProcurementUpdateManyWithWhereWithoutManagerInput | ProcurementUpdateManyWithWhereWithoutManagerInput[]
+    deleteMany?: ProcurementScalarWhereInput | ProcurementScalarWhereInput[]
+  }
+
+  export type TaskUncheckedUpdateManyWithoutCreatedByUserNestedInput = {
+    create?: XOR<TaskCreateWithoutCreatedByUserInput, TaskUncheckedCreateWithoutCreatedByUserInput> | TaskCreateWithoutCreatedByUserInput[] | TaskUncheckedCreateWithoutCreatedByUserInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutCreatedByUserInput | TaskCreateOrConnectWithoutCreatedByUserInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutCreatedByUserInput | TaskUpsertWithWhereUniqueWithoutCreatedByUserInput[]
+    createMany?: TaskCreateManyCreatedByUserInputEnvelope
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutCreatedByUserInput | TaskUpdateWithWhereUniqueWithoutCreatedByUserInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutCreatedByUserInput | TaskUpdateManyWithWhereWithoutCreatedByUserInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
+  }
+
+  export type ProcurementUncheckedUpdateManyWithoutManagerNestedInput = {
+    create?: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput> | ProcurementCreateWithoutManagerInput[] | ProcurementUncheckedCreateWithoutManagerInput[]
+    connectOrCreate?: ProcurementCreateOrConnectWithoutManagerInput | ProcurementCreateOrConnectWithoutManagerInput[]
+    upsert?: ProcurementUpsertWithWhereUniqueWithoutManagerInput | ProcurementUpsertWithWhereUniqueWithoutManagerInput[]
+    createMany?: ProcurementCreateManyManagerInputEnvelope
+    set?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+    disconnect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+    delete?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+    connect?: ProcurementWhereUniqueInput | ProcurementWhereUniqueInput[]
+    update?: ProcurementUpdateWithWhereUniqueWithoutManagerInput | ProcurementUpdateWithWhereUniqueWithoutManagerInput[]
+    updateMany?: ProcurementUpdateManyWithWhereWithoutManagerInput | ProcurementUpdateManyWithWhereWithoutManagerInput[]
+    deleteMany?: ProcurementScalarWhereInput | ProcurementScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -11078,18 +12235,26 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  export type NestedDecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -11134,67 +12299,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedDecimalFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-  }
-
-  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
-  }
-
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
@@ -11225,6 +12329,59 @@ export namespace Prisma {
     _sum?: NestedDecimalNullableFilter<$PrismaModel>
     _min?: NestedDecimalNullableFilter<$PrismaModel>
     _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -11269,559 +12426,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type TaskCreateWithoutUserInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    name: string
-    priority?: $Enums.Priority | null
-    status?: string
-    terminationDate: Date | string
-    isCompleted?: boolean
-    notes?: string | null
-  }
-
-  export type TaskUncheckedCreateWithoutUserInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    name: string
-    priority?: $Enums.Priority | null
-    status?: string
-    terminationDate: Date | string
-    isCompleted?: boolean
-    notes?: string | null
-  }
-
-  export type TaskCreateOrConnectWithoutUserInput = {
-    where: TaskWhereUniqueInput
-    create: XOR<TaskCreateWithoutUserInput, TaskUncheckedCreateWithoutUserInput>
-  }
-
-  export type TaskCreateManyUserInputEnvelope = {
-    data: TaskCreateManyUserInput | TaskCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ProcurementCreateWithoutManagerInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    expectedValue: Decimal | DecimalJsLike | number | string
-    resultValue?: Decimal | DecimalJsLike | number | string | null
-    announcedAt?: Date | string | null
-    finishedAt?: Date | string | null
-    prozorroId?: string | null
-    prozorroLink?: string | null
-    product: string
-    unit: string
-    scope: string
-    status?: string
-    customer: CustomerCreateNestedOneWithoutProcurementsInput
-    jointProcurement?: JointProcurementCreateNestedOneWithoutProcurementsInput
-    contracts?: ContractCreateNestedManyWithoutProcurementInput
-  }
-
-  export type ProcurementUncheckedCreateWithoutManagerInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    expectedValue: Decimal | DecimalJsLike | number | string
-    resultValue?: Decimal | DecimalJsLike | number | string | null
-    announcedAt?: Date | string | null
-    finishedAt?: Date | string | null
-    prozorroId?: string | null
-    prozorroLink?: string | null
-    product: string
-    unit: string
-    scope: string
-    status?: string
-    customerId: string
-    jointProcurementid?: string | null
-    contracts?: ContractUncheckedCreateNestedManyWithoutProcurementInput
-  }
-
-  export type ProcurementCreateOrConnectWithoutManagerInput = {
-    where: ProcurementWhereUniqueInput
-    create: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput>
-  }
-
-  export type ProcurementCreateManyManagerInputEnvelope = {
-    data: ProcurementCreateManyManagerInput | ProcurementCreateManyManagerInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type TaskUpsertWithWhereUniqueWithoutUserInput = {
-    where: TaskWhereUniqueInput
-    update: XOR<TaskUpdateWithoutUserInput, TaskUncheckedUpdateWithoutUserInput>
-    create: XOR<TaskCreateWithoutUserInput, TaskUncheckedCreateWithoutUserInput>
-  }
-
-  export type TaskUpdateWithWhereUniqueWithoutUserInput = {
-    where: TaskWhereUniqueInput
-    data: XOR<TaskUpdateWithoutUserInput, TaskUncheckedUpdateWithoutUserInput>
-  }
-
-  export type TaskUpdateManyWithWhereWithoutUserInput = {
-    where: TaskScalarWhereInput
-    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type TaskScalarWhereInput = {
-    AND?: TaskScalarWhereInput | TaskScalarWhereInput[]
-    OR?: TaskScalarWhereInput[]
-    NOT?: TaskScalarWhereInput | TaskScalarWhereInput[]
-    id?: StringFilter<"Task"> | string
-    createdAt?: DateTimeFilter<"Task"> | Date | string
-    updatedAt?: DateTimeFilter<"Task"> | Date | string
-    name?: StringFilter<"Task"> | string
-    priority?: EnumPriorityNullableFilter<"Task"> | $Enums.Priority | null
-    status?: StringFilter<"Task"> | string
-    terminationDate?: DateTimeFilter<"Task"> | Date | string
-    isCompleted?: BoolFilter<"Task"> | boolean
-    notes?: StringNullableFilter<"Task"> | string | null
-    userId?: StringFilter<"Task"> | string
-  }
-
-  export type ProcurementUpsertWithWhereUniqueWithoutManagerInput = {
-    where: ProcurementWhereUniqueInput
-    update: XOR<ProcurementUpdateWithoutManagerInput, ProcurementUncheckedUpdateWithoutManagerInput>
-    create: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput>
-  }
-
-  export type ProcurementUpdateWithWhereUniqueWithoutManagerInput = {
-    where: ProcurementWhereUniqueInput
-    data: XOR<ProcurementUpdateWithoutManagerInput, ProcurementUncheckedUpdateWithoutManagerInput>
-  }
-
-  export type ProcurementUpdateManyWithWhereWithoutManagerInput = {
-    where: ProcurementScalarWhereInput
-    data: XOR<ProcurementUpdateManyMutationInput, ProcurementUncheckedUpdateManyWithoutManagerInput>
-  }
-
-  export type ProcurementScalarWhereInput = {
-    AND?: ProcurementScalarWhereInput | ProcurementScalarWhereInput[]
-    OR?: ProcurementScalarWhereInput[]
-    NOT?: ProcurementScalarWhereInput | ProcurementScalarWhereInput[]
-    id?: StringFilter<"Procurement"> | string
-    createdAt?: DateTimeFilter<"Procurement"> | Date | string
-    updatedAt?: DateTimeFilter<"Procurement"> | Date | string
-    expectedValue?: DecimalFilter<"Procurement"> | Decimal | DecimalJsLike | number | string
-    resultValue?: DecimalNullableFilter<"Procurement"> | Decimal | DecimalJsLike | number | string | null
-    announcedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
-    finishedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
-    prozorroId?: StringNullableFilter<"Procurement"> | string | null
-    prozorroLink?: StringNullableFilter<"Procurement"> | string | null
-    product?: StringFilter<"Procurement"> | string
-    unit?: StringFilter<"Procurement"> | string
-    scope?: StringFilter<"Procurement"> | string
-    status?: StringFilter<"Procurement"> | string
-    customerId?: StringFilter<"Procurement"> | string
-    userId?: StringFilter<"Procurement"> | string
-    jointProcurementid?: StringNullableFilter<"Procurement"> | string | null
-  }
-
-  export type ProcurementCreateWithoutCustomerInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    expectedValue: Decimal | DecimalJsLike | number | string
-    resultValue?: Decimal | DecimalJsLike | number | string | null
-    announcedAt?: Date | string | null
-    finishedAt?: Date | string | null
-    prozorroId?: string | null
-    prozorroLink?: string | null
-    product: string
-    unit: string
-    scope: string
-    status?: string
-    manager: UserCreateNestedOneWithoutProcurementsInput
-    jointProcurement?: JointProcurementCreateNestedOneWithoutProcurementsInput
-    contracts?: ContractCreateNestedManyWithoutProcurementInput
-  }
-
-  export type ProcurementUncheckedCreateWithoutCustomerInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    expectedValue: Decimal | DecimalJsLike | number | string
-    resultValue?: Decimal | DecimalJsLike | number | string | null
-    announcedAt?: Date | string | null
-    finishedAt?: Date | string | null
-    prozorroId?: string | null
-    prozorroLink?: string | null
-    product: string
-    unit: string
-    scope: string
-    status?: string
-    userId: string
-    jointProcurementid?: string | null
-    contracts?: ContractUncheckedCreateNestedManyWithoutProcurementInput
-  }
-
-  export type ProcurementCreateOrConnectWithoutCustomerInput = {
-    where: ProcurementWhereUniqueInput
-    create: XOR<ProcurementCreateWithoutCustomerInput, ProcurementUncheckedCreateWithoutCustomerInput>
-  }
-
-  export type ProcurementCreateManyCustomerInputEnvelope = {
-    data: ProcurementCreateManyCustomerInput | ProcurementCreateManyCustomerInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ProcurementUpsertWithWhereUniqueWithoutCustomerInput = {
-    where: ProcurementWhereUniqueInput
-    update: XOR<ProcurementUpdateWithoutCustomerInput, ProcurementUncheckedUpdateWithoutCustomerInput>
-    create: XOR<ProcurementCreateWithoutCustomerInput, ProcurementUncheckedCreateWithoutCustomerInput>
-  }
-
-  export type ProcurementUpdateWithWhereUniqueWithoutCustomerInput = {
-    where: ProcurementWhereUniqueInput
-    data: XOR<ProcurementUpdateWithoutCustomerInput, ProcurementUncheckedUpdateWithoutCustomerInput>
-  }
-
-  export type ProcurementUpdateManyWithWhereWithoutCustomerInput = {
-    where: ProcurementScalarWhereInput
-    data: XOR<ProcurementUpdateManyMutationInput, ProcurementUncheckedUpdateManyWithoutCustomerInput>
-  }
-
-  export type CustomerCreateWithoutProcurementsInput = {
-    id?: string
-    name: string
-    code: string
-    email: string
-    phone: string
-  }
-
-  export type CustomerUncheckedCreateWithoutProcurementsInput = {
-    id?: string
-    name: string
-    code: string
-    email: string
-    phone: string
-  }
-
-  export type CustomerCreateOrConnectWithoutProcurementsInput = {
-    where: CustomerWhereUniqueInput
-    create: XOR<CustomerCreateWithoutProcurementsInput, CustomerUncheckedCreateWithoutProcurementsInput>
-  }
-
-  export type UserCreateWithoutProcurementsInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    email: string
-    name?: string | null
-    surname?: string | null
-    password: string
-    position?: string | null
-    role?: string
-    tasks?: TaskCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutProcurementsInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    email: string
-    name?: string | null
-    surname?: string | null
-    password: string
-    position?: string | null
-    role?: string
-    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutProcurementsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutProcurementsInput, UserUncheckedCreateWithoutProcurementsInput>
-  }
-
-  export type JointProcurementCreateWithoutProcurementsInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    expectedValue: Decimal | DecimalJsLike | number | string
-    resultValue?: Decimal | DecimalJsLike | number | string | null
-    announcedAt?: Date | string | null
-    finishedAt?: Date | string | null
-    prozorroId?: string | null
-    prozorroLink?: string | null
-    product: string
-    unit: string
-    scope: string
-    status?: string
-  }
-
-  export type JointProcurementUncheckedCreateWithoutProcurementsInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    expectedValue: Decimal | DecimalJsLike | number | string
-    resultValue?: Decimal | DecimalJsLike | number | string | null
-    announcedAt?: Date | string | null
-    finishedAt?: Date | string | null
-    prozorroId?: string | null
-    prozorroLink?: string | null
-    product: string
-    unit: string
-    scope: string
-    status?: string
-  }
-
-  export type JointProcurementCreateOrConnectWithoutProcurementsInput = {
-    where: JointProcurementWhereUniqueInput
-    create: XOR<JointProcurementCreateWithoutProcurementsInput, JointProcurementUncheckedCreateWithoutProcurementsInput>
-  }
-
-  export type ContractCreateWithoutProcurementInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    number: string
-    prozorroLink?: string | null
-    startValue: Decimal | DecimalJsLike | number | string
-    currentValue?: Decimal | DecimalJsLike | number | string | null
-    signatureDate: Date | string
-    terminationDate: Date | string
-    product: string
-    unit: string
-    scope: string
-    agreements?: contractAgreementCreateNestedManyWithoutContractInput
-  }
-
-  export type ContractUncheckedCreateWithoutProcurementInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    number: string
-    prozorroLink?: string | null
-    startValue: Decimal | DecimalJsLike | number | string
-    currentValue?: Decimal | DecimalJsLike | number | string | null
-    signatureDate: Date | string
-    terminationDate: Date | string
-    product: string
-    unit: string
-    scope: string
-    agreements?: contractAgreementUncheckedCreateNestedManyWithoutContractInput
-  }
-
-  export type ContractCreateOrConnectWithoutProcurementInput = {
-    where: ContractWhereUniqueInput
-    create: XOR<ContractCreateWithoutProcurementInput, ContractUncheckedCreateWithoutProcurementInput>
-  }
-
-  export type ContractCreateManyProcurementInputEnvelope = {
-    data: ContractCreateManyProcurementInput | ContractCreateManyProcurementInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type CustomerUpsertWithoutProcurementsInput = {
-    update: XOR<CustomerUpdateWithoutProcurementsInput, CustomerUncheckedUpdateWithoutProcurementsInput>
-    create: XOR<CustomerCreateWithoutProcurementsInput, CustomerUncheckedCreateWithoutProcurementsInput>
-    where?: CustomerWhereInput
-  }
-
-  export type CustomerUpdateToOneWithWhereWithoutProcurementsInput = {
-    where?: CustomerWhereInput
-    data: XOR<CustomerUpdateWithoutProcurementsInput, CustomerUncheckedUpdateWithoutProcurementsInput>
-  }
-
-  export type CustomerUpdateWithoutProcurementsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    code?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    phone?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CustomerUncheckedUpdateWithoutProcurementsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    code?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    phone?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type UserUpsertWithoutProcurementsInput = {
-    update: XOR<UserUpdateWithoutProcurementsInput, UserUncheckedUpdateWithoutProcurementsInput>
-    create: XOR<UserCreateWithoutProcurementsInput, UserUncheckedCreateWithoutProcurementsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutProcurementsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutProcurementsInput, UserUncheckedUpdateWithoutProcurementsInput>
-  }
-
-  export type UserUpdateWithoutProcurementsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    surname?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
-    position?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
-    tasks?: TaskUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutProcurementsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    surname?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
-    position?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
-    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type JointProcurementUpsertWithoutProcurementsInput = {
-    update: XOR<JointProcurementUpdateWithoutProcurementsInput, JointProcurementUncheckedUpdateWithoutProcurementsInput>
-    create: XOR<JointProcurementCreateWithoutProcurementsInput, JointProcurementUncheckedCreateWithoutProcurementsInput>
-    where?: JointProcurementWhereInput
-  }
-
-  export type JointProcurementUpdateToOneWithWhereWithoutProcurementsInput = {
-    where?: JointProcurementWhereInput
-    data: XOR<JointProcurementUpdateWithoutProcurementsInput, JointProcurementUncheckedUpdateWithoutProcurementsInput>
-  }
-
-  export type JointProcurementUpdateWithoutProcurementsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
-    product?: StringFieldUpdateOperationsInput | string
-    unit?: StringFieldUpdateOperationsInput | string
-    scope?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type JointProcurementUncheckedUpdateWithoutProcurementsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
-    product?: StringFieldUpdateOperationsInput | string
-    unit?: StringFieldUpdateOperationsInput | string
-    scope?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type ContractUpsertWithWhereUniqueWithoutProcurementInput = {
-    where: ContractWhereUniqueInput
-    update: XOR<ContractUpdateWithoutProcurementInput, ContractUncheckedUpdateWithoutProcurementInput>
-    create: XOR<ContractCreateWithoutProcurementInput, ContractUncheckedCreateWithoutProcurementInput>
-  }
-
-  export type ContractUpdateWithWhereUniqueWithoutProcurementInput = {
-    where: ContractWhereUniqueInput
-    data: XOR<ContractUpdateWithoutProcurementInput, ContractUncheckedUpdateWithoutProcurementInput>
-  }
-
-  export type ContractUpdateManyWithWhereWithoutProcurementInput = {
-    where: ContractScalarWhereInput
-    data: XOR<ContractUpdateManyMutationInput, ContractUncheckedUpdateManyWithoutProcurementInput>
-  }
-
-  export type ContractScalarWhereInput = {
-    AND?: ContractScalarWhereInput | ContractScalarWhereInput[]
-    OR?: ContractScalarWhereInput[]
-    NOT?: ContractScalarWhereInput | ContractScalarWhereInput[]
-    id?: StringFilter<"Contract"> | string
-    createdAt?: DateTimeFilter<"Contract"> | Date | string
-    updatedAt?: DateTimeFilter<"Contract"> | Date | string
-    number?: StringFilter<"Contract"> | string
-    prozorroLink?: StringNullableFilter<"Contract"> | string | null
-    startValue?: DecimalFilter<"Contract"> | Decimal | DecimalJsLike | number | string
-    currentValue?: DecimalNullableFilter<"Contract"> | Decimal | DecimalJsLike | number | string | null
-    signatureDate?: DateTimeFilter<"Contract"> | Date | string
-    terminationDate?: DateTimeFilter<"Contract"> | Date | string
-    product?: StringFilter<"Contract"> | string
-    unit?: StringFilter<"Contract"> | string
-    scope?: StringFilter<"Contract"> | string
-    procurementId?: StringFilter<"Contract"> | string
-  }
-
-  export type ProcurementCreateWithoutJointProcurementInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    expectedValue: Decimal | DecimalJsLike | number | string
-    resultValue?: Decimal | DecimalJsLike | number | string | null
-    announcedAt?: Date | string | null
-    finishedAt?: Date | string | null
-    prozorroId?: string | null
-    prozorroLink?: string | null
-    product: string
-    unit: string
-    scope: string
-    status?: string
-    customer: CustomerCreateNestedOneWithoutProcurementsInput
-    manager: UserCreateNestedOneWithoutProcurementsInput
-    contracts?: ContractCreateNestedManyWithoutProcurementInput
-  }
-
-  export type ProcurementUncheckedCreateWithoutJointProcurementInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    expectedValue: Decimal | DecimalJsLike | number | string
-    resultValue?: Decimal | DecimalJsLike | number | string | null
-    announcedAt?: Date | string | null
-    finishedAt?: Date | string | null
-    prozorroId?: string | null
-    prozorroLink?: string | null
-    product: string
-    unit: string
-    scope: string
-    status?: string
-    customerId: string
-    userId: string
-    contracts?: ContractUncheckedCreateNestedManyWithoutProcurementInput
-  }
-
-  export type ProcurementCreateOrConnectWithoutJointProcurementInput = {
-    where: ProcurementWhereUniqueInput
-    create: XOR<ProcurementCreateWithoutJointProcurementInput, ProcurementUncheckedCreateWithoutJointProcurementInput>
-  }
-
-  export type ProcurementCreateManyJointProcurementInputEnvelope = {
-    data: ProcurementCreateManyJointProcurementInput | ProcurementCreateManyJointProcurementInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ProcurementUpsertWithWhereUniqueWithoutJointProcurementInput = {
-    where: ProcurementWhereUniqueInput
-    update: XOR<ProcurementUpdateWithoutJointProcurementInput, ProcurementUncheckedUpdateWithoutJointProcurementInput>
-    create: XOR<ProcurementCreateWithoutJointProcurementInput, ProcurementUncheckedCreateWithoutJointProcurementInput>
-  }
-
-  export type ProcurementUpdateWithWhereUniqueWithoutJointProcurementInput = {
-    where: ProcurementWhereUniqueInput
-    data: XOR<ProcurementUpdateWithoutJointProcurementInput, ProcurementUncheckedUpdateWithoutJointProcurementInput>
-  }
-
-  export type ProcurementUpdateManyWithWhereWithoutJointProcurementInput = {
-    where: ProcurementScalarWhereInput
-    data: XOR<ProcurementUpdateManyMutationInput, ProcurementUncheckedUpdateManyWithoutJointProcurementInput>
   }
 
   export type ProcurementCreateWithoutContractsInput = {
@@ -11978,7 +12582,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     number: string
-    prozorroLink?: string | null
     startValue: Decimal | DecimalJsLike | number | string
     currentValue?: Decimal | DecimalJsLike | number | string | null
     signatureDate: Date | string
@@ -11994,7 +12597,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     number: string
-    prozorroLink?: string | null
     startValue: Decimal | DecimalJsLike | number | string
     currentValue?: Decimal | DecimalJsLike | number | string | null
     signatureDate: Date | string
@@ -12026,7 +12628,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     number?: StringFieldUpdateOperationsInput | string
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12042,7 +12643,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     number?: StringFieldUpdateOperationsInput | string
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
     startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12053,16 +12653,445 @@ export namespace Prisma {
     procurementId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type ProcurementCreateWithoutCustomerInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
+    product: string
+    unit: string
+    scope: string
+    status?: string
+    manager: UserCreateNestedOneWithoutProcurementsInput
+    jointProcurement?: JointProcurementCreateNestedOneWithoutProcurementsInput
+    contracts?: ContractCreateNestedManyWithoutProcurementInput
+  }
+
+  export type ProcurementUncheckedCreateWithoutCustomerInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
+    product: string
+    unit: string
+    scope: string
+    status?: string
+    userId: string
+    jointProcurementid?: string | null
+    contracts?: ContractUncheckedCreateNestedManyWithoutProcurementInput
+  }
+
+  export type ProcurementCreateOrConnectWithoutCustomerInput = {
+    where: ProcurementWhereUniqueInput
+    create: XOR<ProcurementCreateWithoutCustomerInput, ProcurementUncheckedCreateWithoutCustomerInput>
+  }
+
+  export type ProcurementCreateManyCustomerInputEnvelope = {
+    data: ProcurementCreateManyCustomerInput | ProcurementCreateManyCustomerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProcurementUpsertWithWhereUniqueWithoutCustomerInput = {
+    where: ProcurementWhereUniqueInput
+    update: XOR<ProcurementUpdateWithoutCustomerInput, ProcurementUncheckedUpdateWithoutCustomerInput>
+    create: XOR<ProcurementCreateWithoutCustomerInput, ProcurementUncheckedCreateWithoutCustomerInput>
+  }
+
+  export type ProcurementUpdateWithWhereUniqueWithoutCustomerInput = {
+    where: ProcurementWhereUniqueInput
+    data: XOR<ProcurementUpdateWithoutCustomerInput, ProcurementUncheckedUpdateWithoutCustomerInput>
+  }
+
+  export type ProcurementUpdateManyWithWhereWithoutCustomerInput = {
+    where: ProcurementScalarWhereInput
+    data: XOR<ProcurementUpdateManyMutationInput, ProcurementUncheckedUpdateManyWithoutCustomerInput>
+  }
+
+  export type ProcurementScalarWhereInput = {
+    AND?: ProcurementScalarWhereInput | ProcurementScalarWhereInput[]
+    OR?: ProcurementScalarWhereInput[]
+    NOT?: ProcurementScalarWhereInput | ProcurementScalarWhereInput[]
+    id?: StringFilter<"Procurement"> | string
+    createdAt?: DateTimeFilter<"Procurement"> | Date | string
+    updatedAt?: DateTimeFilter<"Procurement"> | Date | string
+    expectedValue?: DecimalFilter<"Procurement"> | Decimal | DecimalJsLike | number | string
+    resultValue?: DecimalNullableFilter<"Procurement"> | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
+    finishedAt?: DateTimeNullableFilter<"Procurement"> | Date | string | null
+    prozorroId?: StringNullableFilter<"Procurement"> | string | null
+    prozorroLink?: StringNullableFilter<"Procurement"> | string | null
+    product?: StringFilter<"Procurement"> | string
+    unit?: StringFilter<"Procurement"> | string
+    scope?: StringFilter<"Procurement"> | string
+    status?: StringFilter<"Procurement"> | string
+    customerId?: StringFilter<"Procurement"> | string
+    userId?: StringFilter<"Procurement"> | string
+    jointProcurementid?: StringNullableFilter<"Procurement"> | string | null
+  }
+
+  export type ProcurementCreateWithoutJointProcurementInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
+    product: string
+    unit: string
+    scope: string
+    status?: string
+    customer: CustomerCreateNestedOneWithoutProcurementsInput
+    manager: UserCreateNestedOneWithoutProcurementsInput
+    contracts?: ContractCreateNestedManyWithoutProcurementInput
+  }
+
+  export type ProcurementUncheckedCreateWithoutJointProcurementInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
+    product: string
+    unit: string
+    scope: string
+    status?: string
+    customerId: string
+    userId: string
+    contracts?: ContractUncheckedCreateNestedManyWithoutProcurementInput
+  }
+
+  export type ProcurementCreateOrConnectWithoutJointProcurementInput = {
+    where: ProcurementWhereUniqueInput
+    create: XOR<ProcurementCreateWithoutJointProcurementInput, ProcurementUncheckedCreateWithoutJointProcurementInput>
+  }
+
+  export type ProcurementCreateManyJointProcurementInputEnvelope = {
+    data: ProcurementCreateManyJointProcurementInput | ProcurementCreateManyJointProcurementInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProcurementUpsertWithWhereUniqueWithoutJointProcurementInput = {
+    where: ProcurementWhereUniqueInput
+    update: XOR<ProcurementUpdateWithoutJointProcurementInput, ProcurementUncheckedUpdateWithoutJointProcurementInput>
+    create: XOR<ProcurementCreateWithoutJointProcurementInput, ProcurementUncheckedCreateWithoutJointProcurementInput>
+  }
+
+  export type ProcurementUpdateWithWhereUniqueWithoutJointProcurementInput = {
+    where: ProcurementWhereUniqueInput
+    data: XOR<ProcurementUpdateWithoutJointProcurementInput, ProcurementUncheckedUpdateWithoutJointProcurementInput>
+  }
+
+  export type ProcurementUpdateManyWithWhereWithoutJointProcurementInput = {
+    where: ProcurementScalarWhereInput
+    data: XOR<ProcurementUpdateManyMutationInput, ProcurementUncheckedUpdateManyWithoutJointProcurementInput>
+  }
+
+  export type CustomerCreateWithoutProcurementsInput = {
+    id?: string
+    name: string
+    code: string
+    email: string
+    phone: string
+    address?: string | null
+  }
+
+  export type CustomerUncheckedCreateWithoutProcurementsInput = {
+    id?: string
+    name: string
+    code: string
+    email: string
+    phone: string
+    address?: string | null
+  }
+
+  export type CustomerCreateOrConnectWithoutProcurementsInput = {
+    where: CustomerWhereUniqueInput
+    create: XOR<CustomerCreateWithoutProcurementsInput, CustomerUncheckedCreateWithoutProcurementsInput>
+  }
+
+  export type UserCreateWithoutProcurementsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    email: string
+    name: string
+    surname: string
+    password: string
+    isAdmin?: boolean
+    isManager?: boolean
+    isGuest?: boolean
+    tasks?: TaskCreateNestedManyWithoutCreatedByUserInput
+  }
+
+  export type UserUncheckedCreateWithoutProcurementsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    email: string
+    name: string
+    surname: string
+    password: string
+    isAdmin?: boolean
+    isManager?: boolean
+    isGuest?: boolean
+    tasks?: TaskUncheckedCreateNestedManyWithoutCreatedByUserInput
+  }
+
+  export type UserCreateOrConnectWithoutProcurementsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutProcurementsInput, UserUncheckedCreateWithoutProcurementsInput>
+  }
+
+  export type JointProcurementCreateWithoutProcurementsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
+    product: string
+    unit: string
+    scope: string
+    status?: string
+  }
+
+  export type JointProcurementUncheckedCreateWithoutProcurementsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
+    product: string
+    unit: string
+    scope: string
+    status?: string
+  }
+
+  export type JointProcurementCreateOrConnectWithoutProcurementsInput = {
+    where: JointProcurementWhereUniqueInput
+    create: XOR<JointProcurementCreateWithoutProcurementsInput, JointProcurementUncheckedCreateWithoutProcurementsInput>
+  }
+
+  export type ContractCreateWithoutProcurementInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    number: string
+    startValue: Decimal | DecimalJsLike | number | string
+    currentValue?: Decimal | DecimalJsLike | number | string | null
+    signatureDate: Date | string
+    terminationDate: Date | string
+    product: string
+    unit: string
+    scope: string
+    agreements?: contractAgreementCreateNestedManyWithoutContractInput
+  }
+
+  export type ContractUncheckedCreateWithoutProcurementInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    number: string
+    startValue: Decimal | DecimalJsLike | number | string
+    currentValue?: Decimal | DecimalJsLike | number | string | null
+    signatureDate: Date | string
+    terminationDate: Date | string
+    product: string
+    unit: string
+    scope: string
+    agreements?: contractAgreementUncheckedCreateNestedManyWithoutContractInput
+  }
+
+  export type ContractCreateOrConnectWithoutProcurementInput = {
+    where: ContractWhereUniqueInput
+    create: XOR<ContractCreateWithoutProcurementInput, ContractUncheckedCreateWithoutProcurementInput>
+  }
+
+  export type ContractCreateManyProcurementInputEnvelope = {
+    data: ContractCreateManyProcurementInput | ContractCreateManyProcurementInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CustomerUpsertWithoutProcurementsInput = {
+    update: XOR<CustomerUpdateWithoutProcurementsInput, CustomerUncheckedUpdateWithoutProcurementsInput>
+    create: XOR<CustomerCreateWithoutProcurementsInput, CustomerUncheckedCreateWithoutProcurementsInput>
+    where?: CustomerWhereInput
+  }
+
+  export type CustomerUpdateToOneWithWhereWithoutProcurementsInput = {
+    where?: CustomerWhereInput
+    data: XOR<CustomerUpdateWithoutProcurementsInput, CustomerUncheckedUpdateWithoutProcurementsInput>
+  }
+
+  export type CustomerUpdateWithoutProcurementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CustomerUncheckedUpdateWithoutProcurementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserUpsertWithoutProcurementsInput = {
+    update: XOR<UserUpdateWithoutProcurementsInput, UserUncheckedUpdateWithoutProcurementsInput>
+    create: XOR<UserCreateWithoutProcurementsInput, UserUncheckedCreateWithoutProcurementsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutProcurementsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutProcurementsInput, UserUncheckedUpdateWithoutProcurementsInput>
+  }
+
+  export type UserUpdateWithoutProcurementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    surname?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    isManager?: BoolFieldUpdateOperationsInput | boolean
+    isGuest?: BoolFieldUpdateOperationsInput | boolean
+    tasks?: TaskUpdateManyWithoutCreatedByUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutProcurementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    surname?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    isManager?: BoolFieldUpdateOperationsInput | boolean
+    isGuest?: BoolFieldUpdateOperationsInput | boolean
+    tasks?: TaskUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  }
+
+  export type JointProcurementUpsertWithoutProcurementsInput = {
+    update: XOR<JointProcurementUpdateWithoutProcurementsInput, JointProcurementUncheckedUpdateWithoutProcurementsInput>
+    create: XOR<JointProcurementCreateWithoutProcurementsInput, JointProcurementUncheckedCreateWithoutProcurementsInput>
+    where?: JointProcurementWhereInput
+  }
+
+  export type JointProcurementUpdateToOneWithWhereWithoutProcurementsInput = {
+    where?: JointProcurementWhereInput
+    data: XOR<JointProcurementUpdateWithoutProcurementsInput, JointProcurementUncheckedUpdateWithoutProcurementsInput>
+  }
+
+  export type JointProcurementUpdateWithoutProcurementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    product?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type JointProcurementUncheckedUpdateWithoutProcurementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    product?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ContractUpsertWithWhereUniqueWithoutProcurementInput = {
+    where: ContractWhereUniqueInput
+    update: XOR<ContractUpdateWithoutProcurementInput, ContractUncheckedUpdateWithoutProcurementInput>
+    create: XOR<ContractCreateWithoutProcurementInput, ContractUncheckedCreateWithoutProcurementInput>
+  }
+
+  export type ContractUpdateWithWhereUniqueWithoutProcurementInput = {
+    where: ContractWhereUniqueInput
+    data: XOR<ContractUpdateWithoutProcurementInput, ContractUncheckedUpdateWithoutProcurementInput>
+  }
+
+  export type ContractUpdateManyWithWhereWithoutProcurementInput = {
+    where: ContractScalarWhereInput
+    data: XOR<ContractUpdateManyMutationInput, ContractUncheckedUpdateManyWithoutProcurementInput>
+  }
+
+  export type ContractScalarWhereInput = {
+    AND?: ContractScalarWhereInput | ContractScalarWhereInput[]
+    OR?: ContractScalarWhereInput[]
+    NOT?: ContractScalarWhereInput | ContractScalarWhereInput[]
+    id?: StringFilter<"Contract"> | string
+    createdAt?: DateTimeFilter<"Contract"> | Date | string
+    updatedAt?: DateTimeFilter<"Contract"> | Date | string
+    number?: StringFilter<"Contract"> | string
+    startValue?: DecimalFilter<"Contract"> | Decimal | DecimalJsLike | number | string
+    currentValue?: DecimalNullableFilter<"Contract"> | Decimal | DecimalJsLike | number | string | null
+    signatureDate?: DateTimeFilter<"Contract"> | Date | string
+    terminationDate?: DateTimeFilter<"Contract"> | Date | string
+    product?: StringFilter<"Contract"> | string
+    unit?: StringFilter<"Contract"> | string
+    scope?: StringFilter<"Contract"> | string
+    procurementId?: StringFilter<"Contract"> | string
+  }
+
   export type UserCreateWithoutTasksInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     email: string
-    name?: string | null
-    surname?: string | null
+    name: string
+    surname: string
     password: string
-    position?: string | null
-    role?: string
+    isAdmin?: boolean
+    isManager?: boolean
+    isGuest?: boolean
     procurements?: ProcurementCreateNestedManyWithoutManagerInput
   }
 
@@ -12071,11 +13100,12 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     email: string
-    name?: string | null
-    surname?: string | null
+    name: string
+    surname: string
     password: string
-    position?: string | null
-    role?: string
+    isAdmin?: boolean
+    isManager?: boolean
+    isGuest?: boolean
     procurements?: ProcurementUncheckedCreateNestedManyWithoutManagerInput
   }
 
@@ -12100,11 +13130,12 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    surname?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    surname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    position?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    isManager?: BoolFieldUpdateOperationsInput | boolean
+    isGuest?: BoolFieldUpdateOperationsInput | boolean
     procurements?: ProcurementUpdateManyWithoutManagerNestedInput
   }
 
@@ -12113,15 +13144,16 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    surname?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    surname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    position?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    isManager?: BoolFieldUpdateOperationsInput | boolean
+    isGuest?: BoolFieldUpdateOperationsInput | boolean
     procurements?: ProcurementUncheckedUpdateManyWithoutManagerNestedInput
   }
 
-  export type TaskCreateManyUserInput = {
+  export type TaskCreateWithoutCreatedByUserInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12131,9 +13163,52 @@ export namespace Prisma {
     terminationDate: Date | string
     isCompleted?: boolean
     notes?: string | null
+    managerId?: string | null
   }
 
-  export type ProcurementCreateManyManagerInput = {
+  export type TaskUncheckedCreateWithoutCreatedByUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name: string
+    priority?: $Enums.Priority | null
+    status?: string
+    terminationDate: Date | string
+    isCompleted?: boolean
+    notes?: string | null
+    managerId?: string | null
+  }
+
+  export type TaskCreateOrConnectWithoutCreatedByUserInput = {
+    where: TaskWhereUniqueInput
+    create: XOR<TaskCreateWithoutCreatedByUserInput, TaskUncheckedCreateWithoutCreatedByUserInput>
+  }
+
+  export type TaskCreateManyCreatedByUserInputEnvelope = {
+    data: TaskCreateManyCreatedByUserInput | TaskCreateManyCreatedByUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProcurementCreateWithoutManagerInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
+    product: string
+    unit: string
+    scope: string
+    status?: string
+    customer: CustomerCreateNestedOneWithoutProcurementsInput
+    jointProcurement?: JointProcurementCreateNestedOneWithoutProcurementsInput
+    contracts?: ContractCreateNestedManyWithoutProcurementInput
+  }
+
+  export type ProcurementUncheckedCreateWithoutManagerInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12149,98 +13224,102 @@ export namespace Prisma {
     status?: string
     customerId: string
     jointProcurementid?: string | null
+    contracts?: ContractUncheckedCreateNestedManyWithoutProcurementInput
   }
 
-  export type TaskUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    name?: StringFieldUpdateOperationsInput | string
-    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
-    status?: StringFieldUpdateOperationsInput | string
-    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    isCompleted?: BoolFieldUpdateOperationsInput | boolean
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
+  export type ProcurementCreateOrConnectWithoutManagerInput = {
+    where: ProcurementWhereUniqueInput
+    create: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput>
   }
 
-  export type TaskUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    name?: StringFieldUpdateOperationsInput | string
-    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
-    status?: StringFieldUpdateOperationsInput | string
-    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    isCompleted?: BoolFieldUpdateOperationsInput | boolean
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
+  export type ProcurementCreateManyManagerInputEnvelope = {
+    data: ProcurementCreateManyManagerInput | ProcurementCreateManyManagerInput[]
+    skipDuplicates?: boolean
   }
 
-  export type TaskUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    name?: StringFieldUpdateOperationsInput | string
-    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
-    status?: StringFieldUpdateOperationsInput | string
-    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    isCompleted?: BoolFieldUpdateOperationsInput | boolean
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
+  export type TaskUpsertWithWhereUniqueWithoutCreatedByUserInput = {
+    where: TaskWhereUniqueInput
+    update: XOR<TaskUpdateWithoutCreatedByUserInput, TaskUncheckedUpdateWithoutCreatedByUserInput>
+    create: XOR<TaskCreateWithoutCreatedByUserInput, TaskUncheckedCreateWithoutCreatedByUserInput>
   }
 
-  export type ProcurementUpdateWithoutManagerInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
-    product?: StringFieldUpdateOperationsInput | string
-    unit?: StringFieldUpdateOperationsInput | string
-    scope?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    customer?: CustomerUpdateOneRequiredWithoutProcurementsNestedInput
-    jointProcurement?: JointProcurementUpdateOneWithoutProcurementsNestedInput
-    contracts?: ContractUpdateManyWithoutProcurementNestedInput
+  export type TaskUpdateWithWhereUniqueWithoutCreatedByUserInput = {
+    where: TaskWhereUniqueInput
+    data: XOR<TaskUpdateWithoutCreatedByUserInput, TaskUncheckedUpdateWithoutCreatedByUserInput>
   }
 
-  export type ProcurementUncheckedUpdateWithoutManagerInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
-    product?: StringFieldUpdateOperationsInput | string
-    unit?: StringFieldUpdateOperationsInput | string
-    scope?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    customerId?: StringFieldUpdateOperationsInput | string
-    jointProcurementid?: NullableStringFieldUpdateOperationsInput | string | null
-    contracts?: ContractUncheckedUpdateManyWithoutProcurementNestedInput
+  export type TaskUpdateManyWithWhereWithoutCreatedByUserInput = {
+    where: TaskScalarWhereInput
+    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutCreatedByUserInput>
   }
 
-  export type ProcurementUncheckedUpdateManyWithoutManagerInput = {
+  export type TaskScalarWhereInput = {
+    AND?: TaskScalarWhereInput | TaskScalarWhereInput[]
+    OR?: TaskScalarWhereInput[]
+    NOT?: TaskScalarWhereInput | TaskScalarWhereInput[]
+    id?: StringFilter<"Task"> | string
+    createdAt?: DateTimeFilter<"Task"> | Date | string
+    updatedAt?: DateTimeFilter<"Task"> | Date | string
+    name?: StringFilter<"Task"> | string
+    priority?: EnumPriorityNullableFilter<"Task"> | $Enums.Priority | null
+    status?: StringFilter<"Task"> | string
+    terminationDate?: DateTimeFilter<"Task"> | Date | string
+    isCompleted?: BoolFilter<"Task"> | boolean
+    notes?: StringNullableFilter<"Task"> | string | null
+    managerId?: StringNullableFilter<"Task"> | string | null
+    userId?: StringFilter<"Task"> | string
+  }
+
+  export type ProcurementUpsertWithWhereUniqueWithoutManagerInput = {
+    where: ProcurementWhereUniqueInput
+    update: XOR<ProcurementUpdateWithoutManagerInput, ProcurementUncheckedUpdateWithoutManagerInput>
+    create: XOR<ProcurementCreateWithoutManagerInput, ProcurementUncheckedCreateWithoutManagerInput>
+  }
+
+  export type ProcurementUpdateWithWhereUniqueWithoutManagerInput = {
+    where: ProcurementWhereUniqueInput
+    data: XOR<ProcurementUpdateWithoutManagerInput, ProcurementUncheckedUpdateWithoutManagerInput>
+  }
+
+  export type ProcurementUpdateManyWithWhereWithoutManagerInput = {
+    where: ProcurementScalarWhereInput
+    data: XOR<ProcurementUpdateManyMutationInput, ProcurementUncheckedUpdateManyWithoutManagerInput>
+  }
+
+  export type contractAgreementCreateManyContractInput = {
+    id?: string
+    createdAt?: Date | string
+    number: string
+    signatureDate: Date | string
+    reason: string
+    changes: string
+  }
+
+  export type contractAgreementUpdateWithoutContractInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
-    product?: StringFieldUpdateOperationsInput | string
-    unit?: StringFieldUpdateOperationsInput | string
-    scope?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    customerId?: StringFieldUpdateOperationsInput | string
-    jointProcurementid?: NullableStringFieldUpdateOperationsInput | string | null
+    number?: StringFieldUpdateOperationsInput | string
+    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    changes?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type contractAgreementUncheckedUpdateWithoutContractInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    number?: StringFieldUpdateOperationsInput | string
+    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    changes?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type contractAgreementUncheckedUpdateManyWithoutContractInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    number?: StringFieldUpdateOperationsInput | string
+    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    changes?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProcurementCreateManyCustomerInput = {
@@ -12317,68 +13396,6 @@ export namespace Prisma {
     jointProcurementid?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type ContractCreateManyProcurementInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    number: string
-    prozorroLink?: string | null
-    startValue: Decimal | DecimalJsLike | number | string
-    currentValue?: Decimal | DecimalJsLike | number | string | null
-    signatureDate: Date | string
-    terminationDate: Date | string
-    product: string
-    unit: string
-    scope: string
-  }
-
-  export type ContractUpdateWithoutProcurementInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    number?: StringFieldUpdateOperationsInput | string
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
-    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    product?: StringFieldUpdateOperationsInput | string
-    unit?: StringFieldUpdateOperationsInput | string
-    scope?: StringFieldUpdateOperationsInput | string
-    agreements?: contractAgreementUpdateManyWithoutContractNestedInput
-  }
-
-  export type ContractUncheckedUpdateWithoutProcurementInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    number?: StringFieldUpdateOperationsInput | string
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
-    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    product?: StringFieldUpdateOperationsInput | string
-    unit?: StringFieldUpdateOperationsInput | string
-    scope?: StringFieldUpdateOperationsInput | string
-    agreements?: contractAgreementUncheckedUpdateManyWithoutContractNestedInput
-  }
-
-  export type ContractUncheckedUpdateManyWithoutProcurementInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    number?: StringFieldUpdateOperationsInput | string
-    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
-    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    product?: StringFieldUpdateOperationsInput | string
-    unit?: StringFieldUpdateOperationsInput | string
-    scope?: StringFieldUpdateOperationsInput | string
-  }
-
   export type ProcurementCreateManyJointProcurementInput = {
     id?: string
     createdAt?: Date | string
@@ -12453,95 +13470,191 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
   }
 
-  export type contractAgreementCreateManyContractInput = {
+  export type ContractCreateManyProcurementInput = {
     id?: string
     createdAt?: Date | string
+    updatedAt?: Date | string
     number: string
+    startValue: Decimal | DecimalJsLike | number | string
+    currentValue?: Decimal | DecimalJsLike | number | string | null
     signatureDate: Date | string
-    reason: string
-    changes: string
+    terminationDate: Date | string
+    product: string
+    unit: string
+    scope: string
   }
 
-  export type contractAgreementUpdateWithoutContractInput = {
+  export type ContractUpdateWithoutProcurementInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     number?: StringFieldUpdateOperationsInput | string
+    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    reason?: StringFieldUpdateOperationsInput | string
-    changes?: StringFieldUpdateOperationsInput | string
+    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    product?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    agreements?: contractAgreementUpdateManyWithoutContractNestedInput
   }
 
-  export type contractAgreementUncheckedUpdateWithoutContractInput = {
+  export type ContractUncheckedUpdateWithoutProcurementInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     number?: StringFieldUpdateOperationsInput | string
+    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    reason?: StringFieldUpdateOperationsInput | string
-    changes?: StringFieldUpdateOperationsInput | string
+    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    product?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    agreements?: contractAgreementUncheckedUpdateManyWithoutContractNestedInput
   }
 
-  export type contractAgreementUncheckedUpdateManyWithoutContractInput = {
+  export type ContractUncheckedUpdateManyWithoutProcurementInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     number?: StringFieldUpdateOperationsInput | string
+    startValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     signatureDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    reason?: StringFieldUpdateOperationsInput | string
-    changes?: StringFieldUpdateOperationsInput | string
+    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    product?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TaskCreateManyCreatedByUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name: string
+    priority?: $Enums.Priority | null
+    status?: string
+    terminationDate: Date | string
+    isCompleted?: boolean
+    notes?: string | null
+    managerId?: string | null
+  }
+
+  export type ProcurementCreateManyManagerInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expectedValue: Decimal | DecimalJsLike | number | string
+    resultValue?: Decimal | DecimalJsLike | number | string | null
+    announcedAt?: Date | string | null
+    finishedAt?: Date | string | null
+    prozorroId?: string | null
+    prozorroLink?: string | null
+    product: string
+    unit: string
+    scope: string
+    status?: string
+    customerId: string
+    jointProcurementid?: string | null
+  }
+
+  export type TaskUpdateWithoutCreatedByUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
+    status?: StringFieldUpdateOperationsInput | string
+    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    managerId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TaskUncheckedUpdateWithoutCreatedByUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
+    status?: StringFieldUpdateOperationsInput | string
+    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    managerId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TaskUncheckedUpdateManyWithoutCreatedByUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
+    status?: StringFieldUpdateOperationsInput | string
+    terminationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    managerId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ProcurementUpdateWithoutManagerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    product?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    customer?: CustomerUpdateOneRequiredWithoutProcurementsNestedInput
+    jointProcurement?: JointProcurementUpdateOneWithoutProcurementsNestedInput
+    contracts?: ContractUpdateManyWithoutProcurementNestedInput
+  }
+
+  export type ProcurementUncheckedUpdateWithoutManagerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    product?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    customerId?: StringFieldUpdateOperationsInput | string
+    jointProcurementid?: NullableStringFieldUpdateOperationsInput | string | null
+    contracts?: ContractUncheckedUpdateManyWithoutProcurementNestedInput
+  }
+
+  export type ProcurementUncheckedUpdateManyWithoutManagerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expectedValue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    resultValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    announcedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    prozorroId?: NullableStringFieldUpdateOperationsInput | string | null
+    prozorroLink?: NullableStringFieldUpdateOperationsInput | string | null
+    product?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    scope?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    customerId?: StringFieldUpdateOperationsInput | string
+    jointProcurementid?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 
-
-  /**
-   * Aliases for legacy arg types
-   */
-    /**
-     * @deprecated Use UserCountOutputTypeDefaultArgs instead
-     */
-    export type UserCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserCountOutputTypeDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use CustomerCountOutputTypeDefaultArgs instead
-     */
-    export type CustomerCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CustomerCountOutputTypeDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ProcurementCountOutputTypeDefaultArgs instead
-     */
-    export type ProcurementCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ProcurementCountOutputTypeDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use JointProcurementCountOutputTypeDefaultArgs instead
-     */
-    export type JointProcurementCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = JointProcurementCountOutputTypeDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ContractCountOutputTypeDefaultArgs instead
-     */
-    export type ContractCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ContractCountOutputTypeDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use UserDefaultArgs instead
-     */
-    export type UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use CustomerDefaultArgs instead
-     */
-    export type CustomerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CustomerDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ProcurementDefaultArgs instead
-     */
-    export type ProcurementArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ProcurementDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use JointProcurementDefaultArgs instead
-     */
-    export type JointProcurementArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = JointProcurementDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ContractDefaultArgs instead
-     */
-    export type ContractArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ContractDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use contractAgreementDefaultArgs instead
-     */
-    export type contractAgreementArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = contractAgreementDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use TaskDefaultArgs instead
-     */
-    export type TaskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TaskDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

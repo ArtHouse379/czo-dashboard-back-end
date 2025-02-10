@@ -1,113 +1,11 @@
-generator client {
-  provider = "prisma-client-js"
-  output   = "../prisma/generated/client"
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-model User {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  email    String  @unique
-  name     String?
-  surname  String?
-  password String
-
-  position String?
-  role     String  @default("user")
-
-  tasks        Task[]
-  procurements Procurement[]
-
-  @@map("user")
-}
-
-model Customer {
-  id String @id @default(cuid())
-
-  name  String
-  code  String
-  email String
-  phone String
-
-  procurements Procurement[]
-
-  @@map("customer")
-}
-
-model Procurement {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  expectedValue Decimal @map("expected_value")
-  resultValue   Decimal? @map("result_value")
-
-  announcedAt DateTime? @map("announced_at")
-  finishedAt  DateTime? @map("finished_at")
-
-  prozorroId   String?
-  prozorroLink String? @map("prozorro_link")
-
-  product String
-  unit    String
-  scope   String
-
-  status String @default("in work")
-
-  customer   Customer @relation(fields: [customerId], references: [id])
-  customerId String   @map("customer_id")
-
-  manager User   @relation(fields: [userId], references: [id])
-  userId  String @map("user_id")
-
-  jointProcurement   JointProcurement? @relation(fields: [jointProcurementid], references: [id])
-  jointProcurementid String?           @map("joint_procurement_id")
-
-  contracts Contract[]
-
-  @@map("procurement")
-}
-
-model JointProcurement {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  expectedValue Decimal @map("expected_value")
-  resultValue   Decimal? @map("result_value")
-
-  announcedAt DateTime? @map("announced_at")
-  finishedAt  DateTime? @map("finished_at")
-
-  prozorroId   String?
-  prozorroLink String? @map("prozorro_link")
-
-  product String
-  unit    String
-  scope   String
-
-  status String @default("in work")
-
-  procurements Procurement[]
-
-  @@map("joint_procurement")
-}
-
 model Contract {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   number          String
-  prozorroLink    String?  @map("prozorro_link")
-  startValue      Decimal   @map("start_value")
-  currentValue    Decimal?  @map("final_value")
+  startValue      Decimal  @map("start_value")
+  currentValue    Decimal? @map("final_value")
   signatureDate   DateTime @map("signature_date")
   terminationDate DateTime @map("termination_date")
 
@@ -138,6 +36,96 @@ model contractAgreement {
   @@map("contract_agreement")
 }
 
+model Customer {
+  id String @id @default(cuid())
+
+  name    String
+  code    String
+  email   String
+  phone   String
+  address String?
+
+  procurements Procurement[]
+
+  @@map("customer")
+}
+
+model JointProcurement {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  expectedValue Decimal  @map("expected_value")
+  resultValue   Decimal? @map("result_value")
+
+  announcedAt DateTime? @map("announced_at")
+  finishedAt  DateTime? @map("finished_at")
+
+  prozorroId   String?
+  prozorroLink String? @map("prozorro_link")
+
+  product String
+  unit    String
+  scope   String
+
+  status String @default("in work")
+
+  procurements Procurement[]
+
+  @@map("joint_procurement")
+}
+
+enum Priority {
+  low
+  medium
+  high
+}
+
+model Procurement {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  expectedValue Decimal  @map("expected_value")
+  resultValue   Decimal? @map("result_value")
+
+  announcedAt DateTime? @map("announced_at")
+  finishedAt  DateTime? @map("finished_at")
+
+  prozorroId   String?
+  prozorroLink String? @map("prozorro_link")
+
+  product String
+  unit    String
+  scope   String
+
+  status String @default("in work")
+
+  customer   Customer @relation(fields: [customerId], references: [id])
+  customerId String   @map("customer_id")
+
+  manager User   @relation(fields: [userId], references: [id])
+  userId  String @map("user_id")
+
+  jointProcurement   JointProcurement? @relation(fields: [jointProcurementid], references: [id])
+  jointProcurementid String?           @map("joint_procurement_id")
+
+  contracts Contract[]
+
+  @@map("procurement")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../generated/client"
+  previewFeatures = ["prismaSchemaFolder"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
 model Task {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map("created_at")
@@ -149,15 +137,30 @@ model Task {
   terminationDate DateTime  @map("termination_date")
   isCompleted     Boolean   @default(false) @map("is_completed")
   notes           String?
+  managerId       String?   @map("manager_id")
 
-  user   User   @relation(fields: [userId], references: [id])
-  userId String @map("user_id")
+  createdByUser User   @relation(fields: [userId], references: [id])
+  userId        String @map("user_id")
 
   @@map("task")
 }
 
-enum Priority {
-  low
-  medium
-  high
+model User {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  email    String @unique
+  name     String
+  surname  String
+  password String
+
+  isAdmin   Boolean @default(false) @map("is_admin")
+  isManager Boolean @default(false) @map("is_manager")
+  isGuest   Boolean @default(true) @map("is_guest")
+
+  tasks        Task[]
+  procurements Procurement[]
+
+  @@map("user")
 }
