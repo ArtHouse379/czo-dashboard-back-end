@@ -24,12 +24,6 @@ export class CustomerController {
 		return this.customerService.getAll()
 	}
 
-	@Get(':id')
-	@Auth()
-	async getById(@Param('id') customerId: string) {
-		return this.customerService.getById(customerId)
-	}
-
 	@Get('by-email')
 	@Auth()
 	async getByEmail(email: string) {
@@ -40,6 +34,12 @@ export class CustomerController {
 	@Auth()
 	async getByCode(code: string) {
 		return this.customerService.getByCode(code)
+	}
+
+	@Get(':id')
+	@Auth()
+	async getById(@Param('id') customerId: string) {
+		return this.customerService.getById(customerId)
 	}
 
 	@UsePipes(new ValidationPipe())

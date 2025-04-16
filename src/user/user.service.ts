@@ -20,6 +20,10 @@ export class UserService {
 		})
 	}
 
+	getAll() {
+		return this.prisma.user.findMany()
+	}
+
 	getByEmail(email: string) {
 		return this.prisma.user.findUnique({
 			where: {
@@ -118,6 +122,7 @@ export class UserService {
 			data,
 			select: {
 				name: true,
+				surname: true,
 				email: true
 			}
 		})

@@ -20,15 +20,12 @@ export class UserDto {
 	})
 	password: string
 
-	@IsString()
 	@IsOptional()
 	isAdmin: boolean
 
-	@IsString()
 	@IsOptional()
 	isManager: boolean
 
-	@IsString()
 	@IsOptional()
 	isGuest: boolean
 }

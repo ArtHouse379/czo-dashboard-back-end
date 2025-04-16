@@ -25,11 +25,6 @@ export class ProcurementController {
 		return this.procurementService.getAll()
 	}
 
-	@Get(':id')
-	async getById(@Param('id') id: string) {
-		return this.procurementService.getById(id)
-	}
-
 	@Get('users-procurements')
 	@Auth()
 	async getByUserId(@CurrentUser('id') userId: string) {
@@ -40,6 +35,11 @@ export class ProcurementController {
 	@Auth()
 	async getByCustomerId(@Param('id') customerId: string) {
 		return this.procurementService.getByCustomerId(customerId)
+	}
+
+	@Get(':id')
+	async getById(@Param('id') id: string) {
+		return this.procurementService.getById(id)
 	}
 
 	@UsePipes(new ValidationPipe())
